@@ -1,6 +1,6 @@
-package com.coffeeshop.repository;
+package com.coffeeshop.repository.productDetails;
 
-import com.coffeeshop.model.entity.InStock;
+import com.coffeeshop.model.entity.productDetails.InStock;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface InStockRepository extends JpaRepository<InStock, Long> {

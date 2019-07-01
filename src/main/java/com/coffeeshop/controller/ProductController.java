@@ -1,8 +1,7 @@
 package com.coffeeshop.controller;
 
-import com.coffeeshop.model.entity.Product;
-import com.coffeeshop.model.web.RichProductDtoResponse;
-import com.coffeeshop.repository.ProductRepository;
+import com.coffeeshop.model.entity.productDetails.Product;
+import com.coffeeshop.repository.productDetails.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

@@ -1,5 +1,7 @@
-package com.coffeeshop.model.web;
+package com.coffeeshop.model.web.productDetails;
 
+import com.coffeeshop.model.web.productDetails.CharacteristicDtoResponse;
+import com.coffeeshop.model.web.productDetails.InStockDtoResponse;
 import lombok.*;
 
 import java.util.List;

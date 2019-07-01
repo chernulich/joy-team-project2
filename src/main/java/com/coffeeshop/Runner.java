@@ -1,19 +1,15 @@
 package com.coffeeshop;
 
-import com.coffeeshop.model.entity.Characteristic;
-import com.coffeeshop.model.entity.Example;
-import com.coffeeshop.model.entity.InStock;
-import com.coffeeshop.model.entity.Product;
-import com.coffeeshop.repository.CharacteristicRepository;
+import com.coffeeshop.model.entity.productDetails.Characteristic;
+import com.coffeeshop.model.entity.productDetails.InStock;
+import com.coffeeshop.model.entity.productDetails.Product;
+import com.coffeeshop.repository.productDetails.CharacteristicRepository;
 import com.coffeeshop.repository.ExampleRepository;
-import com.coffeeshop.repository.InStockRepository;
-import com.coffeeshop.repository.ProductRepository;
+import com.coffeeshop.repository.productDetails.InStockRepository;
+import com.coffeeshop.repository.productDetails.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
-
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Component
 public class Runner implements CommandLineRunner {

@@ -1,4 +1,4 @@
-package com.coffeeshop.model.entity;
+package com.coffeeshop.model.entity.productDetails;
 
 import lombok.*;
 
