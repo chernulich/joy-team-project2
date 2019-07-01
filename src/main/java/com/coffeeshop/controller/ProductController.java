@@ -15,7 +15,7 @@ import java.util.stream.Stream;
 public class ProductController {
 
 
-    @GetMapping("/products/{productId}")
+    @GetMapping("/products/{id}")
     public RichProductDtoResponse getById(@PathVariable("id") Long productId) {
         String[] img = {"http://customer-ui/products/1/image/1", "http://customer-ui/products/1/image/1"};
         List<CharacteristicDtoResponse> characteristic = Stream.of(CharacteristicDtoResponse.builder()
@@ -31,9 +31,9 @@ public class ProductController {
                 .productName("Alabasta")
                 .quantityAvailableKg(300)
                 .productImages(img)
-                .characteristicResponseList(characteristic)
+                .characteristicDtoResponseList(characteristic)
                 .description("!!!!")
-                .inStockResponseList(inStock)
+                .inStockDtoResponseList(inStock)
                 .unitPrice(100.0)
                 .build();
     }
