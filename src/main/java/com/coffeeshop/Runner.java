@@ -16,6 +16,8 @@ public class Runner implements CommandLineRunner {
     private ExampleRepository exampleRepository;
 
 
+
+
     @Override
     public void run(String... args) throws Exception {
         exampleRepository.saveAll(
