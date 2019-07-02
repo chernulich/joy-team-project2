@@ -1,14 +1,12 @@
 package com.coffeeshop.controller;
 
 
+import com.coffeeshop.model.web.checkout.CheckoutDtoResponse;
+import com.coffeeshop.model.web.checkout.CustomerInfoDtoRequest;
 import com.coffeeshop.model.web.productDetails.CharacteristicDtoResponse;
 import com.coffeeshop.model.web.productDetails.InStockDtoResponse;
 import com.coffeeshop.model.web.productDetails.RichProductDtoResponse;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @RestController
 @RequestMapping("/api/customer")
@@ -16,7 +14,7 @@ public class ProductController {
 
 
     @GetMapping("/products/{id}")
-    public RichProductDtoResponse getById(@PathVariable("id") Long productId) {
+    public RichProductDtoResponse getById(@PathVariable("id") Long id) {
         String[] img = {"http://customer-ui/products/1/image/1", "http://customer-ui/products/1/image/1"};
         CharacteristicDtoResponse characteristic = CharacteristicDtoResponse.builder()
                 .strong(2)
@@ -35,6 +33,14 @@ public class ProductController {
                 .description("!!!!")
                 .inStockDtoResponse(inStock)
                 .unitPrice(100.0)
+                .build();
+    }
+
+    @PostMapping("/checkout")
+    public CheckoutDtoResponse submitOrder(@RequestBody CustomerInfoDtoRequest customerInfoDtoRequest) {
+        return CheckoutDtoResponse.builder()
+                .orderId(1L)
+                .message("Thanks for your order")
                 .build();
     }
 
