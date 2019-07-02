@@ -17,8 +17,8 @@ public class RichProductDtoResponse {
     private String productName;
     private Integer quantityAvailableKg;
     private String[] productImages;
-    private CharacteristicDtoResponse  characteristicDtoResponseList;
+    private CharacteristicDtoResponse  characteristicDtoResponse;
     private String description;
-    private InStockDtoResponse inStockDtoResponseList;
+    private InStockDtoResponse inStockDtoResponse;
     private Double unitPrice;
 }

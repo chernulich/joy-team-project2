@@ -31,9 +31,9 @@ public class ProductController {
                 .productName("Alabasta")
                 .quantityAvailableKg(300)
                 .productImages(img)
-                .characteristicDtoResponseList(characteristic)
+                .characteristicDtoResponse(characteristic)
                 .description("!!!!")
-                .inStockDtoResponseList(inStock)
+                .inStockDtoResponse(inStock)
                 .unitPrice(100.0)
                 .build();
     }
