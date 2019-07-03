@@ -1,5 +1,7 @@
-
 package com.coffeeshop.controller;
+
+//<<<<<<< HEAD
+
 
 import com.coffeeshop.model.common.CoffeeType;
 import com.coffeeshop.model.common.ProductType;
@@ -12,6 +14,9 @@ import com.coffeeshop.model.web.productDetails.InStockDtoResponse;
 import com.coffeeshop.model.web.productDetails.RichProductDtoResponse;
 import org.springframework.web.bind.annotation.*;
 
+import com.coffeeshop.model.web.checkout.CheckoutDtoResponse;
+import com.coffeeshop.model.web.checkout.CustomerInfoDtoRequest;
+
 import java.util.Arrays;
 
 @RestController
@@ -19,7 +24,7 @@ import java.util.Arrays;
 public class ProductController {
 
     @PostMapping("/products")
-    public ProductListResponseDto getProductList(@RequestBody ProductRequestDto productRequestDto){
+    public ProductListResponseDto getProductList(@RequestBody ProductRequestDto productRequestDto) {
         return ProductListResponseDto.builder()
                 .popular(ProductDto.builder()
                         .productId(1L)
@@ -71,4 +76,15 @@ public class ProductController {
                 .unitPrice(100.0)
                 .build();
     }
-}
+
+    @PostMapping("/checkout")
+    public CheckoutDtoResponse submitOrder(@RequestBody CustomerInfoDtoRequest customerInfoDtoRequest) {
+        return CheckoutDtoResponse.builder()
+                .orderId(1L)
+                .message("Thanks for your order")
+                .build();
+    }
+ }
+
+
+//>>>>>>> 3c18039f341360b5a70b5c2ec58ebb001ca4fe63
