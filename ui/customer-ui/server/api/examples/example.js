@@ -12,7 +12,7 @@ exports.getExampleList = function (request, response) {
 exports.getExampleById = function (request, response) {
   let id = request.params.id;
 
-  rest.get(configuration.perEnvironment.backendUrl + '/examples/' + id, (backendResponseBody, backendResponseMeta) => {
+  rest.get(configuration.perEnvironment.backendUrl + '/examples/' + id).on('success', (backendResponseBody, backendResponseMeta) => {
     response.json(backendResponseBody);
   });
 };
