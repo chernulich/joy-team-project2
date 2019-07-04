@@ -11,10 +11,6 @@ jsonFile.readFile(file, function (err, obj) {
     });
 })
 
-app.get('/', function (req, res) {
-    res.send('Hi, Joy-Team!');
-});
-
 app.listen(PORT, () => {
     console.log(`Node Express server listening on http://localhost:${PORT}`);
 });

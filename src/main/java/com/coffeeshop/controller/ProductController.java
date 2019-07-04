@@ -1,8 +1,5 @@
 package com.coffeeshop.controller;
 
-//<<<<<<< HEAD
-
-
 import com.coffeeshop.model.common.CoffeeType;
 import com.coffeeshop.model.common.ProductType;
 import com.coffeeshop.model.web.product.ProductDto;
@@ -85,6 +82,3 @@ public class ProductController {
                 .build();
     }
  }
-
-
-//>>>>>>> 3c18039f341360b5a70b5c2ec58ebb001ca4fe63
