@@ -1,11 +1,14 @@
 package com.coffeeshop.controller;
 
+import com.coffeeshop.exception.InputValidationException;
 import com.coffeeshop.model.entity.Example;
 import com.coffeeshop.model.web.ExampleDto;
 import com.coffeeshop.repository.ExampleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -22,7 +25,12 @@ public class ExampleController {
     }
 
     @PostMapping("/examples")
-    public Example save(@RequestBody ExampleDto exampleDto) {
+    public Example save(@RequestBody @Valid ExampleDto exampleDto, BindingResult result) {
+
+        if (result.hasErrors()) {
+            throw new InputValidationException(result);
+        }
+
         return exampleRepository.save(
                 Example.builder()
                         .name(exampleDto.getName())
