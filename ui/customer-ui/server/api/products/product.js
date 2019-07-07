@@ -21,4 +21,19 @@ exports.getImagesById = function (request, response) {
 
 };
 
+<<<<<<< HEAD
 
+=======
+exports.getProductDetails = function (request, response) {
+
+  const file = '../customer-ui/server/mock/json/productDetail.json';
+  jsonFile.readFile(file, function (err,  obj) {
+      if(err) {
+        console.error(err);
+      }
+      response.send(obj);
+  })
+
+
+}
+>>>>>>> c2c26be87bc1f2c4f6a634f55340a791fe8b3acb
