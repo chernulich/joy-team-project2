@@ -1,0 +1,34 @@
+{
+  "popular": {
+    "productId": 123123,
+    "title": "CoffeeTitle",
+    "shortDescription": "Best coffee in the world",
+    "type": "coffee",
+    "previewImage": "base64 [STRING]",
+    "price": 100.00,
+    "inStockCount": 30,
+    "productParameters": {
+      "flavour": "strong [STRING]",
+      "rate": 1,
+      "decaf": true,
+      "coffeeType": "string (arabika, robusta)"
+    }
+  },
+  "products": [
+    {
+      "productId": 1212313,
+      "title": "TitleCoffee",
+      "shortDescription": "Not bad coffee",
+      "type": "coffee (coffee | tea)",
+      "previewImage": "base64[STRING]",
+      "price": 200.00,
+      "inStockCount": 4,
+      "productParameters": {
+        "flavour": "strong [STRING]",
+        "rate": 1,
+        "decaf": true,
+        "coffeeType": "robusta"
+      }
+    }
+  ]
+}

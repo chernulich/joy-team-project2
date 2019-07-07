@@ -20,17 +20,23 @@ app.get('*.*', express.static(DIST_FOLDER, {
 let routes = {
   api: {
     example: require('./api/examples/example'),
-    product: require("./api/products/product")
+    product: require('./api/products/product')
   }
 };
 
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
+
 app.get('/api/examples', routes.api.example.getExampleList);
 app.get('/api/examples/:id', routes.api.example.getExampleById);
 app.post('/api/examples', routes.api.example.saveExample);
+
 app.get('/api/customer/products/:productId/images/:imageId',routes.api.product.getImagesById);
+<<<<<<< HEAD
+app.post('/api/customer/products', routes.api.product.getProductList);
+=======
 app.get('/api/customer/products/:productId',routes.api.product.getProductDetails)
+>>>>>>> c2c26be87bc1f2c4f6a634f55340a791fe8b3acb
 
 
 // All regular routes use the Universal engine

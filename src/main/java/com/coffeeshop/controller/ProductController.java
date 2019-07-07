@@ -1,6 +1,5 @@
 package com.coffeeshop.controller;
 
-
 import com.coffeeshop.model.common.CoffeeType;
 import com.coffeeshop.model.common.ProductType;
 import com.coffeeshop.model.web.checkout.CheckoutDtoResponse;
@@ -85,6 +84,7 @@ public class ProductController {
                 .message("Thanks for your order")
                 .build();
     }
+
 
     @GetMapping(
             value = "/products/{productId}/images/{imageId}",
