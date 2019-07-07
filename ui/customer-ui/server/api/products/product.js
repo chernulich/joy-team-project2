@@ -32,3 +32,13 @@ exports.getProductDetails = function (request, response) {
       response.send(obj);
   })
 };
+
+exports.submitOrder = function (request, response) {
+  const file = '../customer-ui/server/mock/json/submitOrderResponse.json';
+  jsonFile.readFile(file, function (err, obj) {
+    if (err) {
+      console.error(err);
+    }
+    response.send(obj);
+  })
+};
