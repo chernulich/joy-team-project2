@@ -90,8 +90,8 @@ public class ProductController {
             value = "/products/{productId}/images/{imageId}",
             produces = MediaType.IMAGE_JPEG_VALUE)
     public @ResponseBody
-    byte[] getProductImage(@PathVariable("productId") Integer productId,
-                           @PathVariable("imageId") Integer imageId) throws IOException {
+    byte[] getProductImage(@PathVariable("productId") Long productId,
+                           @PathVariable("imageId") Long imageId) throws IOException {
 
         InputStream io = getClass()
                 .getResourceAsStream("/image/coffee.jpg");
