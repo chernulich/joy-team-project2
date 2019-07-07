@@ -1,10 +1,10 @@
 package com.coffeeshop.controller;
 
-//<<<<<<< HEAD
-
 
 import com.coffeeshop.model.common.CoffeeType;
 import com.coffeeshop.model.common.ProductType;
+import com.coffeeshop.model.web.checkout.CheckoutDtoResponse;
+import com.coffeeshop.model.web.checkout.CustomerInfoDtoRequest;
 import com.coffeeshop.model.web.product.ProductDto;
 import com.coffeeshop.model.web.product.ProductListResponseDto;
 import com.coffeeshop.model.web.product.ProductParametersDto;
@@ -12,11 +12,12 @@ import com.coffeeshop.model.web.product.ProductRequestDto;
 import com.coffeeshop.model.web.productDetails.CharacteristicDtoResponse;
 import com.coffeeshop.model.web.productDetails.InStockDtoResponse;
 import com.coffeeshop.model.web.productDetails.RichProductDtoResponse;
+import org.apache.commons.io.IOUtils;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
-import com.coffeeshop.model.web.checkout.CheckoutDtoResponse;
-import com.coffeeshop.model.web.checkout.CustomerInfoDtoRequest;
-
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Arrays;
 
 @RestController
@@ -84,7 +85,17 @@ public class ProductController {
                 .message("Thanks for your order")
                 .build();
     }
- }
 
+    @GetMapping(
+            value = "/products/{productId}/images/{imageId}",
+            produces = MediaType.IMAGE_JPEG_VALUE)
+    public @ResponseBody
+    byte[] getProductImage(@PathVariable("productId") Long productId,
+                           @PathVariable("imageId") Long imageId) throws IOException {
 
-//>>>>>>> 3c18039f341360b5a70b5c2ec58ebb001ca4fe63
+        InputStream io = getClass()
+                .getResourceAsStream("/image/coffee.jpg");
+        return IOUtils.toByteArray(io);
+    }
+}
+
