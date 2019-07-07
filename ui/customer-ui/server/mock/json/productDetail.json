@@ -1,0 +1,20 @@
+{
+  "productId": 123123,
+  "productName": "Alabasta",
+  "quantityAvailableKg": 300,
+  "images": [
+    "http://customer-ui/products/1/image/1",
+    "http://customer-ui/products/1/image/2"
+  ],
+  "characteristics": {
+    "strong": 2,
+    "sour": 2,
+    "bitter": 3
+  },
+  "description": "Product description",
+  "inStock": {
+    "isAvailable" : true,
+    "quantityAvailable" : 20
+  },
+  "unitPrice" : 100.00
+}
