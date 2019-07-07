@@ -1,6 +1,7 @@
 let rest = require('restler');
 let path = require("path");
 let configuration = require('../../config/backend-config');
+const jsonFile = require('jsonfile');
 
 exports.getImagesById = function (request, response) {
 
@@ -10,3 +11,15 @@ exports.getImagesById = function (request, response) {
 
 };
 
+exports.getProductDetails = function (request, response) {
+
+  const file = '../customer-ui/server/mock/json/productDetail.json';
+  jsonFile.readFile(file, function (err,  obj) {
+      if(err) {
+        console.error(err);
+      }
+      response.send(obj);
+  })
+
+
+}
