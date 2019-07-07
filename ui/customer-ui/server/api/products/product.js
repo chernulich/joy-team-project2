@@ -1,10 +1,9 @@
 let rest = require('restler');
 let path = require("path");
 let configuration = require('../../config/backend-config');
+const jsonFile = require('jsonfile');
 
 exports.getProductList = function (request, response) {
-
-    const jsonFile = require('jsonfile');
     const file = '../customer-ui/server/mock/json/productsList.json';
     jsonFile.readFile(file, function (err, obj) {
         if (err) {
