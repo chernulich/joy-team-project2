@@ -12,7 +12,8 @@ exports.getProductList = function (request, response) {
         response.send(obj);
     })
 
-}
+};
+
 exports.getImagesById = function (request, response) {
 
   let dir = path.join(__dirname, '../../mock/image/rose-blue-flower-rose-blooms-67636.jpeg');
@@ -30,6 +31,14 @@ exports.getProductDetails = function (request, response) {
       }
       response.send(obj);
   })
+};
 
-
-}
+exports.submitOrder = function (request, response) {
+  const file = '../customer-ui/server/mock/json/submitOrderResponse.json';
+  jsonFile.readFile(file, function (err, obj) {
+    if (err) {
+      console.error(err);
+    }
+    response.send(obj);
+  })
+};
