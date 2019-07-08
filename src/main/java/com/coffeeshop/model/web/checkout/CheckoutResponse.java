@@ -7,8 +7,8 @@ import lombok.*;
 @Setter
 @Getter
 @Builder
-public class ChargesDtoRequest {
+public class CheckoutResponse {
 
-    private Integer shipping;
-    private Double tax;
+    private Long orderId;
+    private String message;
 }
