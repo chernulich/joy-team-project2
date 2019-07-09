@@ -6,7 +6,7 @@ import com.coffeeshop.model.web.checkout.CheckoutResponse;
 import com.coffeeshop.model.web.checkout.CustomerInfoRequest;
 import com.coffeeshop.model.web.product.ProductDto;
 import com.coffeeshop.model.web.product.ProductListResponse;
-import com.coffeeshop.model.web.product.ProductParametersRequest;
+import com.coffeeshop.model.web.product.ProductParametersResponse;
 import com.coffeeshop.model.web.product.ProductRequest;
 import com.coffeeshop.model.web.productDetails.CharacteristicResponse;
 import com.coffeeshop.model.web.productDetails.InStockResponse;
@@ -34,7 +34,7 @@ public class ProductController {
                         .price(30.00)
                         .inStockCount(20)
                         .type(ProductType.COFFEE.name())
-                        .productParametersRequest(ProductParametersRequest.builder()
+                        .productParametersResponse(ProductParametersResponse.builder()
                                 .flavour("strong")
                                 .rate(1.0)
                                 .coffeeType(CoffeeType.ARABICA.name().toLowerCase())
@@ -47,7 +47,7 @@ public class ProductController {
                         .price(45.00)
                         .inStockCount(360)
                         .type(ProductType.COFFEE.name())
-                        .productParametersRequest(ProductParametersRequest.builder()
+                        .productParametersResponse(ProductParametersResponse.builder()
                                 .flavour("strong")
                                 .rate(1.0)
                                 .coffeeType(CoffeeType.ARABICA.name().toLowerCase())

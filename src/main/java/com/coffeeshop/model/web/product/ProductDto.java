@@ -16,7 +16,7 @@ public class ProductDto {
     private String previewImage;
     private Double price;
     private Integer inStockCount;
-    private ProductParametersRequest productParametersRequest;
+    private ProductParametersResponse productParametersResponse;
 
 
 }

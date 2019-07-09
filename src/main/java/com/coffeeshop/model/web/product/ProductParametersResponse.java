@@ -7,7 +7,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ProductParametersRequest {
+public class ProductParametersResponse {
 
     private String flavour;
     private Double rate;
