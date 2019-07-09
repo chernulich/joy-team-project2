@@ -35,7 +35,6 @@ app.post('/api/examples', routes.api.example.saveExample);
 app.get('/api/customer/products/:productId/images/:imageId',routes.api.product.getImagesById);
 app.post('/api/customer/products', routes.api.product.getProductList);
 app.get('/api/customer/products/:productId',routes.api.product.getProductDetails);
-app.get('/api/customer/products/:productId', routes.api.product.getProductDetails);
 app.post("/api/customer/checkout", routes.api.product.submitOrder);
 
 app.post('/api/customer/products', routes.api.productlist.getProductList);

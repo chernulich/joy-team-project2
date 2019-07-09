@@ -8,7 +8,7 @@ import lombok.*;
 @Getter
 @Setter
 @Builder
-public class CharacteristicDtoResponse {
+public class CharacteristicResponse {
 
     private Integer strong;
     private Integer sour;

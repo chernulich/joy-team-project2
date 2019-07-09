@@ -8,13 +8,13 @@ import lombok.*;
 @Setter
 @Getter
 @Builder
-public class DeliveryDtoRequest {
+public class DeliveryRequest {
 
     private String officialName;
     private  String city;
     private String street;
     private String houseNumber;
-    private String apartmemt;
+    private String apartment;
     private Integer floor;
     private String deliveryComment;
 }
