@@ -20,8 +20,7 @@ app.get('*.*', express.static(DIST_FOLDER, {
 let routes = {
   api: {
     example: require('./api/examples/example'),
-    product: require('./api/products/product'),
-    productlist: require('../src/app/product-list/product-list')
+    product: require('./api/products/product')
   }
 };
 
@@ -36,8 +35,6 @@ app.get('/api/customer/products/:productId/images/:imageId',routes.api.product.g
 app.post('/api/customer/products', routes.api.product.getProductList);
 app.get('/api/customer/products/:productId',routes.api.product.getProductDetails);
 app.post("/api/customer/checkout", routes.api.product.submitOrder);
-
-app.post('/api/customer/products', routes.api.productlist.getProductList);
 
 // All regular routes use the Universal engine
 app.get('*', (req, res) => {

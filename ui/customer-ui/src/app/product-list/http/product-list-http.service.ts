@@ -1,15 +1,17 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {ProductList} from "./model/product-list";
+import {ProductList} from "../model/product-list";
 
 @Injectable({
   providedIn: 'root'
 })
-export class ProductListService {
+export class ProductListHttpService {
+
+
 
   constructor(private httpClient: HttpClient) { }
 
   getProductList(body) {
-    return this.httpClient.post('/api/customer/products', {body});
+    return this.httpClient.post<ProductList>('/api/customer/products', {body});
   }
 }

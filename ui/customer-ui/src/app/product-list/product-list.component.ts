@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {ProductListService} from "./product-list.service";
+import {ProductListHttpService} from "./http/product-list-http.service";
 import {ProductList} from "./model/product-list";
 import {Requestdto} from "./model/requestdto";
 
@@ -9,19 +9,25 @@ import {Requestdto} from "./model/requestdto";
   styleUrls: ['./product-list.component.css']
 })
 export class ProductListComponent implements OnInit {
-
+  public json: string
   public productsList: ProductList;
   public requestdto: Requestdto = new Requestdto();
 
-  constructor(private productListService: ProductListService) { }
+  constructor(private productListService: ProductListHttpService) { }
+
 
   ngOnInit() {
     this.getProductList(this.requestdto);
   }
 
   getProductList(body: Requestdto){
-    this.productListService.getProductList({body}).subscribe(data =>
-              console.log(data));
+    return this.productListService.getProductList({body}).subscribe(data => {
+      this.productsList = data;
+      this.json = JSON.stringify(this.productsList);
+    });
+
+
+
   }
 
 }
