@@ -1,6 +1,5 @@
 package com.coffeeshop.model.web.product;
 
-import com.coffeeshop.model.common.ProductType;
 import lombok.*;
 
 @Getter
@@ -17,7 +16,7 @@ public class ProductDto {
     private String previewImage;
     private Double price;
     private Integer inStockCount;
-    private ProductParametersDto productParameters;
+    private ProductParametersResponse productParametersResponse;
 
 
 }

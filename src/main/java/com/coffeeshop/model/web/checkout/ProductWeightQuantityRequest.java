@@ -7,9 +7,9 @@ import lombok.*;
 @Setter
 @Getter
 @Builder
-public class ContactInfoDtoRequest {
+public class ProductWeightQuantityRequest {
 
-    private String firstName;
-    private String lastName;
-    private String phoneNumber;
+    private Long productId;
+    private Double weight;
+    private Integer quantity;
 }

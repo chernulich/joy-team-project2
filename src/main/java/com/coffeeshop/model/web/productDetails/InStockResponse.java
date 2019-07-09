@@ -7,7 +7,7 @@ import lombok.*;
 @Getter
 @Setter
 @Builder
-public class InStockDtoResponse {
+public class InStockResponse {
 
     private Boolean isAvailable;
     private Integer quantityAvailable;
