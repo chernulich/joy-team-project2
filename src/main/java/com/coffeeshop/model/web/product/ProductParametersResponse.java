@@ -1,6 +1,5 @@
 package com.coffeeshop.model.web.product;
 
-import com.coffeeshop.model.common.CoffeeType;
 import lombok.*;
 
 @Getter
@@ -8,7 +7,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ProductParametersDto {
+public class ProductParametersResponse {
 
     private String flavour;
     private Double rate;

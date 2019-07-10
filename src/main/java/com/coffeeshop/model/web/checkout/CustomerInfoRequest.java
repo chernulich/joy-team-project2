@@ -9,15 +9,15 @@ import java.util.List;
 @Setter
 @Getter
 @Builder
-public class CustomerInfoDtoRequest {
+public class CustomerInfoRequest {
 
     private String entityName;
     private String email;
     private String phoneNumber;
-    private ContactInfoDtoRequest contactInfoDtoRequest;
-    private DeliveryDtoRequest deliveryDtoRequest;
-    private List<ProductsDtoRequest> productsDtoRequestList;
-    private ChargesDtoRequest chargesDtoRequest;
+    private ContactInfoRequest contactInfoRequest;
+    private DeliveryRequest deliveryRequest;
+    private List<ProductWeightQuantityRequest> productWeightQuantityRequestList;
+    private ChargesRequest chargesRequest;
 
 
 }

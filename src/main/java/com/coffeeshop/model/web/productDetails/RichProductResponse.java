@@ -1,24 +1,20 @@
 package com.coffeeshop.model.web.productDetails;
 
-import com.coffeeshop.model.web.productDetails.CharacteristicDtoResponse;
-import com.coffeeshop.model.web.productDetails.InStockDtoResponse;
 import lombok.*;
-
-import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @Builder
-public class RichProductDtoResponse {
+public class RichProductResponse {
 
     private Long id;
     private String productName;
     private Integer quantityAvailableKg;
     private String[] productImages;
-    private CharacteristicDtoResponse  characteristicDtoResponse;
+    private CharacteristicResponse characteristicResponse;
     private String description;
-    private InStockDtoResponse inStockDtoResponse;
+    private InStockResponse inStockResponse;
     private Double unitPrice;
 }

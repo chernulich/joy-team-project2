@@ -7,7 +7,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class CharacteristicsRequestDto {
+public class CharacteristicsRequest {
 
     private Integer bitterFrom;
     private Integer bitterTo;
