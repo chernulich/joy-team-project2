@@ -9,18 +9,19 @@ import {Requestdto} from "./model/requestdto";
   styleUrls: ['./product-list.component.css']
 })
 export class ProductListComponent implements OnInit {
-  public json: string
+  public json: string;
   public productsList: ProductList;
-  public requestdto: Requestdto = new Requestdto();
+  public defaultRequestDto: Requestdto = Requestdto.prototype.getDefaultDto();
+
 
   constructor(private productListService: ProductListHttpService) { }
 
 
   ngOnInit() {
-    this.getProductList(this.requestdto);
+    this.getProductList(this.defaultRequestDto);
   }
 
-  getProductList(body: Requestdto){
+  getProductList(body){
     return this.productListService.getProductList({body}).subscribe(data => {
       this.productsList = data;
       this.json = JSON.stringify(this.productsList);

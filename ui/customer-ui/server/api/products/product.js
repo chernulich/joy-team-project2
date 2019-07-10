@@ -9,7 +9,7 @@ exports.getProductList = function (request, response) {
         if (err) {
             console.error(err);
         }
-        response.json(obj);
+        response.send(obj);
     })
 
 };
