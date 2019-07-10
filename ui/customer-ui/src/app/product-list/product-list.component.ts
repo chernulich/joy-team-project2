@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ProductListHttpService} from "./http/product-list-http.service";
 import {ProductList} from "./model/product-list";
-import {Requestdto} from "./model/requestdto";
+import {RequestDto} from "./model/request-dto";
 
 @Component({
   selector: 'app-product-list',
@@ -11,7 +11,7 @@ import {Requestdto} from "./model/requestdto";
 export class ProductListComponent implements OnInit {
   public json: string;
   public productsList: ProductList;
-  public defaultRequestDto: Requestdto = Requestdto.prototype.getDefaultDto();
+  public defaultRequestDto: RequestDto = RequestDto.prototype.getDefaultDto();
 
 
   constructor(private productListService: ProductListHttpService) { }
