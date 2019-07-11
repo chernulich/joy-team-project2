@@ -8,6 +8,7 @@ import {ExampleComponent} from './example/example.component';
 import {FormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
 import { ProductDetailsComponent } from './product-details/product-details.component';
+import { ProductListComponent } from './product-list/product-list.component';
 import {HeaderComponent} from './header/header.component';
 
 @NgModule({
@@ -15,6 +16,7 @@ import {HeaderComponent} from './header/header.component';
     AppComponent,
     ExampleComponent,
     ProductDetailsComponent,
+    ProductListComponent,
     HeaderComponent
   ],
   imports: [
