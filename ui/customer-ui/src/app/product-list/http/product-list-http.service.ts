@@ -8,8 +8,6 @@ import {RequestDto} from "../model/request-dto";
 })
 export class ProductListHttpService {
 
-public body: RequestDto;
-
   constructor(private httpClient: HttpClient) { }
 
   getProductList(body) {
