@@ -8,7 +8,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ProductListResponseDto {
+public class ProductListResponse {
 
     private ProductDto popular;
     private List<ProductDto> products;
