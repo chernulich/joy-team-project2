@@ -2,3 +2,6 @@
 .border {
   border-style: solid;
 }
+.body,.html{
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+}
