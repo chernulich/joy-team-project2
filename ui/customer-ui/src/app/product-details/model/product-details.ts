@@ -13,7 +13,8 @@ export class ProductDetails {
   private _unitPrice: number;
 
 
-  constructor(productId: number, productName: string, quantityAvailableKg: number, images: string[], characteristics: ProductCharacteristics, description: string, inStock: ProductInStock, unitPrice: number) {
+  constructor(productId: number, productName: string, quantityAvailableKg: number, images: string[],
+              characteristics: ProductCharacteristics, description: string, inStock: ProductInStock, unitPrice: number) {
     this._productId = productId;
     this._productName = productName;
     this._quantityAvailableKg = quantityAvailableKg;
