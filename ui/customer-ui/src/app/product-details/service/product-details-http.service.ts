@@ -9,8 +9,8 @@ export class ProductDetailsHttpService {
 
   constructor(private httpClient: HttpClient){}
 
-  getProductDetails(id: number) {
-    return this.httpClient.get<ProductDetails>("api/customer/products/" + id)
+  getProductDetails(productId: number) {
+    return this.httpClient.get<ProductDetails>("api/customer/products/" + productId)
   }
 
 }

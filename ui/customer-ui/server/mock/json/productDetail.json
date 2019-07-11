@@ -1,20 +1,20 @@
 {
-  "productId": 12312,
-  "productName": "Alabast",
-  "quantityAvailableKg": 30,
+  "productId": 123123,
+  "productName": "Alabasta",
+  "quantityAvailableKg": 300,
   "images": [
-    "http://customer-ui/products/1/image/3",
+    "http://customer-ui/products/1/image/1",
     "http://customer-ui/products/1/image/2"
   ],
   "characteristics": {
     "strong": 2,
-    "sour": 3,
-    "bitter": 3
+    "sour": 2,
+    "bitter": 2
   },
   "description": "Product description",
   "inStock": {
     "isAvailable" : true,
-    "quantityAvailable" : 200
+    "quantityAvailable" : 20
   },
-  "unitPrice" : 1000.00
+  "unitPrice" : 100.00
 }
