@@ -1,0 +1,30 @@
+<p>product-details works!</p>
+<div class="card-body">
+  <table class="table table-hover table-bordered">
+    <thead class="alert-info">
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Quantity Available Kg</th>
+      <th>Images</th>
+      <th>Characteristics</th>
+      <th>Description</th>
+      <th>In Stock</th>
+      <th>Price</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr >
+      <td>{{this.productId}}</td>
+      <td>{{this.productDetails.productName}}</td>
+      <td>{{this.productDetails.quantityAvailableKg}}</td>
+      <td>{{this.productDetails.images}}</td>
+      <td>{{this.productDetails.characteristics.bitter}}</td>
+      <td>{{this.productDetails.description}}</td>
+      <td>{{this.productDetails.inStock.quantityAvailable}}</td>
+      <td>{{this.productDetails.unitPrice}}</td>
+    </tr>
+    </tbody>
+
+  </table>
+</div>

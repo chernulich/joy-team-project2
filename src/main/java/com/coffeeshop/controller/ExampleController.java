@@ -33,8 +33,8 @@ public class ExampleController {
 
         return exampleRepository.save(
                 Example.builder()
-                        .name(exampleDto.getName())
-                        .build());
+                       .name(exampleDto.getName())
+                       .build());
     }
 
     @GetMapping("/examples/{id}")
