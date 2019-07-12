@@ -1,12 +1,10 @@
+<head>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+</head>
+<body>
 <div class="page-header bg-dark"></div>
 <nav class="navbar navbar-expand-lg navbar-light bg-white">
   <a class="navbar-brand" href="#">Coffee Shop</a>
-  <button aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
-          class="navbar-toggler" data-target="#navbarSupportedContent" data-toggle="collapse" type="button">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
         <a class="nav-link" href="#">HOME <span class="sr-only">(current)</span></a>
@@ -14,11 +12,14 @@
       <li class="nav-item">
         <a class="nav-link" href="#">ABOUT</a>
       </li>
-      <li class="nav-item dropdown">
-        <a aria-expanded="false" aria-haspopup="true" class="nav-link dropdown-toggle" data-toggle="dropdown" href="#"
-           id="navbarDropdown" role="button">
-          PRODUCTS
-        </a>
+      <li class="dropdown" dropdown class="nav-item dropdown" >
+        <a class="nav-link dropdown-toggle" dropdownToggle href="#" role="button">
+          PRODUCTS <span class="caret"></span></a>
+        <div *dropdownMenu class="dropdown-menu">
+          <a class="dropdown-item" href="#">Link 1</a>
+          <a class="dropdown-item" href="#">Link 2</a>
+          <a class="dropdown-item" href="#">Link 3</a>
+        </div>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="#">CONTACTS</a>
@@ -27,7 +28,15 @@
         <i class=""></i>
         <a class="nav-link" href="#">DELIVERY</a>
       </li>
+      <li class="nav-item" class="nav-link" href="#" style="position:absolute; right: 400px" >
+        <i class="fas fa-search fa-lg"></i>
+      </li>
+      <li class="nav-item" class="nav-link" href="#" style="position:absolute; right: 350px" >
+        <i class="fas fa-heart fa-lg"></i>
+      </li>
+      <li class="nav-item" class="nav-link" href="#" style="position:absolute; right: 300px">
+        <i class="fas fa-shopping-basket fa-lg"></i>
+      </li>
     </ul>
-  </div>
 </nav>
 
