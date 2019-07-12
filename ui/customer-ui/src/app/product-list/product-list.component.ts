@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {ProductListHttpService} from "./http/product-list-http.service";
+import {ProductListHttpService} from "./service/product-list-http.service";
 import {ProductList} from "./model/product-list";
 import {RequestDto} from "./model/request-dto";
 
