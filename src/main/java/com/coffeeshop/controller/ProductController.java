@@ -2,8 +2,8 @@ package com.coffeeshop.controller;
 
 import com.coffeeshop.model.common.CoffeeType;
 import com.coffeeshop.model.common.ProductType;
+import com.coffeeshop.model.web.checkout.CheckoutRequest;
 import com.coffeeshop.model.web.checkout.CheckoutResponse;
-import com.coffeeshop.model.web.checkout.CustomerInfoRequest;
 import com.coffeeshop.model.web.product.ProductDto;
 import com.coffeeshop.model.web.product.ProductListResponse;
 import com.coffeeshop.model.web.product.ProductParametersResponse;
@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
+import java.util.Collections;
 
 @RestController
 @RequestMapping("/api/customer")
@@ -39,7 +40,7 @@ public class ProductController {
                                 .rate(1.0)
                                 .coffeeType(CoffeeType.ARABICA.name().toLowerCase())
                                 .decaf(true).build()).build())
-                .products(Arrays.asList(ProductDto.builder()
+                .products(Collections.singletonList(ProductDto.builder()
                         .productId(2L)
                         .title("Brazilian Santos")
                         .previewImage("image2")
@@ -79,7 +80,7 @@ public class ProductController {
     }
 
     @PostMapping("/checkout")
-    public CheckoutResponse submitOrder(@RequestBody CustomerInfoRequest customerInfoRequest) {
+    public CheckoutResponse submitOrder(@RequestBody CheckoutRequest checkoutRequest) {
         return CheckoutResponse.builder()
                 .orderId(1L)
                 .message("Thanks for your order")
