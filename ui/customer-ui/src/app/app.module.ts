@@ -2,23 +2,34 @@ import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 
 import {AppRoutingModule} from './app-routing.module';
+import {BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import {AppComponent} from './app.component';
 import {ExampleComponent} from './example/example.component';
 import {FormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
 
+
 import { FooterComponent } from './footer/footer.component';
+
 import {HeaderComponent} from './header/header.component';
+import { CheckoutComponent } from './checkout/checkout.component';
+import {ProductListComponent} from "./product-list/product-list.component";
+import {ProductDetailsComponent} from "./product-details/product-details.component";
 
 @NgModule({
   declarations: [
     AppComponent,
     ExampleComponent,
     FooterComponent,
-    HeaderComponent
+    ProductDetailsComponent,
+    ProductListComponent,
+
+    HeaderComponent,
+    CheckoutComponent
   ],
   imports: [
     BrowserModule,
+    BsDropdownModule.forRoot(),
     AppRoutingModule,
     FormsModule,
     HttpClientModule
