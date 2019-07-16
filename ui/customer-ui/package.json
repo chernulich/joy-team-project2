@@ -25,18 +25,16 @@
     "@angular/router": "~8.0.1",
     "@nguniversal/express-engine": "^7.1.1",
     "bootstrap": "^4.3.1",
-<<<<<<< HEAD
+
     "bower": "^1.8.8",
-=======
+
     "ngx-bootstrap": "^5.1.0",
     "popper.js": "^1.15.0",
->>>>>>> 420dcc7857f0f040ecb5cbec400a79706d6bf478
+
     "restler": "^3.4.0",
     "rxjs": "~6.4.0",
     "tslib": "^1.9.0",
     "zone.js": "~0.9.1",
-    "ngx-bootstrap": "latest",
-    "ngx-bootstrap": "latest",
     "ngx-bootstrap": "latest"
   },
   "devDependencies": {

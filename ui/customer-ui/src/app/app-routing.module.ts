@@ -5,6 +5,7 @@ import {FooterComponent} from "./footer/footer.component";
 import {ProductDetailsComponent} from "./product-details/product-details.component";
 import {HeaderComponent} from "./header/header.component";
 import {ProductListComponent} from "./product-list/product-list.component";
+import {CheckoutComponent} from "./checkout-customer/checkout.component";
 
 const routes: Routes = [
   {path: '', component: ProductListComponent},
@@ -14,7 +15,7 @@ const routes: Routes = [
   {path: 'header', component: HeaderComponent},
 
   {path: 'products/:id' , component: ProductDetailsComponent},
-  {path: ''}
+  {path: 'checkout/:id', component: CheckoutComponent},
 
 ];
 

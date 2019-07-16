@@ -1,5 +1,9 @@
 
 export class Charges{
+
+  private _shipping: number;
+  private _tax: number;
+
   get shipping(): number {
     return this._shipping;
   }
@@ -15,9 +19,6 @@ export class Charges{
   set tax(value: number) {
     this._tax = value;
   }
-  private _shipping: number;
-  private _tax: number;
-
 
   constructor(shipping: number, tax: number) {
     this._shipping = shipping;

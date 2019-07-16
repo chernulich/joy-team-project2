@@ -12,7 +12,7 @@ import {HttpClientModule} from "@angular/common/http";
 import { FooterComponent } from './footer/footer.component';
 
 import {HeaderComponent} from './header/header.component';
-import { CheckoutComponent } from './checkout/checkout.component';
+import { CheckoutComponent } from './checkout-customer/checkout.component';
 import {ProductListComponent} from "./product-list/product-list.component";
 import {ProductDetailsComponent} from "./product-details/product-details.component";
 
