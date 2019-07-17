@@ -2,10 +2,7 @@ package com.coffeeshop.model.entity;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
 @AllArgsConstructor
@@ -14,7 +11,8 @@ import javax.validation.constraints.NotBlank;
 @Setter
 @Builder
 @Entity
-public class Example {
+@Table(name = "example")
+public class Example{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,4 +20,5 @@ public class Example {
 
     @NotBlank
     private String name;
+
 }

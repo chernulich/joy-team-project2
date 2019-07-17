@@ -11,7 +11,7 @@ import lombok.*;
 public class DeliveryRequest {
 
     private String officialName;
-    private  String city;
+    private String city;
     private String street;
     private String houseNumber;
     private String apartment;
