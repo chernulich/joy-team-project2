@@ -7,6 +7,77 @@
 
     <changeSet id="1" author="Pavel">
 
+        <createTable tableName="PRODUCT">
+            <column name="ID" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+
+            <column name="SHORT_DESCRIPTION" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="DESCRIPTION" type="LONGTEXT">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="PREVIEW_IMAGE" type="LONGTEXT">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="UNIT_PRICE" type="DECIMAL(10,2)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="PRODUCT_CATEGORY_ID" type="INT">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="AVAILABLE" type="BIT">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="VERSION" type="INT">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="UPDATE_ON" type="DATETIME">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="CREATED_ON" type="DATETIME">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+
+
+        <createTable tableName="ORDERS">
+
+            <column name="ID" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+
+            <column name="ORDER_TRANSIT_STATUS" type="INT">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="ORDER_PAYMENT_STATUS" type="INT">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="ORDER_STATUS" type="INT">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="UPDATE_ON" type="DATETIME">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="CREATED_ON" type="DATETIME">
+                <constraints nullable="true"/>
+            </column>
+
+        </createTable>
+
     </changeSet>
 
 </databaseChangeLog>
