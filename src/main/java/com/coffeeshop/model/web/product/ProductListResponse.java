@@ -3,6 +3,7 @@ package com.coffeeshop.model.web.product;
 import lombok.*;
 
 import java.util.List;
+
 @Getter
 @Setter
 @NoArgsConstructor

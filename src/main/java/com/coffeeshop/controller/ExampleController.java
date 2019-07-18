@@ -33,8 +33,8 @@ public class ExampleController {
 
         return exampleRepository.save(
                 Example.builder()
-                       .name(exampleDto.getName())
-                       .build());
+                        .name(exampleDto.getName())
+                        .build());
     }
 
     @GetMapping("/examples/{id}")
@@ -42,4 +42,11 @@ public class ExampleController {
         return exampleRepository.findById(id).orElse(null);
     }
 
+
+    @PutMapping("/examples/{id}")
+    public Example updateExample(@PathVariable("id") Long id, @RequestBody ExampleDto dto) {
+        Example example = exampleRepository.findById(id).get();
+        example.setName(dto.getName());
+        return exampleRepository.save(example);
+    }
 }
