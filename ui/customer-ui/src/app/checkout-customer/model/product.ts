@@ -1,4 +1,4 @@
- export class Products {
+ export class Product {
 
    private _productId: number;
    private _weight: number;

@@ -1,20 +1,20 @@
 import {CustomerInfo} from "./customerInfo";
 import {Delivery} from "./delivery";
 import {Charges} from "./charges";
-import {Products} from "./products";
 import {ContactInfo} from "./contactInfo";
+import {Product} from "./product";
 
 export class CheckoutRequest {
 
   private _customerInfo: CustomerInfo;
   private _delivery: Delivery;
-  private _products: Products;
+  private _product: Product;
   private _charges: Charges;
 
-  constructor(customerInfo: CustomerInfo, delivery: Delivery, products: Products, charges: Charges) {
+  constructor(customerInfo: CustomerInfo, delivery: Delivery, product: Product, charges: Charges) {
     this._customerInfo = customerInfo;
     this._delivery = delivery;
-    this._products = products;
+    this._product = product;
     this._charges = charges;
   }
 
@@ -35,12 +35,12 @@ export class CheckoutRequest {
     this._delivery = value;
   }
 
-  get products(): Products {
-    return this._products;
+  get product(): Product {
+    return this._product;
   }
 
-  set products(value: Products) {
-    this._products = value;
+  set product(value: Product) {
+    this._product = value;
   }
 
   get charges(): Charges {
@@ -57,7 +57,7 @@ export class CheckoutRequest {
       ('Company name: relevant for business entities','doe@site.com', '+972501112233',
                   new ContactInfo('John', 'Doe', '+972581112233')),
       new Delivery('name on the package', 'Alabasta', 'rotshild', '11', '115', 1, 'comment'),
-      new Products(123123, 0.250, 100500),
+      new Product(123123, 0.250, 100500),
       new Charges(0, 123.1))
  };
 
