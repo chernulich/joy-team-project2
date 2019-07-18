@@ -1,10 +1,11 @@
-import {contactInfo} from './contactInfo';
+import {ContactInfo} from "./contactInfo";
 
 export class CustomerInfo {
+
   private _entityName: string;
   private _email: string;
-  private _phoneNumber: number;
-  private _contactInfo: contactInfo;
+  private _phoneNumber: string
+  private _contactInfo: ContactInfo;
 
   get entityName(): string {
     return this._entityName;
@@ -22,22 +23,22 @@ export class CustomerInfo {
     this._email = value;
   }
 
-  get phoneNumber(): number {
+  get phoneNumber(): string {
     return this._phoneNumber;
   }
 
-  set phoneNumber(value: number) {
+  set phoneNumber(value: string) {
     this._phoneNumber = value;
   }
 
-  get contactInfo(): contactInfo {
+  get contactInfo(): ContactInfo {
     return this._contactInfo;
   }
 
-  set contactInfo(value: contactInfo) {
+  set contactInfo(value: ContactInfo) {
     this._contactInfo = value;
   }
-  constructor(entityName: string, email: string, phoneNumber: number, contactInfo: contactInfo) {
+  constructor(entityName: string, email: string, phoneNumber: string, contactInfo: ContactInfo) {
     this._entityName = entityName;
     this._email = email;
     this._phoneNumber = phoneNumber;

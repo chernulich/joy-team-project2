@@ -1,10 +1,11 @@
 
-export class contactInfo {
+export class ContactInfo {
+
   private _firstName: string;
   private _lastName: string;
-  private _phoneNumber: number;
+  private _phoneNumber: string;
 
-  constructor(firstName: string, lastName: string, phoneNumber: number) {
+  constructor(firstName: string, lastName: string, phoneNumber: string) {
     this._firstName = firstName;
     this._lastName = lastName;
     this._phoneNumber = phoneNumber;
@@ -26,16 +27,12 @@ export class contactInfo {
     this._lastName = value;
   }
 
-  get phoneNumber(): number {
+  get phoneNumber(): string {
     return this._phoneNumber;
   }
 
-  set phoneNumber(value: number) {
+  set phoneNumber(value: string) {
     this._phoneNumber = value;
   }
-
-
-
-
 
 }

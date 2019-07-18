@@ -4,22 +4,11 @@
   <div class="card shadow">
     <br>
     <h1 class="text-center">App component</h1>
-
     <div class="btn-group">
       <button type="button" class="btn btn-info" [routerLink]="['products', '123123']">Details</button>
+      <button type="button" class="btn btn-dark" [routerLink]="['checkout']">Checkout</button>
     </div>
-
-
-    <div class="btn-group">
-      <button type="button" class="btn btn-info" [routerLink]="['checkout', '1']">Checkout</button>
-    </div>
-
     <router-outlet ></router-outlet>
-
-    <br>
-  </div>
-  <app-footer></app-footer>
-
   </div>
 
 

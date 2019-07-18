@@ -1,17 +1,17 @@
 import {CustomerInfo} from "./customerInfo";
 import {Delivery} from "./delivery";
-import {Prodacts} from "./prodacts";
 import {Charges} from "./charges";
-import {contactInfo} from "./contactInfo";
+import {Products} from "./products";
+import {ContactInfo} from "./contactInfo";
 
-export class RequestCheckoutDto {
+export class CheckoutRequest {
 
   private _customerInfo: CustomerInfo;
   private _delivery: Delivery;
-  private _products: Prodacts;
+  private _products: Products;
   private _charges: Charges;
 
-  constructor(customerInfo: CustomerInfo, delivery: Delivery, products: Prodacts, charges: Charges) {
+  constructor(customerInfo: CustomerInfo, delivery: Delivery, products: Products, charges: Charges) {
     this._customerInfo = customerInfo;
     this._delivery = delivery;
     this._products = products;
@@ -35,11 +35,11 @@ export class RequestCheckoutDto {
     this._delivery = value;
   }
 
-  get products(): Prodacts {
+  get products(): Products {
     return this._products;
   }
 
-  set products(value: Prodacts) {
+  set products(value: Products) {
     this._products = value;
   }
 
@@ -51,14 +51,14 @@ export class RequestCheckoutDto {
     this._charges = value;
   }
 
- getDefultRequestCheckoutDto (): RequestCheckoutDto {
-    return new RequestCheckoutDto
+ getDefaultCheckoutRequest (): CheckoutRequest {
+    return new CheckoutRequest
     (new CustomerInfo
-      ('Company name: relevant for business entities','doe@site.com', Number('+972501112233'),
-                  new contactInfo('John', 'Doe', Number('+972581112233'))),
-      new Delivery('name on the package', 'eilat', 'rotshild', Number('11'), '115', '1', 'comment'),
-      new Prodacts(Number('123123'), Number('0.250'), Number('100500')),
-      new Charges(Number('0'), Number('123.1')))
+      ('Company name: relevant for business entities','doe@site.com', '+972501112233',
+                  new ContactInfo('John', 'Doe', '+972581112233')),
+      new Delivery('name on the package', 'Alabasta', 'rotshild', '11', '115', 1, 'comment'),
+      new Products(123123, 0.250, 100500),
+      new Charges(0, 123.1))
  };
 
  }

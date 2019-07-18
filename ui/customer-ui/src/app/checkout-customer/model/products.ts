@@ -1,4 +1,5 @@
  export class Products {
+
    private _productId: number;
    private _weight: number;
    private _quantity: number;

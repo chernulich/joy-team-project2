@@ -3,8 +3,8 @@
    private _officialName: string;
    private _city: string;
    private _street: string;
-   private _houseNumber: number;
-   private _apartment: number;
+   private _houseNumber: string;
+   private _apartment: string;
    private _floor: number;
    private _deliveryComment: string;
 
@@ -32,19 +32,19 @@
      this._street = value;
    }
 
-   get houseNumber(): number {
+   get houseNumber(): string {
      return this._houseNumber;
    }
 
-   set houseNumber(value: number) {
+   set houseNumber(value: string) {
      this._houseNumber = value;
    }
 
-   get apartment(): number {
+   get apartment(): string {
      return this._apartment;
    }
 
-   set apartment(value: number) {
+   set apartment(value: string) {
      this._apartment = value;
    }
 
@@ -65,13 +65,13 @@
    }
 
 
-   constructor(officialName: string, city: string, street: string, houseNumber: number, apartment: string, floor: string, deliveryComment: string) {
+   constructor(officialName: string, city: string, street: string, houseNumber: string, apartment: string, floor: number, deliveryComment: string) {
      this._officialName = officialName;
      this._city = city;
      this._street = street;
      this._houseNumber = houseNumber;
-     this._apartment = Number(apartment);
-     this._floor = Number(floor);
+     this._apartment = apartment;
+     this._floor = floor;
      this._deliveryComment = deliveryComment;
    }
 

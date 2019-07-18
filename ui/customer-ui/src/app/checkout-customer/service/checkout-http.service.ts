@@ -1,17 +1,17 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {RequestCheckoutDto} from "../model/requestCheckoutDto";
+import {CheckoutRequest} from "../model/checkoutRequest";
 import {SubmitOrderResponse} from "../model/submitOrderResponse";
 
 @Injectable({
   providedIn: 'root'
 })
-export class CheckoutListHttpService {
+export class CheckoutHttpService {
 
   constructor(private httpClient: HttpClient) { }
 
-  postProductList(requestDto: RequestCheckoutDto) {
-    return this.httpClient.post<SubmitOrderResponse>('/api/customer/checkout', {requestDto});
+  submitOrder(checkoutRequest: CheckoutRequest) {
+    return this.httpClient.post<SubmitOrderResponse>('/api/customer/checkout', {checkoutRequest});
   }
 
 

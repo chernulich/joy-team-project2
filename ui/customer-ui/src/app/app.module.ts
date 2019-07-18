@@ -7,10 +7,6 @@ import {AppComponent} from './app.component';
 import {ExampleComponent} from './example/example.component';
 import {FormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
-
-
-import { FooterComponent } from './footer/footer.component';
-
 import {HeaderComponent} from './header/header.component';
 import { CheckoutComponent } from './checkout-customer/checkout.component';
 import {ProductListComponent} from "./product-list/product-list.component";
@@ -20,10 +16,8 @@ import {ProductDetailsComponent} from "./product-details/product-details.compone
   declarations: [
     AppComponent,
     ExampleComponent,
-    FooterComponent,
     ProductDetailsComponent,
     ProductListComponent,
-
     HeaderComponent,
     CheckoutComponent
   ],

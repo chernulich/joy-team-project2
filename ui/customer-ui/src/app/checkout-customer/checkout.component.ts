@@ -1,6 +1,6 @@
 import { Component, OnInit, Injectable } from '@angular/core';
-import {RequestCheckoutDto} from './model/requestCheckoutDto';
-import {CheckoutListHttpService} from "./service/checkoutListHttp.service";
+import {CheckoutRequest} from './model/checkoutRequest';
+import {CheckoutHttpService} from "./service/checkout-http.service";
 import {SubmitOrderResponse} from "./model/submitOrderResponse";
 
 
@@ -15,19 +15,19 @@ export class CheckoutComponent implements OnInit {
 
   public json: string;
   public orderResponse : SubmitOrderResponse;
-  public defaultRequestDto : RequestCheckoutDto = RequestCheckoutDto.prototype.getDefultRequestCheckoutDto();
+  public defaultRequest : CheckoutRequest = CheckoutRequest.prototype.getDefaultCheckoutRequest();
 
-  constructor(private checkoutListService : CheckoutListHttpService){ }
+  constructor(private checkoutHttpService : CheckoutHttpService){ }
 
-  postProductList(requestDto : RequestCheckoutDto){
-    return console.log(this.checkoutListService.postProductList(requestDto).subscribe(data => {
+  submitOrder(checkoutRequest : CheckoutRequest){
+    return this.checkoutHttpService.submitOrder(checkoutRequest).subscribe(data => {
       this.orderResponse = data;
       this.json = JSON.stringify(this.orderResponse);
-    }));
+    });
   }
 
   ngOnInit() {
-    this.postProductList(this.defaultRequestDto);
+    this.submitOrder(this.defaultRequest);
   }
 
 
