@@ -2,8 +2,6 @@ import { Component, OnInit, Injectable } from '@angular/core';
 import {CheckoutRequest} from './model/checkoutRequest';
 import {CheckoutHttpService} from "./service/checkout-http.service";
 import {SubmitOrderResponse} from "./model/submitOrderResponse";
-import {Subscription} from "rxjs";
-import {ActivatedRoute} from "@angular/router";
 import {CommonService} from "../service/common/common.service";
 
 
