@@ -1,15 +1,15 @@
 package com.coffeeshop.model.entity;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
+import lombok.Getter;
 
+import javax.persistence.*;
+
+@Getter
 @MappedSuperclass
 public abstract class BaseIdentification {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID")
     private Long id;
-
 }
