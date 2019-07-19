@@ -21,10 +21,10 @@ public class OrderDetails extends BaseDate{
     private Orders order;
 
     @Column(name = "CUSTOMER_ENTITY_NAME")
-    private String CustomerName;
+    private String customerName;
 
     @Column(name = "CUSTOMER_ENTITY_PHONE_NUMBER")
-    private String CustomerPhoneNumber;
+    private String customerPhoneNumber;
 
     @Column(name = "ORDER_EMAIL", nullable = false)
     private String orderEmail;
