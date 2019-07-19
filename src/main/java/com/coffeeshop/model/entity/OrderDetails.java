@@ -17,7 +17,7 @@ import javax.persistence.*;
 public class OrderDetails extends BaseDate{
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "ORDER_ID", referencedColumnName = "ID")
+    @JoinColumn(name = "ORDER_ID", referencedColumnName = "ID" , nullable = false)
     private Orders order;
 
     @Column(name = "CUSTOMER_ENTITY_NAME")
