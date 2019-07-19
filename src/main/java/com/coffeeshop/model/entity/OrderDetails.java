@@ -39,7 +39,7 @@ public class OrderDetails extends BaseDate{
     private String contactPhoneNumber;
 
     @Column(name = "IS_SELF_PICKUP")
-    private boolean isSelfPickup;
+    private Boolean isSelfPickup;
 
     @Column(name = "CITY", nullable = false)
     private String city;
