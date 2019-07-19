@@ -16,7 +16,7 @@ import javax.persistence.*;
 @Table(name = "ORDER_DETAILS")
 public class OrderDetails extends BaseDate{
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "ORDER_ID", referencedColumnName = "ID" , nullable = false)
     private Orders order;
 
