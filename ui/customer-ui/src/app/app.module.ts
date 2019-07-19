@@ -12,6 +12,7 @@ import { OrderReceivedComponent } from './order-received/order-received.componen
 import { CheckoutComponent } from './checkout-customer/checkout.component';
 import {ProductListComponent} from "./product-list/product-list.component";
 import {ProductDetailsComponent} from "./product-details/product-details.component";
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import {ProductDetailsComponent} from "./product-details/product-details.compone
     ProductListComponent,
     HeaderComponent,
     OrderReceivedComponent,
-    CheckoutComponent
+    CheckoutComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
