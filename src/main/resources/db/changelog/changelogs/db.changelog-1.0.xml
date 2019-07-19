@@ -78,6 +78,46 @@
 
         </createTable>
 
+        <createTable tableName="PRODUCT_COFFEE">
+
+            <column name="ID" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+
+            <column name="PRODUCT_ID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="SOUR" type="INT">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="BITTER" type="INT">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="STRONG" type="INT">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="GROUND" type="BIT">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="DECAF" type="BIT">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="UPDATE_ON" type="DATETIME">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="CREATED_ON" type="DATETIME">
+                <constraints nullable="true"/>
+            </column>
+
+        </createTable>
+
     </changeSet>
 
 </databaseChangeLog>
