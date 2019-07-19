@@ -2,6 +2,9 @@ import { Component, OnInit, Injectable } from '@angular/core';
 import {CheckoutRequest} from './model/checkoutRequest';
 import {CheckoutHttpService} from "./service/checkout-http.service";
 import {SubmitOrderResponse} from "./model/submitOrderResponse";
+import {Subscription} from "rxjs";
+import {ActivatedRoute} from "@angular/router";
+import {CommonService} from "../service/common/common.service";
 
 
 @Component({
@@ -17,12 +20,14 @@ export class CheckoutComponent implements OnInit {
   public orderResponse : SubmitOrderResponse;
   public defaultRequest : CheckoutRequest = CheckoutRequest.prototype.getDefaultCheckoutRequest();
 
-  constructor(private checkoutHttpService : CheckoutHttpService){ }
+  constructor(private checkoutHttpService : CheckoutHttpService,
+              private commonService: CommonService){ }
 
   submitOrder(checkoutRequest : CheckoutRequest){
     return this.checkoutHttpService.submitOrder(checkoutRequest).subscribe(data => {
       this.orderResponse = data;
       this.json = JSON.stringify(this.orderResponse);
+      this.commonService.orderId = this.orderResponse.orderId;
     });
   }
 

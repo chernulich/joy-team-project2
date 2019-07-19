@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 })
 export class CommonService {
 
-  public orderId: number
+  public orderId: number;
 
   constructor() { }
 }

@@ -8,7 +8,7 @@ import {CommonService} from "../service/common/common.service";
 })
 export class OrderReceivedComponent implements OnInit {
 
-  public orderId: number
+  public orderId: number;
 
   constructor(private commonService: CommonService) { }
 

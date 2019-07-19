@@ -5,9 +5,11 @@ import {HeaderComponent} from "./header/header.component";
 import {ProductListComponent} from "./product-list/product-list.component";
 import {OrderReceivedComponent} from "./order-received/order-received.component";
 import {CheckoutComponent} from "./checkout-customer/checkout.component";
+import {ExampleComponent} from "./example/example.component";
 
 const routes: Routes = [
   {path: '', component: ProductListComponent},
+  {path: 'examples', component: ExampleComponent},
   {path: 'header', component: HeaderComponent},
   {path: 'products/:id' , component: ProductDetailsComponent},
   {path: 'received', component: OrderReceivedComponent},
