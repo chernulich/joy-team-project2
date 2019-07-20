@@ -12,7 +12,7 @@ const routes: Routes = [
   {path: 'examples', component: ExampleComponent},
   {path: 'header', component: HeaderComponent},
   {path: 'products/:id' , component: ProductDetailsComponent},
-  {path: 'received', component: OrderReceivedComponent},
+  {path: 'received/:orderId', component: OrderReceivedComponent},
   {path: 'checkout', component: CheckoutComponent},
 ];
 

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {CommonService} from "../service/common/common.service";
+import {Subscription} from "rxjs";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-order-received',
@@ -9,11 +10,12 @@ import {CommonService} from "../service/common/common.service";
 export class OrderReceivedComponent implements OnInit {
 
   public orderId: number;
+  private subscription: Subscription;
 
-  constructor(private commonService: CommonService) { }
+  constructor(private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
-    this.orderId = this.commonService.orderId;
+    this.subscription = this.activatedRoute.params.subscribe(params=>this.orderId=params['orderId']);
   }
 
 }

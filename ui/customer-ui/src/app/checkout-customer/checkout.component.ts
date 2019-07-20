@@ -2,7 +2,7 @@ import { Component, OnInit, Injectable } from '@angular/core';
 import {CheckoutRequest} from './model/checkoutRequest';
 import {CheckoutHttpService} from "./service/checkout-http.service";
 import {SubmitOrderResponse} from "./model/submitOrderResponse";
-import {CommonService} from "../service/common/common.service";
+import {Router} from "@angular/router";
 
 
 @Component({
@@ -19,13 +19,13 @@ export class CheckoutComponent implements OnInit {
   public defaultRequest : CheckoutRequest = CheckoutRequest.prototype.getDefaultCheckoutRequest();
 
   constructor(private checkoutHttpService : CheckoutHttpService,
-              private commonService: CommonService){ }
+              private router: Router){ }
 
   submitOrder(checkoutRequest : CheckoutRequest){
     return this.checkoutHttpService.submitOrder(checkoutRequest).subscribe(data => {
       this.orderResponse = data;
       this.json = JSON.stringify(this.orderResponse);
-      this.commonService.orderId = this.orderResponse.orderId;
+      this.router.navigate(['/received/' + this.orderResponse.orderId]);
     });
   }
 
