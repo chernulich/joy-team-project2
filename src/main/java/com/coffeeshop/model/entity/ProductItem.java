@@ -17,7 +17,7 @@ import javax.persistence.*;
 @Table(name = "PRODUCT_ITEM")
 public class ProductItem extends BaseDate{
 
-    @OneToMany
+    @OneToOne
     @JoinColumn(name = "PRODUCT_ID", referencedColumnName = "ID", nullable = false)
     private Product product;
 
