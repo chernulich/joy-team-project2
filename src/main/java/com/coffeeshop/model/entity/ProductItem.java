@@ -17,8 +17,10 @@ import javax.persistence.*;
 @Table(name = "PRODUCT_ITEM")
 public class ProductItem extends BaseDate{
 
-    @Column(name = "PRODUCT_ID", nullable = false)
-    private Long productId;
+    @OneToMany
+    @JoinColumn(name = "PRODUCT_ID", referencedColumnName = "ID", nullable = false)
+    private Product product;
+
     @Column(name = "WEIGHT_KG", nullable = false)
     private Integer weightKg;
 
