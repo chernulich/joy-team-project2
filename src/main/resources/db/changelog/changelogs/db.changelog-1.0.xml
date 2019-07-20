@@ -118,6 +118,30 @@
 
         </createTable>
 
+        <createTable tableName="ORDER_ITEMS">
+
+            <column name="ID" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+
+            <column name="ORDER_ID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="PRODUCT_ITEM_ID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="UPDATE_ON" type="DATETIME">
+                 <constraints nullable="true"/>
+            </column>
+
+            <column name="CREATED_ON" type="DATETIME">
+                 <constraints nullable="true"/>
+            </column>
+
+          </createTable>
+
     </changeSet>
 
 </databaseChangeLog>
