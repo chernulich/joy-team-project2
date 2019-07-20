@@ -7,10 +7,11 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
+
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
 @Setter
+@Getter
 
 @Entity
 @Table(name = "PRODUCT_COFFEE")
