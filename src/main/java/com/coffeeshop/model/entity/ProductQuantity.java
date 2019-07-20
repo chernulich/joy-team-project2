@@ -20,8 +20,10 @@ import javax.persistence.Version;
 @Table(name = "PRODUCT_QUANTITY")
 public class ProductQuantity extends BaseDate{
 
-    @Column(name = "PRODUCT_ID")
-    private Long productId;
+    @ManyToOne
+    @JoinColumn(name = "PRODUCT_ID", referencedColumnName = "ID", nullable = false)
+    private Product product;
+
 
     @Column(name = "QUANTITY")
     private Integer quantity;
