@@ -1,6 +1,6 @@
 import {Characteristics} from "./characteristics";
 
-export class RequestDto {
+export class ProductListRequest {
 
     private _page: number;
     private _results: number;
@@ -76,8 +76,8 @@ export class RequestDto {
         this._characteristics = value;
     }
 
-    getDefaultDto(): RequestDto {
-        return new RequestDto(1,
+    getDefaultProductListRequest(): ProductListRequest {
+        return new ProductListRequest(1,
             10,
             "search product",
             10,
