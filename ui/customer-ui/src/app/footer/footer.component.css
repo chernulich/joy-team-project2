@@ -1,0 +1,12 @@
+.page-footer {
+  position: absolute;
+  bottom: 0;
+  width:100%;
+  display: table-row;
+  height:23%;
+  color: rgba(255, 246, 254, 0.68);
+  text-align: center;
+}
+.color-link {
+  color: rgba(255, 246, 254, 0.68);
+}

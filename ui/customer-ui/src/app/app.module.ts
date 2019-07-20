@@ -8,9 +8,11 @@ import {ExampleComponent} from './example/example.component';
 import {FormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
 import {HeaderComponent} from './header/header.component';
-import { CheckoutComponent } from './checkout-customer/checkout.component';
-import {ProductListComponent} from "./product-list/product-list.component";
+import { FooterComponent } from './footer/footer.component';
 import {ProductDetailsComponent} from "./product-details/product-details.component";
+import {ProductListComponent} from "./product-list/product-list.component";
+import {CheckoutComponent} from "./checkout-customer/checkout.component";
+
 
 @NgModule({
   declarations: [
@@ -19,6 +21,7 @@ import {ProductDetailsComponent} from "./product-details/product-details.compone
     ProductDetailsComponent,
     ProductListComponent,
     HeaderComponent,
+    FooterComponent,
     CheckoutComponent
   ],
   imports: [
