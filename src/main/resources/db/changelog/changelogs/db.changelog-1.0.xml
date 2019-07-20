@@ -116,6 +116,68 @@
                 <constraints nullable="true"/>
             </column>
 
+            <createTable tableName="PRODUCT_ITEM">
+
+                <column name="ID" type="BIGINT" autoIncrement="true">
+                    <constraints primaryKey="true"/>
+                </column>
+
+                <column name="PRODUCT_ID" type="BIGINT">
+                    <constraints nullable="false"/>
+                </column>
+
+                <column name="WEIGHT_KG" type="INT">
+                    <constraints nullable="false"/>
+                </column>
+
+                <column name="STATUS" type="INT">
+                    <constraints nullable="false"/>
+                </column>
+
+                <column name="UPDATE_ON" type="DATETIME">
+                    <constraints nullable="true"/>
+                </column>
+
+                <column name="CREATED_ON" type="DATETIME">
+                    <constraints nullable="true"/>
+                </column>
+
+                <column name="VERSION" type="INT">
+                    <constraints nullable="true"/>
+                </column>
+
+            </createTable>
+
+            <createTable tableName="PRODUCT_QUANTITY">
+
+                <column name="ID" type="BIGINT" autoIncrement="true">
+                    <constraints primaryKey="true"/>
+                </column>
+
+                <column name="PRODUCT_ID" type="BIGINT">
+                    <constraints nullable="false"/>
+                </column>
+
+                <column name="QUANTITY" type="INTEGER">
+                    <constraints nullable="false"/>
+                </column>
+
+                <column name="UPDATE_ON" type="DATETIME">
+                    <constraints nullable="true"/>
+                </column>
+
+                <column name="CREATED_ON" type="DATETIME">
+                    <constraints nullable="true"/>
+                </column>
+
+                <column name="VERSION" type="BIGINT">
+                    <constraints nullable="true"/>
+                </column>
+
+            </createTable>
+
+
+
         </createTable>
 
     </changeSet>
