@@ -85,7 +85,10 @@
             </column>
 
             <column name="PRODUCT_ID" type="BIGINT">
-                <constraints nullable="false"/>
+                <constraints
+                        nullable="false"
+                        foreignKeyName="fk_product_coffee_product"
+                        references="PRODUCT(ID)"/>
             </column>
 
             <column name="SOUR" type="INT">
@@ -125,11 +128,16 @@
             </column>
 
             <column name="ORDER_ID" type="BIGINT">
-                <constraints nullable="false"/>
+                <constraints
+                        nullable="false"
+                        foreignKeyName="fk_order_items_order"
+                        references="ORDERS(ID)" />
             </column>
 
             <column name="PRODUCT_ITEM_ID" type="BIGINT">
-                <constraints nullable="false"/>
+                <constraints nullable="false"
+                             foreignKeyName="fk_order_items_product"
+                             references="PRODUCT(ID)"/>
             </column>
 
             <column name="UPDATE_ON" type="DATETIME">
