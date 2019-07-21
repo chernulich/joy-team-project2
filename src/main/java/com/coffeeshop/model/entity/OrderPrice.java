@@ -21,7 +21,7 @@ public class OrderPrice extends BaseDate{
     private Orders order;
 
     @Column(name = "SUBTOTAL_PRICE", nullable = false)
-    private String SubtotalPrice;
+    private String subtotalPrice;
 
     @Column(name = "SHIPPING_PRICE", nullable = false)
     private Double shippingPrice;

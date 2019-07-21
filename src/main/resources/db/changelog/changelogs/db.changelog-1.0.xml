@@ -95,7 +95,7 @@
             </column>
 
             <column name="SUBTOTAL_PRICE"
-                    type="DECIMAL(10,2)">
+                    type="VARCHAR(50)">
                 <constraints nullable="false"/>
             </column>
 
