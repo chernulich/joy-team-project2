@@ -187,6 +187,79 @@
 
         </createTable>
 
+        <createTable tableName="ORDER_DETAILS">
+
+            <column name="ID" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+
+            <column name="UPDATE_ON" type="DATETIME">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="CREATED_ON" type="DATETIME">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="ORDER_ID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="CUSTOMER_ENTITY_NAME" type="VARCHAR(50)">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="CUSTOMER_ENTITY_PHONE_NUMBER" type="VARCHAR(20)">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="ORDER_EMAIL" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="CONTACT_FIRST_NAME" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="CONTACT_LAST_NAME" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="CONTACT_PHONE_NUMBER" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="IS_SELF_PICKUP" type="BIT">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="CITY" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="STREET" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="HOUSE_NUMBER" type="VARCHAR(10)">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="APARTMENT" type="VARCHAR(10)">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="FLOOR" type="VARCHAR(5)">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="DELIVERY_COMMENT" type="VARCHAR(255)">
+                <constraints nullable="true"/>
+            </column>
+
+        </createTable>
+
+
     </changeSet>
 
 </databaseChangeLog>
