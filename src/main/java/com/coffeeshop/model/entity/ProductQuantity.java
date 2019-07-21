@@ -20,7 +20,7 @@ import javax.persistence.Version;
 @Table(name = "PRODUCT_QUANTITY")
 public class ProductQuantity extends BaseDate{
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "PRODUCT_ID", referencedColumnName = "ID", nullable = false)
     private Product product;
 
