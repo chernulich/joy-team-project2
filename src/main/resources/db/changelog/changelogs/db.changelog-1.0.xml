@@ -78,30 +78,45 @@
         </createTable>
 
         <createTable tableName="ORDER_PRICE">
-            <column name="ID" type="BIGINT" autoIncrement="true">
-                <constraints primaryKey="true"/>
+            <column name="ID"
+                    type="BIGINT"
+                    autoIncrement="true">
+                <constraints
+                        primaryKey="true"
+                        nullable="false"/>
             </column>
 
-            <column name="ORDERS_ID" type="BIGINT">
+            <column name="ORDERS_ID"
+                    type="BIGINT">
                 <constraints
                         nullable="false"
-                        foreignKeyName="fk_order_price_order"
+                        foreignKeyName="fk_order_price_orders"
                         references="ORDERS(ID)"/>
             </column>
 
-            <column name="SUBTOTAL_PRICE" type="DECIMAL(10,2)">
+            <column name="SUBTOTAL_PRICE"
+                    type="DECIMAL(10,2)">
                 <constraints nullable="false"/>
             </column>
 
-            <column name="DISCOUNT" type="DECIMAL(10,2)">
+            <column name="SHIPPING_PRICE"
+                    type="DECIMAL(10,2)"
+                    defaultValue="0.00">
                 <constraints nullable="false"/>
             </column>
 
-            <column name="UPDATE_ON" type="DATETIME">
+            <column name="DISCOUNT"
+                    type="DECIMAL(10,2)">
                 <constraints nullable="true"/>
             </column>
 
-            <column name="CREATED_ON" type="DATETIME">
+            <column name="UPDATE_ON"
+                    type="DATETIME">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="CREATED_ON"
+                    type="DATETIME">
                 <constraints nullable="true"/>
             </column>
         </createTable>
