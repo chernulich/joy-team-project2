@@ -352,7 +352,11 @@
 
     </changeSet>
 
+
+
+
     <changeSet id="2" author="Alex">
+
         <addDefaultValue
                 tableName="PRODUCT_QUANTITY"
                 columnName="QUANTITY"
@@ -372,6 +376,7 @@
                 tableName="ORDER_PRICE"
                 columnName="SHIPPING_PRICE"
                 defaultValueNumeric="0.0"/>
+
     </changeSet>
 
 </databaseChangeLog>
