@@ -358,17 +358,20 @@
                 columnName="QUANTITY"
                 defaultValueNumeric="0"/>
 
-        <addDefaultValue tableName="PRODUCT"
-                         columnName="AVAILABLE"
-                         defaultValueBoolean="false"/>
+        <addDefaultValue
+                tableName="PRODUCT"
+                columnName="AVAILABLE"
+                defaultValueBoolean="false"/>
 
-        <addDefaultValue tableName="ORDER_DETAILS"
-                         columnName="IS_SELF_PICKUP"
-                         defaultValueBoolean="false"/>
+        <addDefaultValue
+                tableName="ORDER_DETAILS"
+                columnName="IS_SELF_PICKUP"
+                defaultValueBoolean="false"/>
 
-        <addDefaultValue tableName="ORDER_PRICE"
-                          columnName="SHIPPING_PRICE"
-                          defaultValueNumeric="0.0"/>
+        <addDefaultValue
+                tableName="ORDER_PRICE"
+                columnName="SHIPPING_PRICE"
+                defaultValueNumeric="0.0"/>
     </changeSet>
 
 </databaseChangeLog>
