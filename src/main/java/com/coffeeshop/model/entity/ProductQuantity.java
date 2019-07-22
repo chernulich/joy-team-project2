@@ -5,10 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.persistence.Version;
+import javax.persistence.*;
 
 
 @NoArgsConstructor
@@ -24,8 +21,7 @@ public class ProductQuantity extends BaseDate{
     @JoinColumn(name = "PRODUCT_ID", referencedColumnName = "ID", nullable = false)
     private Product product;
 
-
-    @Column(name = "QUANTITY")
+    @Column(name = "QUANTITY", nullable = false)
     private Integer quantity;
 
     @Column(name = "VERSION")

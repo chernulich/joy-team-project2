@@ -32,7 +32,9 @@
                 <constraints nullable="false"/>
             </column>
 
-            <column name="AVAILABLE" type="BIT">
+            <column name="AVAILABLE"
+                    type="BIT"
+                    defaultValueBoolean="false">
                 <constraints nullable="false"/>
             </column>
 
@@ -93,7 +95,10 @@
                 <constraints nullable="false"/>
             </column>
 
-            <column name="SHIPPING_PRICE" type="DECIMAL(10,2)" defaultValue="0.00">
+            <column
+                    name="SHIPPING_PRICE"
+                    type="DECIMAL(10,2)"
+                    defaultValue="0.00">
                 <constraints nullable="false"/>
             </column>
 
@@ -179,7 +184,9 @@
 
             <createTable tableName="PRODUCT_ITEM">
 
-                <column name="ID" type="BIGINT" autoIncrement="true">
+                <column name="ID"
+                        type="BIGINT"
+                        autoIncrement="true">
                     <constraints primaryKey="true"/>
                 </column>
 
@@ -223,7 +230,8 @@
                                  references="PRODUCT(ID)"/>
                 </column>
 
-                <column name="QUANTITY" type="INTEGER" defaultValue="0">
+                <column name="QUANTITY"
+                        type="INTEGER">
                     <constraints nullable="false"/>
                 </column>
 
@@ -275,7 +283,8 @@
                 <constraints nullable="false"/>
             </column>
 
-            <column name="IS_SELF_PICKUP" type="BIT">
+            <column name="IS_SELF_PICKUP"
+                    type="BIT" defaultValueBoolean="false">
                 <constraints nullable="false"/>
             </column>
 
@@ -341,6 +350,25 @@
 
           </createTable>
 
+    </changeSet>
+
+    <changeSet id="2" author="Alex">
+        <addDefaultValue
+                tableName="PRODUCT_QUANTITY"
+                columnName="QUANTITY"
+                defaultValueNumeric="0"/>
+
+        <addDefaultValue tableName="PRODUCT"
+                         columnName="AVAILABLE"
+                         defaultValueBoolean="false"/>
+
+        <addDefaultValue tableName="ORDER_DETAILS"
+                         columnName="IS_SELF_PICKUP"
+                         defaultValueBoolean="false"/>
+
+        <addDefaultValue tableName="ORDER_PRICE"
+                          columnName="SHIPPING_PRICE"
+                          defaultValueNumeric="0.0"/>
     </changeSet>
 
 </databaseChangeLog>

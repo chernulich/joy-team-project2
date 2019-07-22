@@ -34,7 +34,7 @@ public class Product extends BaseDate {
     @Convert(converter = ProductCategoryConverter.class)
     private ProductCategory productCategory;
 
-    @Column(name = "AVAILABLE")
+    @Column(name = "AVAILABLE", nullable = false)
     private boolean available;
 
     @Column(name = "VERSION")
