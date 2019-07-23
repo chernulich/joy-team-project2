@@ -6,15 +6,13 @@ import com.coffeeshop.model.entity.converter.OrderTransitStatusConverter;
 import com.coffeeshop.model.entity.type.OrderPaymentStatus;
 import com.coffeeshop.model.entity.type.OrderStatus;
 import com.coffeeshop.model.entity.type.OrderTransitStatus;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -37,4 +35,12 @@ public class Orders extends BaseDate {
     @Convert(converter = OrderStatusConverter.class)
     private OrderStatus orderStatus;
 
+    @Builder
+    public Orders(Long id, LocalDateTime createdOn, LocalDateTime updatedOn, OrderTransitStatus orderTransitStatus,
+                  OrderPaymentStatus orderPaymentStatus, OrderStatus orderStatus) {
+        super(id, createdOn, updatedOn);
+        this.orderTransitStatus = orderTransitStatus;
+        this.orderPaymentStatus = orderPaymentStatus;
+        this.orderStatus = orderStatus;
+    }
 }

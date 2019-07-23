@@ -1,11 +1,9 @@
 package com.coffeeshop.model.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 
 @AllArgsConstructor
@@ -36,5 +34,15 @@ public class ProductCoffee extends BaseDate {
     @Column(name = "DECAF", nullable = false)
     private Boolean decaf;
 
-
+    @Builder
+    public ProductCoffee(Long id, LocalDateTime createdOn, LocalDateTime updatedOn, Product product, Integer sour,
+                         Integer bitter, Integer strong, Boolean ground, Boolean decaf) {
+        super(id, createdOn, updatedOn);
+        this.product = product;
+        this.sour = sour;
+        this.bitter = bitter;
+        this.strong = strong;
+        this.ground = ground;
+        this.decaf = decaf;
+    }
 }

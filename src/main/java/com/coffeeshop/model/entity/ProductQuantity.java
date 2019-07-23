@@ -1,14 +1,9 @@
 package com.coffeeshop.model.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.persistence.Version;
+import javax.persistence.*;
+import java.time.LocalDateTime;
 
 
 @NoArgsConstructor
@@ -32,5 +27,12 @@ public class ProductQuantity extends BaseDate{
     @Version
     private Long version;
 
-
+    @Builder
+    public ProductQuantity(Long id, LocalDateTime createdOn, LocalDateTime updatedOn, Product product, Integer quantity,
+                           Long version) {
+        super(id, createdOn, updatedOn);
+        this.product = product;
+        this.quantity = quantity;
+        this.version = version;
+    }
 }
