@@ -1,11 +1,9 @@
 package com.coffeeshop.model.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -28,4 +26,14 @@ public class OrderPrice extends BaseDate{
 
     @Column(name = "DISCOUNT")
     private Double discount;
+
+    @Builder
+    public OrderPrice(Long id, LocalDateTime createdOn, LocalDateTime updatedOn, Orders order, String subtotalPrice,
+                      Double shippingPrice, Double discount) {
+        super(id, createdOn, updatedOn);
+        this.order = order;
+        this.subtotalPrice = subtotalPrice;
+        this.shippingPrice = shippingPrice;
+        this.discount = discount;
+    }
 }

@@ -4,8 +4,8 @@ import com.coffeeshop.model.entity.converter.ProductStatusConverter;
 import com.coffeeshop.model.entity.type.ProductStatus;
 import lombok.*;
 
-
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 
 @AllArgsConstructor
@@ -32,4 +32,13 @@ public class ProductItem extends BaseDate{
     @Version
     private Integer version;
 
+    @Builder
+    public ProductItem(Long id, LocalDateTime createdOn, LocalDateTime updatedOn, Product product, Integer weightKg,
+                       ProductStatus productStatus, Integer version) {
+        super(id, createdOn, updatedOn);
+        this.product = product;
+        this.weightKg = weightKg;
+        this.productStatus = productStatus;
+        this.version = version;
+    }
 }

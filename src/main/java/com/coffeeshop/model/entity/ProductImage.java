@@ -1,11 +1,9 @@
 package com.coffeeshop.model.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -23,4 +21,10 @@ public class ProductImage extends BaseDate {
     @Column(name = "IMAGE", nullable = false)
     private byte[] image;
 
+    @Builder
+    public ProductImage(Long id, LocalDateTime createdOn, LocalDateTime updatedOn, Product product, byte[] image) {
+        super(id, createdOn, updatedOn);
+        this.product = product;
+        this.image = image;
+    }
 }
