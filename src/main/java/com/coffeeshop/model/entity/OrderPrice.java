@@ -1,6 +1,7 @@
 package com.coffeeshop.model.entity;
 
 import lombok.*;
+import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -10,6 +11,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 
+@DynamicInsert
 @Entity
 @Table(name = "ORDER_PRICE")
 public class OrderPrice extends BaseDate{

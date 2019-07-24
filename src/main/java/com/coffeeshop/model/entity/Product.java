@@ -3,6 +3,7 @@ package com.coffeeshop.model.entity;
 import com.coffeeshop.model.entity.converter.ProductCategoryConverter;
 import com.coffeeshop.model.entity.type.ProductCategory;
 import lombok.*;
+import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -12,6 +13,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 
+@DynamicInsert
 @Entity
 @Table(name = "PRODUCT")
 public class Product extends BaseDate {
@@ -32,7 +34,7 @@ public class Product extends BaseDate {
     @Convert(converter = ProductCategoryConverter.class)
     private ProductCategory productCategory;
 
-    @Column(name = "AVAILABLE")
+    @Column(name = "AVAILABLE", nullable = false)
     private boolean available;
 
     @Column(name = "VERSION")

@@ -1,6 +1,7 @@
 package com.coffeeshop.model.entity;
 
 import lombok.*;
+import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -10,6 +11,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 
+@DynamicInsert
 @Entity
 @Table(name = "PRODUCT_IMAGE")
 public class ProductImage extends BaseDate {

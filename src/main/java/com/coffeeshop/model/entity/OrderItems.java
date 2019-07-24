@@ -1,6 +1,7 @@
 package com.coffeeshop.model.entity;
 
 import lombok.*;
+import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -13,6 +14,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 
+@DynamicInsert
 @Entity
 @Table(name = "ORDER_ITEMS")
 public class OrderItems extends  BaseDate{

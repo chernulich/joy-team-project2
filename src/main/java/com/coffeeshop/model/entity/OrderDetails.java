@@ -1,6 +1,7 @@
 package com.coffeeshop.model.entity;
 
 import lombok.*;
+import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -10,6 +11,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 
+@DynamicInsert
 @Entity
 @Table(name = "ORDER_DETAILS")
 public class OrderDetails extends BaseDate{
@@ -36,7 +38,7 @@ public class OrderDetails extends BaseDate{
     @Column(name = "CONTACT_PHONE_NUMBER", nullable = false)
     private String contactPhoneNumber;
 
-    @Column(name = "IS_SELF_PICKUP")
+    @Column(name = "IS_SELF_PICKUP", nullable = false)
     private Boolean isSelfPickup;
 
     @Column(name = "CITY", nullable = false)

@@ -7,6 +7,7 @@ import com.coffeeshop.model.entity.type.OrderPaymentStatus;
 import com.coffeeshop.model.entity.type.OrderStatus;
 import com.coffeeshop.model.entity.type.OrderTransitStatus;
 import lombok.*;
+import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.Column;
 import javax.persistence.Convert;
@@ -19,6 +20,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 
+@DynamicInsert
 @Entity
 @Table(name = "ORDERS")
 public class Orders extends BaseDate {

@@ -29,10 +29,11 @@
             </column>
 
             <column name="PRODUCT_CATEGORY_ID" type="INT">
-                <constraints nullable="false"/>
+                <constraints nullable="true"/>
             </column>
 
-            <column name="AVAILABLE" type="BIT">
+            <column name="AVAILABLE"
+                    type="BIT">
                 <constraints nullable="false"/>
             </column>
 
@@ -93,7 +94,7 @@
                 <constraints nullable="false"/>
             </column>
 
-            <column name="SHIPPING_PRICE" type="DECIMAL(10,2)" defaultValue="0.00">
+            <column name="SHIPPING_PRICE" type="DECIMAL(10,2)">
                 <constraints nullable="false"/>
             </column>
 
@@ -110,7 +111,6 @@
             </column>
         </createTable>
 
-
         <createTable tableName="PRODUCT_IMAGE">
 
             <column name="ID" type="BIGINT" autoIncrement="true">
@@ -120,7 +120,7 @@
             <column name="PRODUCT_ID" type="BIGINT">
                 <constraints nullable="false"/>
             </column>
-            
+
             <column name="IMAGE" type="BLOB">
                 <constraints nullable="false"/>
             </column>
@@ -177,69 +177,72 @@
             </column>
         </createTable>
 
-            <createTable tableName="PRODUCT_ITEM">
+        <createTable tableName="PRODUCT_ITEM">
 
-                <column name="ID" type="BIGINT" autoIncrement="true">
-                    <constraints primaryKey="true"/>
-                </column>
+            <column name="ID"
+                    type="BIGINT"
+                    autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
 
-                <column name="PRODUCT_ID" type="BIGINT">
-                    <constraints nullable="false"
-                                 foreignKeyName="fk_product_item_product"
-                                 references="PRODUCT(ID)"/>
-                </column>
+            <column name="PRODUCT_ID" type="BIGINT">
+                <constraints nullable="false"
+                             foreignKeyName="fk_product_item_product"
+                             references="PRODUCT(ID)"/>
+            </column>
 
-                <column name="WEIGHT_KG" type="INT">
-                    <constraints nullable="false"/>
-                </column>
+            <column name="WEIGHT_KG" type="INT">
+                <constraints nullable="false"/>
+            </column>
 
-                <column name="STATUS" type="INT">
-                    <constraints nullable="false"/>
-                </column>
+            <column name="STATUS" type="INT">
+                <constraints nullable="false"/>
+            </column>
 
-                <column name="VERSION" type="INT">
-                    <constraints nullable="true"/>
-                </column>
+            <column name="VERSION" type="INT">
+                <constraints nullable="true"/>
+            </column>
 
-                <column name="UPDATE_ON" type="DATETIME">
-                    <constraints nullable="true"/>
-                </column>
+            <column name="UPDATE_ON" type="DATETIME">
+                <constraints nullable="true"/>
+            </column>
 
-                <column name="CREATED_ON" type="DATETIME">
-                    <constraints nullable="true"/>
-                </column>
+            <column name="CREATED_ON" type="DATETIME">
+                <constraints nullable="true"/>
+            </column>
 
-            </createTable>
+        </createTable>
 
-            <createTable tableName="PRODUCT_QUANTITY">
+        <createTable tableName="PRODUCT_QUANTITY">
 
-                <column name="ID" type="BIGINT" autoIncrement="true">
-                    <constraints primaryKey="true"/>
-                </column>
+            <column name="ID" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
 
-                <column name="PRODUCT_ID" type="BIGINT">
-                    <constraints nullable="false"
-                                 foreignKeyName="fk_product_quantity_product"
-                                 references="PRODUCT(ID)"/>
-                </column>
+            <column name="PRODUCT_ID" type="BIGINT">
+                <constraints nullable="false"
+                             foreignKeyName="fk_product_quantity_product"
+                             references="PRODUCT(ID)"/>
+            </column>
 
-                <column name="QUANTITY" type="INTEGER" defaultValue="0">
-                    <constraints nullable="false"/>
-                </column>
+            <column name="QUANTITY"
+                    type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
 
-                <column name="VERSION" type="BIGINT">
-                    <constraints nullable="true"/>
-                </column>
+            <column name="VERSION" type="BIGINT">
+                <constraints nullable="true"/>
+            </column>
 
-                <column name="UPDATE_ON" type="DATETIME">
-                    <constraints nullable="true"/>
-                </column>
+            <column name="UPDATE_ON" type="DATETIME">
+                <constraints nullable="true"/>
+            </column>
 
-                <column name="CREATED_ON" type="DATETIME">
-                    <constraints nullable="true"/>
-                </column>
+            <column name="CREATED_ON" type="DATETIME">
+                <constraints nullable="true"/>
+            </column>
 
-            </createTable>
+        </createTable>
 
         <createTable tableName="ORDER_DETAILS">
 
@@ -322,7 +325,7 @@
             <column name="ORDER_ID" type="BIGINT">
                 <constraints nullable="false"
                              foreignKeyName="fk_order_items_order"
-                             references="ORDERS(ID)" />
+                             references="ORDERS(ID)"/>
             </column>
 
             <column name="PRODUCT_ITEM_ID" type="BIGINT">
@@ -332,14 +335,59 @@
             </column>
 
             <column name="UPDATE_ON" type="DATETIME">
-                 <constraints nullable="true"/>
+                <constraints nullable="true"/>
             </column>
 
             <column name="CREATED_ON" type="DATETIME">
-                 <constraints nullable="true"/>
+                <constraints nullable="true"/>
             </column>
 
-          </createTable>
+        </createTable>
+
+    </changeSet>
+
+
+    <changeSet id="2" author="Alex">
+
+        <addDefaultValue
+                tableName="PRODUCT_QUANTITY"
+                columnName="QUANTITY"
+                defaultValueNumeric="0"/>
+
+        <addDefaultValue
+                tableName="PRODUCT"
+                columnName="AVAILABLE"
+                defaultValueBoolean="false"/>
+
+        <addDefaultValue
+                tableName="ORDER_DETAILS"
+                columnName="IS_SELF_PICKUP"
+                defaultValueBoolean="false"/>
+
+        <addDefaultValue
+                tableName="ORDER_PRICE"
+                columnName="SHIPPING_PRICE"
+                defaultValueNumeric="0.0"/>
+
+        <addDefaultValue
+                tableName="ORDERS"
+                columnName="ORDER_TRANSIT_STATUS"
+                defaultValueNumeric="1"/>
+
+        <addDefaultValue
+                tableName="ORDERS"
+                columnName="ORDER_PAYMENT_STATUS"
+                defaultValueNumeric="1"/>
+
+        <addDefaultValue
+                tableName="ORDERS"
+                columnName="ORDER_STATUS"
+                defaultValueNumeric="1"/>
+
+        <addDefaultValue
+                tableName="PRODUCT_ITEM"
+                columnName="STATUS"
+                defaultValueNumeric="1"/>
 
     </changeSet>
 
