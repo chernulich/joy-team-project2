@@ -33,8 +33,7 @@
             </column>
 
             <column name="AVAILABLE"
-                    type="BIT"
-                    defaultValueBoolean="false">
+                    type="BIT">
                 <constraints nullable="false"/>
             </column>
 
