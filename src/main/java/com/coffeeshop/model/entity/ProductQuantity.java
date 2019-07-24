@@ -1,11 +1,10 @@
 package com.coffeeshop.model.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 
 @NoArgsConstructor
@@ -13,6 +12,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 
+@DynamicInsert
 @Entity
 @Table(name = "PRODUCT_QUANTITY")
 public class ProductQuantity extends BaseDate{
@@ -21,12 +21,20 @@ public class ProductQuantity extends BaseDate{
     @JoinColumn(name = "PRODUCT_ID", referencedColumnName = "ID", nullable = false)
     private Product product;
 
-    @Column(name = "QUANTITY", nullable = false)
+
+    @Column(name = "QUANTITY")
     private Integer quantity;
 
     @Column(name = "VERSION")
     @Version
     private Long version;
 
-
+    @Builder
+    public ProductQuantity(Long id, LocalDateTime createdOn, LocalDateTime updatedOn, Product product, Integer quantity,
+                           Long version) {
+        super(id, createdOn, updatedOn);
+        this.product = product;
+        this.quantity = quantity;
+        this.version = version;
+    }
 }

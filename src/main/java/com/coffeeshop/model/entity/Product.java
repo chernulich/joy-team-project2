@@ -2,18 +2,18 @@ package com.coffeeshop.model.entity;
 
 import com.coffeeshop.model.entity.converter.ProductCategoryConverter;
 import com.coffeeshop.model.entity.type.ProductCategory;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 
+@DynamicInsert
 @Entity
 @Table(name = "PRODUCT")
 public class Product extends BaseDate {
@@ -41,4 +41,17 @@ public class Product extends BaseDate {
     @Version
     private Integer version;
 
+    @Builder
+    public Product(Long id, LocalDateTime createdOn, LocalDateTime updatedOn, String shortDescription,
+                   String description, String previewImage, Double unitPrice,
+                   ProductCategory productCategory, boolean available, Integer version) {
+        super(id, createdOn, updatedOn);
+        this.shortDescription = shortDescription;
+        this.description = description;
+        this.previewImage = previewImage;
+        this.unitPrice = unitPrice;
+        this.productCategory = productCategory;
+        this.available = available;
+        this.version = version;
+    }
 }

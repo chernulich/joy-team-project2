@@ -1,17 +1,17 @@
 package com.coffeeshop.model.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 
+@DynamicInsert
 @Entity
 @Table(name = "ORDER_DETAILS")
 public class OrderDetails extends BaseDate{
@@ -59,6 +59,26 @@ public class OrderDetails extends BaseDate{
     @Column(name = "DELIVERY_COMMENT")
     private String deliveryComment;
 
-
+    @Builder
+    public OrderDetails(Long id, LocalDateTime createdOn, LocalDateTime updatedOn, Orders order, String customerName,
+                        String customerPhoneNumber, String orderEmail, String contactFirstName, String contactLastName,
+                        String contactPhoneNumber, Boolean isSelfPickup, String city, String street, String houseNumber,
+                        String apartment, String floor, String deliveryComment) {
+        super(id, createdOn, updatedOn);
+        this.order = order;
+        this.customerName = customerName;
+        this.customerPhoneNumber = customerPhoneNumber;
+        this.orderEmail = orderEmail;
+        this.contactFirstName = contactFirstName;
+        this.contactLastName = contactLastName;
+        this.contactPhoneNumber = contactPhoneNumber;
+        this.isSelfPickup = isSelfPickup;
+        this.city = city;
+        this.street = street;
+        this.houseNumber = houseNumber;
+        this.apartment = apartment;
+        this.floor = floor;
+        this.deliveryComment = deliveryComment;
+    }
 }
 
