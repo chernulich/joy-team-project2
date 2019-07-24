@@ -29,7 +29,7 @@
             </column>
 
             <column name="PRODUCT_CATEGORY_ID" type="INT">
-                <constraints nullable="false"/>
+                <constraints nullable="true"/>
             </column>
 
             <column name="AVAILABLE"
