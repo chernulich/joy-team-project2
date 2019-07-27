@@ -2,6 +2,7 @@ package com.coffeeshop.model.entity.type;
 
 import lombok.AllArgsConstructor;
 
+import javax.validation.constraints.NotBlank;
 import java.util.Arrays;
 
 @AllArgsConstructor

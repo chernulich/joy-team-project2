@@ -1,16 +1,15 @@
 package com.coffeeshop.converter.converters;
 
-import com.coffeeshop.model.admin.ProductCreateDto;
+import com.coffeeshop.model.admin.ProductCreateRequest;
 import com.coffeeshop.model.entity.Product;
-import com.coffeeshop.model.entity.ProductCoffee;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ProductCreateDtoToProduct implements Converter<ProductCreateDto, Product> {
+public class ProductCreateDtoToProduct implements Converter<ProductCreateRequest, Product> {
 
     @Override
-    public Product convert(ProductCreateDto source) {
+    public Product convert(ProductCreateRequest source) {
         return Product.builder()
                 .shortDescription(source.getShortDescription())
                 .description(source.getDescription())
