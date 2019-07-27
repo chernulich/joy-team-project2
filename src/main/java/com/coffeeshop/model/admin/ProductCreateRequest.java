@@ -24,7 +24,7 @@ public class ProductCreateRequest {
 
     @NotNull
     private Double unitPrice;
-    
+
     private ProductCategory productCategory;
 
     private ProductCoffeeDto productCoffee;

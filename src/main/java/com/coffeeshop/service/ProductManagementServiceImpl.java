@@ -1,6 +1,7 @@
 package com.coffeeshop.service;
 
 import com.coffeeshop.converter.CommonConverter;
+import com.coffeeshop.exception.ProductNotFoundException;
 import com.coffeeshop.model.admin.ProductCreateRequest;
 import com.coffeeshop.model.entity.Product;
 import com.coffeeshop.model.entity.ProductCoffee;
@@ -46,7 +47,7 @@ public class ProductManagementServiceImpl implements ProductManagementService {
     @Override
     @Transactional
     public void addProductImage(Long productId, byte[] image) {
-        Product product = productRepository.getOne(productId);
+        Product product = productRepository.findById(productId).orElseThrow(() -> new ProductNotFoundException());
         ProductImage productImage = ProductImage.builder()
                 .product(product)
                 .image(image)
@@ -57,7 +58,7 @@ public class ProductManagementServiceImpl implements ProductManagementService {
     @Override
     @Transactional
     public void makeAvailable(Long productId) {
-        Product product = productRepository.getOne(productId);
+        Product product = productRepository.findById(productId).orElseThrow(() -> new ProductNotFoundException());
         product.setAvailable(true);
         productRepository.save(product);
     }
@@ -65,7 +66,7 @@ public class ProductManagementServiceImpl implements ProductManagementService {
     @Override
     @Transactional
     public void makeUnavailable(Long productId) {
-        Product product = productRepository.getOne(productId);
+        Product product = productRepository.findById(productId).orElseThrow(() -> new ProductNotFoundException());
         product.setAvailable(false);
         productRepository.save(product);
     }

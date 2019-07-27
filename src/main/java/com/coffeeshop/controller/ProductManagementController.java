@@ -1,21 +1,26 @@
 package com.coffeeshop.controller;
 
+import com.coffeeshop.exception.InputValidationException;
 import com.coffeeshop.model.admin.ProductCreateRequest;
 import com.coffeeshop.service.ProductManagementService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/api/admin")
+@RequestMapping("/api/admin/product")
 public class ProductManagementController {
 
     @Autowired
     private ProductManagementService productManagementService;
 
     @PostMapping("/add")
-    public void createProduct(@RequestBody @Valid ProductCreateRequest productCreateRequest) {
+    public void createProduct(@RequestBody @Valid ProductCreateRequest productCreateRequest, BindingResult result) {
+        if (result.hasErrors()) {
+            throw new InputValidationException(result);
+        }
         productManagementService.createProduct(productCreateRequest);
     }
 
@@ -24,12 +29,12 @@ public class ProductManagementController {
         productManagementService.addProductImage(productId, image);
     }
 
-    @PostMapping("/true/{id}")
+    @PostMapping("/makeAvailable/{id}")
     public void makeAvailable(@PathVariable("id") Long productId) {
         productManagementService.makeAvailable(productId);
     }
 
-    @PostMapping("/false/{id}")
+    @PostMapping("/makeUnavailable/{id}")
     public void makeUnavailable(@PathVariable("id") Long productId) {
         productManagementService.makeUnavailable(productId);
     }
