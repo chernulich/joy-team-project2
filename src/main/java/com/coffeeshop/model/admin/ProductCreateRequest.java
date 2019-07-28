@@ -3,6 +3,7 @@ package com.coffeeshop.model.admin;
 import com.coffeeshop.model.entity.type.ProductCategory;
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
+import springfox.documentation.spring.web.json.Json;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -27,8 +28,7 @@ public class ProductCreateRequest {
 
     private ProductCategory productCategory;
 
-    private ProductCoffeeDto productCoffee;
+    private String object;
 
     //private ProductTeaDto productTea;
-
 }

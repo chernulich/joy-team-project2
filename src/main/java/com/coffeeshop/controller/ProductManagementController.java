@@ -8,6 +8,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.io.IOException;
 
 @RestController
 @RequestMapping("/api/admin/product")
@@ -17,7 +18,7 @@ public class ProductManagementController {
     private ProductManagementService productManagementService;
 
     @PostMapping("/add")
-    public void createProduct(@RequestBody @Valid ProductCreateRequest productCreateRequest, BindingResult result) {
+    public void createProduct(@RequestBody @Valid ProductCreateRequest productCreateRequest, BindingResult result) throws IOException {
         if (result.hasErrors()) {
             throw new InputValidationException(result);
         }
@@ -38,4 +39,5 @@ public class ProductManagementController {
     public void makeUnavailable(@PathVariable("id") Long productId) {
         productManagementService.makeUnavailable(productId);
     }
+
 }

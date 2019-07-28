@@ -2,16 +2,22 @@ package com.coffeeshop.service;
 
 import com.coffeeshop.converter.CommonConverter;
 import com.coffeeshop.exception.ProductNotFoundException;
+import com.coffeeshop.model.admin.ProductCoffeeDto;
 import com.coffeeshop.model.admin.ProductCreateRequest;
+import com.coffeeshop.model.admin.deserializer.CoffeeDeserializer;
 import com.coffeeshop.model.entity.Product;
 import com.coffeeshop.model.entity.ProductCoffee;
 import com.coffeeshop.model.entity.ProductImage;
 import com.coffeeshop.repository.ProductCoffeeRepository;
 import com.coffeeshop.repository.ProductImageRepository;
 import com.coffeeshop.repository.ProductRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.module.SimpleModule;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.io.IOException;
 
 @Service
 public class ProductManagementServiceImpl implements ProductManagementService {
@@ -30,17 +36,25 @@ public class ProductManagementServiceImpl implements ProductManagementService {
 
     @Override
     @Transactional
-    public void createProduct(ProductCreateRequest productCreateRequest) {
+    public void createProduct(ProductCreateRequest productCreateRequest) throws IOException {
         Product product = commonConverter.getProductCreateDtoToProduct().convert(productCreateRequest);
         productRepository.save(product);
-        ProductCoffee productCoffee = createProductCoffee(productCreateRequest);
-        productCoffee.setProduct(product);
-        productCoffeeRepository.save(productCoffee);
+            ProductCoffeeDto productCoffeeDto = new ObjectMapper().readValue(productCreateRequest.getObject(), ProductCoffeeDto.class);
+            ProductCoffee productCoffee = createProductCoffee(productCoffeeDto);
+            productCoffee.setProduct(product);
+            productCoffeeRepository.save(productCoffee);
+    }
+
+    public void addModule() {
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleModule module = new SimpleModule();
+        module.addDeserializer(ProductCoffeeDto.class, new CoffeeDeserializer());
+        mapper.registerModule(module);
     }
 
     @Override
-    public ProductCoffee createProductCoffee(ProductCreateRequest productCreateRequest) {
-        ProductCoffee productCoffee = commonConverter.getProductCoffeeDtoToProductCoffee().convert(productCreateRequest.getProductCoffee());
+    public ProductCoffee createProductCoffee(ProductCoffeeDto productCoffeeDto) {
+        ProductCoffee productCoffee = commonConverter.getProductCoffeeDtoToProductCoffee().convert(productCoffeeDto);
         return productCoffee;
     }
 
