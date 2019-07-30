@@ -4,6 +4,8 @@ import com.coffeeshop.model.entity.type.ProductCategory;
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
 
+import javax.validation.Valid;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
@@ -22,13 +24,14 @@ public class ProductCreateRequest {
 
     private String previewImage;
 
+    @Min(value = 1)
     @NotNull
     private Double unitPrice;
 
     private ProductCategory productCategory;
 
+    @Valid
+    @NotNull
     private ProductCoffeeDto productCoffee;
-
-    //private ProductTeaDto productTea;
 
 }

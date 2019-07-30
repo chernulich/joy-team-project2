@@ -2,6 +2,7 @@ package com.coffeeshop.service;
 
 import com.coffeeshop.converter.CommonConverter;
 import com.coffeeshop.exception.ProductNotFoundException;
+import com.coffeeshop.model.admin.ProductCoffeeDto;
 import com.coffeeshop.model.admin.ProductCreateRequest;
 import com.coffeeshop.model.entity.Product;
 import com.coffeeshop.model.entity.ProductCoffee;
@@ -33,14 +34,15 @@ public class ProductManagementServiceImpl implements ProductManagementService {
     public void createProduct(ProductCreateRequest productCreateRequest) {
         Product product = commonConverter.getProductCreateDtoToProduct().convert(productCreateRequest);
         productRepository.save(product);
-        ProductCoffee productCoffee = createProductCoffee(productCreateRequest);
+        ProductCoffee productCoffee = createProductCoffee(productCreateRequest.getProductCoffee());
         productCoffee.setProduct(product);
         productCoffeeRepository.save(productCoffee);
     }
 
     @Override
-    public ProductCoffee createProductCoffee(ProductCreateRequest productCreateRequest) {
-        ProductCoffee productCoffee = commonConverter.getProductCoffeeDtoToProductCoffee().convert(productCreateRequest.getProductCoffee());
+    @Transactional
+    public ProductCoffee createProductCoffee(ProductCoffeeDto productCoffeeDto) {
+        ProductCoffee productCoffee = commonConverter.getProductCoffeeDtoToProductCoffee().convert(productCoffeeDto);
         return productCoffee;
     }
 
