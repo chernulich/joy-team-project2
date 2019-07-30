@@ -34,5 +34,4 @@ public class ProductCreateRequest {
     @NotNull
     private ProductCoffeeDto productCoffee;
 
-    private String object;
 }
