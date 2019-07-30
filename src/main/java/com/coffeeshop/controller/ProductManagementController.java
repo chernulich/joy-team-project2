@@ -38,4 +38,5 @@ public class ProductManagementController {
     public void makeUnavailable(@PathVariable("id") Long productId) {
         productManagementService.makeUnavailable(productId);
     }
+
 }
