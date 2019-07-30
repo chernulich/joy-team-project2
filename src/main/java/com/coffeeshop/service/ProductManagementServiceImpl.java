@@ -6,9 +6,7 @@ import com.coffeeshop.model.admin.ProductCoffeeDto;
 import com.coffeeshop.model.admin.ProductCreateRequest;
 import com.coffeeshop.model.entity.Product;
 import com.coffeeshop.model.entity.ProductCoffee;
-import com.coffeeshop.model.entity.ProductImage;
 import com.coffeeshop.repository.ProductCoffeeRepository;
-import com.coffeeshop.repository.ProductImageRepository;
 import com.coffeeshop.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,21 +21,20 @@ public class ProductManagementServiceImpl implements ProductManagementService {
     @Autowired
     private ProductCoffeeRepository productCoffeeRepository;
 
-    @Autowired
-    private ProductImageRepository productImageRepository;
 
     @Autowired
     private CommonConverter commonConverter;
 
     @Override
     @Transactional
-    public void createProduct(ProductCreateRequest productCreateRequest) {
+    public void createProduct(ProductCreateRequest productCreateRequest)  {
         Product product = commonConverter.getProductCreateDtoToProduct().convert(productCreateRequest);
         productRepository.save(product);
-        ProductCoffee productCoffee = createProductCoffee(productCreateRequest.getProductCoffee());
+        ProductCoffee productCoffee = createProductCoffee(productCreateRequest.getProductCoffeeDto());
         productCoffee.setProduct(product);
         productCoffeeRepository.save(productCoffee);
     }
+
 
     @Override
     @Transactional
@@ -46,16 +43,6 @@ public class ProductManagementServiceImpl implements ProductManagementService {
         return productCoffee;
     }
 
-    @Override
-    @Transactional
-    public void addProductImage(Long productId, byte[] image) {
-        Product product = productRepository.findById(productId).orElseThrow(() -> new ProductNotFoundException());
-        ProductImage productImage = ProductImage.builder()
-                .product(product)
-                .image(image)
-                .build();
-        productImageRepository.save(productImage);
-    }
 
     @Override
     @Transactional

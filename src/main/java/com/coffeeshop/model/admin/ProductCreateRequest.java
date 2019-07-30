@@ -32,6 +32,6 @@ public class ProductCreateRequest {
 
     @Valid
     @NotNull
-    private ProductCoffeeDto productCoffee;
+    private ProductCoffeeDto productCoffeeDto;
 
 }

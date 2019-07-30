@@ -8,6 +8,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.io.IOException;
 
 @RestController
 @RequestMapping("/api/admin/product")
@@ -17,20 +18,13 @@ public class ProductManagementController {
     private ProductManagementService productManagementService;
 
     @PostMapping("/add")
-    public void createProduct(@RequestBody @Valid ProductCreateRequest productCreateRequest, BindingResult result) {
+    public void createProduct(@RequestBody @Valid ProductCreateRequest productCreateRequest, BindingResult result) throws IOException {
         if (result.hasErrors()) {
             throw new InputValidationException(result);
         }
         productManagementService.createProduct(productCreateRequest);
     }
 
-    @PostMapping("/addImage/{id}")
-    public void addImage(@PathVariable("id") Long productId, @RequestBody @Valid byte[] image, BindingResult result) {
-        if (result.hasErrors()) {
-            throw new InputValidationException(result);
-        }
-        productManagementService.addProductImage(productId, image);
-    }
 
     @PostMapping("/makeAvailable/{id}")
     public void makeAvailable(@PathVariable("id") Long productId) {
