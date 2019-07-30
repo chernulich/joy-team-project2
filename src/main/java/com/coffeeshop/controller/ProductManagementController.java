@@ -25,12 +25,16 @@ public class ProductManagementController {
     }
 
     @PostMapping("/addImage/{id}")
-    public void addImage(@PathVariable("id") Long productId, @RequestBody byte[] image) {
+    public void addImage(@PathVariable("id") Long productId, @RequestBody @Valid byte[] image, BindingResult result) {
+        if (result.hasErrors()) {
+            throw new InputValidationException(result);
+        }
         productManagementService.addProductImage(productId, image);
     }
 
     @PostMapping("/makeAvailable/{id}")
     public void makeAvailable(@PathVariable("id") Long productId) {
+
         productManagementService.makeAvailable(productId);
     }
 
