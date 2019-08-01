@@ -2,7 +2,7 @@ package com.coffeeshop.controller;
 
 import com.coffeeshop.exception.InputValidationException;
 import com.coffeeshop.model.admin.ProductCreateRequest;
-import com.coffeeshop.service.ProductManagementService;
+import com.coffeeshop.service.product.ProductManagementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;

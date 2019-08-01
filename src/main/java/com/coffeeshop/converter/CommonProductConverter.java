@@ -8,14 +8,14 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Getter
-public class CommonConverter {
+public class CommonProductConverter {
 
     private ProductCreateDtoToProduct productCreateDtoToProduct;
 
     private ProductCoffeeDtoToProductCoffee productCoffeeDtoToProductCoffee;
 
     @Autowired
-    public CommonConverter(ProductCreateDtoToProduct productCreateDtoToProduct, ProductCoffeeDtoToProductCoffee productCoffeeDtoToProductCoffee) {
+    public CommonProductConverter(ProductCreateDtoToProduct productCreateDtoToProduct, ProductCoffeeDtoToProductCoffee productCoffeeDtoToProductCoffee) {
         this.productCreateDtoToProduct = productCreateDtoToProduct;
         this.productCoffeeDtoToProductCoffee = productCoffeeDtoToProductCoffee;
     }

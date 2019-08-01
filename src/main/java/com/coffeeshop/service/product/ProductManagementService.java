@@ -1,4 +1,4 @@
-package com.coffeeshop.service;
+package com.coffeeshop.service.product;
 
 import com.coffeeshop.model.admin.ProductCoffeeDto;
 import com.coffeeshop.model.admin.ProductCreateRequest;
