@@ -1,5 +1,6 @@
 package com.coffeeshop.validation;
 
+import com.coffeeshop.validation.validator.Base64SizeValidator;
 import io.leangen.geantyref.TypeFactory;
 import lombok.SneakyThrows;
 import org.apache.commons.io.IOUtils;
@@ -21,7 +22,7 @@ public class Base64SizeValidationTest {
     
     private Base64Size base64SizeAnnotation;
     private Base64SizeValidator validator;
-    private final String COFFEE_IMAGE_TEST = "src/test/resources/coffee-2.jpg";
+    private final String COFFEE_IMAGE_TEST = "src/test/resources/image/coffee-2.jpg";
 
     @SneakyThrows
     private Base64Size getInstanceOfAnnotation(int size) {

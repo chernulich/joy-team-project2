@@ -1,4 +1,6 @@
-package com.coffeeshop.validation;
+package com.coffeeshop.validation.validator;
+import com.coffeeshop.validation.Base64Size;
+
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 

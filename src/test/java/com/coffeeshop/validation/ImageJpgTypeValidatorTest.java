@@ -1,7 +1,6 @@
 package com.coffeeshop.validation;
 
-import com.coffeeshop.validation.ImageConstraint;
-import com.coffeeshop.validation.validator.ImageValidator;
+import com.coffeeshop.validation.validator.ImageJpgTypeValidator;
 import lombok.SneakyThrows;
 import org.apache.commons.io.IOUtils;
 import org.junit.Test;
@@ -14,7 +13,7 @@ import java.util.Base64;
 
 import static org.junit.Assert.*;
 
-public class ImageValidatorTest {
+public class ImageJpgTypeValidatorTest {
 
     private final String PATH_TO_FIRST_IMAGE_JPG = "src/test/resources/image/coffee.jpg";
     private final String PATH_TO_SECOND_IMAGE_JPG = "src/test/resources/image/art-blur-cappuccino-302899.jpg";
@@ -24,7 +23,7 @@ public class ImageValidatorTest {
     private final String PATH_TO_IMAGE_PDF = "src/test/resources/image/Хотелки.pdf";
     private final String PATH_TO_IMAGE_ZIP = "src/test/resources/image/BloomFilter.zip";
 
-    private ImageValidator validator = new ImageValidator();
+    private ImageJpgTypeValidator validator = new ImageJpgTypeValidator();
 
     @Test
     public void testImageTypeIsJpgSuccess() {

@@ -1,6 +1,6 @@
 package com.coffeeshop.model.web.image;
 
-import com.coffeeshop.validation.ImageConstraint;
+import com.coffeeshop.validation.ImageTypeConstraint;
 import lombok.*;
 
 import javax.validation.constraints.NotBlank;
@@ -16,7 +16,7 @@ public class ImageRequest {
     private Long productId;
 
     @NotBlank
-    @ImageConstraint
+    @ImageTypeConstraint
     private String image;
 
 }

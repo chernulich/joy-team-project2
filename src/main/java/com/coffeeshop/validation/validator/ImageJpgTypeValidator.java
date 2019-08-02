@@ -1,21 +1,21 @@
 package com.coffeeshop.validation.validator;
 
-import com.coffeeshop.validation.ImageConstraint;
+import com.coffeeshop.validation.ImageTypeConstraint;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import java.util.Base64;
 
-public class ImageValidator implements ConstraintValidator<ImageConstraint, String> {
+public class ImageJpgTypeValidator implements ConstraintValidator<ImageTypeConstraint, String> {
 
     private final byte[] JPEG_START_WITH_BYTES = {-1, -40};
 
     private final byte[] JPEG_END_WITH_BYTES = {-1, -39};
 
-    public ImageValidator() {
+    public ImageJpgTypeValidator() {
     }
 
-    public void initialize(ImageConstraint constraint) {
+    public void initialize(ImageTypeConstraint constraint) {
    }
 
     public boolean isValid(String base64Img, ConstraintValidatorContext context) {
