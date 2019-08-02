@@ -7,7 +7,7 @@ import com.coffeeshop.model.entity.ProductCoffee;
 
 public interface ProductManagementService {
 
-    void createProduct(ProductCreateRequest productCreateRequest);
+    void createProductAndQuantity(ProductCreateRequest productCreateRequest);
     ProductCoffee createProductCoffee(ProductCoffeeDto productCoffeeDto);
     void makeAvailable(Long productId);
     void makeUnavailable(Long productId);

@@ -31,7 +31,7 @@ public class ProductManagementServiceImpl implements ProductManagementService {
 
     @Override
     @Transactional
-    public void createProduct(ProductCreateRequest productCreateRequest)  {
+    public void createProductAndQuantity(ProductCreateRequest productCreateRequest)  {
         Product product = commonProductConverter.getProductCreateDtoToProduct().convert(productCreateRequest);
         productRepository.save(product);
         ProductCoffee productCoffee = createProductCoffee(productCreateRequest.getProductCoffeeDto());

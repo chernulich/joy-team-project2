@@ -22,7 +22,7 @@ public class ProductManagementController {
         if (result.hasErrors()) {
             throw new InputValidationException(result);
         }
-        productManagementService.createProduct(productCreateRequest);
+        productManagementService.createProductAndQuantity(productCreateRequest);
     }
 
 
