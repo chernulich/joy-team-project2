@@ -1,6 +1,6 @@
 package com.coffeeshop.model.web.image;
 
-import com.coffeeshop.annotation.ImageConstraint;
+import com.coffeeshop.validation.ImageConstraint;
 import lombok.*;
 
 import javax.validation.constraints.NotBlank;
