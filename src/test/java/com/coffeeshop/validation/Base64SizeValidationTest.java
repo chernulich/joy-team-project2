@@ -24,6 +24,10 @@ public class Base64SizeValidationTest {
     private Base64Size base64SizeAnnotation;
     private Base64SizeValidator validator;
     private final String COFFEE_IMAGE_TEST = "src/test/resources/coffee-2.jpg";
+    private final String COFFEE_2 = "src/test/resources/artistic-blossom-bright-207962.jpg";
+    private final String COFFEE_3 = "src/test/resources/download.jpg";
+    private final String COFFEE_4 = "src/test/resources/join-me-6-24-2019-11-07-50-PM.jpg";
+    private final String COFFEE_5 = "src/test/resources/JAVA-ERROR.png";
 
     @SneakyThrows
     private Base64Size getInstanceOfAnnotation(int size) {
@@ -67,7 +71,6 @@ public class Base64SizeValidationTest {
         assertTrue(validator.isValid(null, null));
     }
 
-
     @Test
     public void testGeneratorAlphaNumericInBytes(){
         String stringEncoded = GeneratorBase64Symbols();
@@ -84,7 +87,7 @@ public class Base64SizeValidationTest {
         assertEquals(BYTES_IN_MEGA_BYTE/1024,expectedSize);
     }
 
-    @SneakyThrows({FileNotFoundException.class, IOException.class})
+    @SneakyThrows()
     private String encoder(String imageSrc){
         String base64 = "" ;
         InputStream inputStream = new FileInputStream(imageSrc);
