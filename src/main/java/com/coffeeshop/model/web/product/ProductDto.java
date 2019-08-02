@@ -7,7 +7,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ProductDto {
+public class ProductDto {  //TODO rename ProductDto to ProductResponse
 
     private Long productId;
     private String title;

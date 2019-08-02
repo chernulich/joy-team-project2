@@ -97,5 +97,6 @@ public class ProductController {
                 .getResourceAsStream("/image/coffee.jpg");
         return IOUtils.toByteArray(io);
     }
+
 }
 
