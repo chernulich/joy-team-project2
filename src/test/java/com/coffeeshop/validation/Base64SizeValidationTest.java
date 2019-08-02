@@ -7,8 +7,6 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Test;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.Base64;
 import java.util.HashMap;
@@ -73,7 +71,7 @@ public class Base64SizeValidationTest {
 
     @Test
     public void testGeneratorAlphaNumericInBytes(){
-        String stringEncoded = GeneratorBase64Symbols();
+        String stringEncoded = generatorBase64Symbols();
         int expectedSize = getValidator(getInstanceOfAnnotation(BYTES_IN_MEGA_BYTE))
                 .calculateBase64StringSize(stringEncoded,true);
         assertEquals(BYTES_IN_MEGA_BYTE,expectedSize);
@@ -81,7 +79,7 @@ public class Base64SizeValidationTest {
 
     @Test
     public void testGeneratorAlphaNumericInKB(){
-        String stringEncoded = GeneratorBase64Symbols();
+        String stringEncoded = generatorBase64Symbols();
         int expectedSize = getValidator(getInstanceOfAnnotation(BYTES_IN_MEGA_BYTE))
                 .calculateBase64StringSize(stringEncoded,false);
         assertEquals(BYTES_IN_MEGA_BYTE/1024,expectedSize);
@@ -96,7 +94,7 @@ public class Base64SizeValidationTest {
             return base64;
     }
 
-    private String GeneratorBase64Symbols(){
+    private String generatorBase64Symbols(){
         String randomGenerated = RandomStringUtils.random(BYTES_IN_MEGA_BYTE,ALPHANUMERIC_CHARSET);
         String stringEncoded = Base64.getEncoder().encodeToString(randomGenerated.getBytes());
         return stringEncoded;
