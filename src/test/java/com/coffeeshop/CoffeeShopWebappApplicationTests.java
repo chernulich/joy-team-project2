@@ -9,7 +9,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class CoffeeShopWebappApplicationTests {
 
     @Test
-    public void contextLoads(){
+    public void contextLoads() {
     }
 
 }

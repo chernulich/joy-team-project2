@@ -48,7 +48,7 @@ public class ImageJpgTypeValidatorTest {
     }
 
     @Test
-    public void TestImageIsEmpty() {
+    public void testImageIsEmpty() {
         String imageBase64 = "";
         assertFalse(validator.isValid(imageBase64, null));
     }
@@ -58,9 +58,9 @@ public class ImageJpgTypeValidatorTest {
         assertTrue(validator.isValid(null, null));
     }
 
-    @SneakyThrows({FileNotFoundException.class, IOException.class})
-    private String imageToArray(String path_to_image) {
-        File file = new File(path_to_image);
+    @SneakyThrows
+    private String imageToArray(String pathToImage) {
+        File file = new File(pathToImage);
         FileInputStream fis = new FileInputStream(file);
 
         return Base64.getEncoder().encodeToString(IOUtils.toByteArray(fis));

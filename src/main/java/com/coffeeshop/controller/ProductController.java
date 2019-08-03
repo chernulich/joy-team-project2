@@ -4,7 +4,7 @@ import com.coffeeshop.model.common.CoffeeType;
 import com.coffeeshop.model.common.ProductType;
 import com.coffeeshop.model.web.checkout.CheckoutRequest;
 import com.coffeeshop.model.web.checkout.CheckoutResponse;
-import com.coffeeshop.model.web.product.ProductDto;
+import com.coffeeshop.model.web.product.ProductResponse;
 import com.coffeeshop.model.web.product.ProductListResponse;
 import com.coffeeshop.model.web.product.ProductParametersResponse;
 import com.coffeeshop.model.web.product.ProductRequest;
@@ -26,7 +26,7 @@ public class ProductController {
     @PostMapping("/products")
     public ProductListResponse getProductList(@RequestBody ProductRequest productRequest) {
         return ProductListResponse.builder()
-                .popular(ProductDto.builder()
+                .popular(ProductResponse.builder()
                         .productId(1L)
                         .title("Kenya AA")
                         .previewImage("image1")
@@ -39,7 +39,7 @@ public class ProductController {
                                 .rate(1.0)
                                 .coffeeType(CoffeeType.ARABICA.name().toLowerCase())
                                 .decaf(true).build()).build())
-                .products(Collections.singletonList(ProductDto.builder()
+                .products(Collections.singletonList(ProductResponse.builder()
                         .productId(2L)
                         .title("Brazilian Santos")
                         .previewImage("image2")
@@ -97,6 +97,5 @@ public class ProductController {
                 .getResourceAsStream("/image/coffee.jpg");
         return IOUtils.toByteArray(io);
     }
-
 }
 
