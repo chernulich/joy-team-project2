@@ -13,6 +13,8 @@ import { CheckoutComponent } from './checkout-customer/checkout.component';
 import {ProductListComponent} from "./product-list/product-list.component";
 import {ProductDetailsComponent} from "./product-details/product-details.component";
 import { FooterComponent } from './footer/footer.component';
+import { ProductListHeaderComponent } from './product-list-header/product-list-header.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -23,14 +25,16 @@ import { FooterComponent } from './footer/footer.component';
     HeaderComponent,
     OrderReceivedComponent,
     FooterComponent,
-    CheckoutComponent
+    CheckoutComponent,
+    ProductListHeaderComponent
   ],
   imports: [
     BrowserModule,
     BsDropdownModule.forRoot(),
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    NgbModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
