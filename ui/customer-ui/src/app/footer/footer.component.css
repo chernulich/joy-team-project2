@@ -1,12 +1,119 @@
-.page-footer {
-  position: absolute;
-  bottom: 0;
-  width:100%;
-  display: table-row;
-  height:23%;
-  color: rgba(255, 246, 254, 0.68);
+.col-container{
   text-align: center;
 }
-.color-link {
-  color: rgba(255, 246, 254, 0.68);
+
+.footer-bs {
+  padding: 25px 25px;
+  color: rgba(255,255,255,1.00);
+  font-family: "Arial";
+}
+
+.footer-bs .footer-brand h2 {
+  margin-left: 100px;
+  font-weight: bold;
+}
+
+.footer-bs .footer-brand p {
+  font-size:14px;
+  text-transform: capitalize;
+  color:rgba(251,254,241,0.68);
+  letter-spacing: 2px;
+  margin-left: 100px;
+}
+
+.footer-bs .footer-nav h4 {
+  margin-bottom: 20px;
+  font-size: 14px;
+  text-transform: capitalize;
+  color: white;
+}
+
+.footer-bs .footer-nav a {
+  font-size: 14px;
+  text-transform: capitalize;
+  color: white;
+  text-align: left;
+}
+
+.footer-bs .footer-nav a:hover {
+  color: #fd7a1e;
+  text-decoration: none;
+  background-color: transparent;
+}
+
+.footer-bs .footer-social h4 {
+  margin-bottom: 20px;
+  font-size: 14px;
+  text-transform: capitalize;
+  color: white;
+}
+
+.footer-bs .footer-social p {
+  font-size: 14px;
+  text-transform: capitalize;
+  color: white;
+  text-align: left;
+}
+
+.footer-bs .footer-ns h4 {
+  font-size: 14px;
+  text-transform: capitalize;
+  color: white;
+  text-align: left;
+  margin-bottom: 20px;
+}
+
+.footer-bs .footer-ns .input-search {
+  background-color: #33333A;
+  border-color: #CACACC;
+  border-width: 0.5px;
+  border-style: solid;
+  height:35px;
+  width:280px;
+  font-size: 13px;
+  padding-left:15px;
+  color:#fd7a1e;
+  margin-right: 30px;
+  margin-bottom: 20px;
+}
+
+.footer-bs .footer-ns .btn-search {
+  background: white;
+  border:none;
+  color:#33333A;
+  font-size: 11px;
+  height:35px;
+  width:130px;
+}
+
+.footer-bs .footer-ns button:hover {
+  background-color: #fd7a1e;
+  color: #CACACC;
+}
+
+.footer-bs .footer-ns .social a{
+  font-size: 20px;
+  margin-right: 17px;
+  color: whitesmoke;
+}
+
+/*twitter hover mouse*/
+#social-tw:hover {
+  color: #fd7a1e;
+}
+/*facebook hover mouse*/
+#social-fb:hover {
+  color: #fd7a1e;
+}
+
+.footer-bs .container p {
+  position: relative;
+  font-size: 14px;
+  text-transform: capitalize;
+  color: white;
+  text-align: center;
+}
+
+.hover a:hover{
+  color: #33333A;
 }
