@@ -18,7 +18,7 @@ public class ProductManagementController {
     private ProductManagementService productManagementService;
 
     @PostMapping("/add")
-    public void createProduct(@RequestBody @Valid ProductCreateRequest productCreateRequest, BindingResult result) throws IOException {
+    public void createProductAndQuantity(@RequestBody @Valid ProductCreateRequest productCreateRequest, BindingResult result) throws IOException {
         if (result.hasErrors()) {
             throw new InputValidationException(result);
         }
