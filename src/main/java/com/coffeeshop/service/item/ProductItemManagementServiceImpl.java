@@ -37,13 +37,10 @@ public class ProductItemManagementServiceImpl implements ProductItemManagementSe
 
     @Override
     @Transactional
-    public List<ProductItemResponse> createProductItems(List<ProductItemRequest> productItemRequests) {
+    public void createProductItems(List<ProductItemRequest> productItemRequests) {
         for(ProductItemRequest productItemRequest : productItemRequests) {
             createProductItem(productItemRequest);
         }
-        List<ProductItem> productItems = productItemRepository.findAll();
-        return productItems.stream().map(item -> productItemConverter.getProductItemToProductItemResponse()
-                .convert(item)).collect(Collectors.toList());
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW, rollbackFor = ProductNotFoundException.class)

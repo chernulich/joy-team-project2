@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface ProductItemManagementService {
 
-    List<ProductItemResponse> createProductItems(List<ProductItemRequest> productItemRequests);
+    void createProductItems(List<ProductItemRequest> productItemRequests);
     List<ProductItemResponse> findAndMarkAsSold(Long id);
 }

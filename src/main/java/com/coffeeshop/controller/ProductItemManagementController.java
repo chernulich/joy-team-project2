@@ -1,6 +1,7 @@
 package com.coffeeshop.controller;
 
 import com.coffeeshop.exception.InputValidationException;
+import com.coffeeshop.exception.ProductNotFoundException;
 import com.coffeeshop.model.admin.ProductItemRequest;
 import com.coffeeshop.model.admin.ProductItemResponse;
 import com.coffeeshop.model.entity.ProductQuantity;
@@ -20,25 +21,21 @@ public class ProductItemManagementController {
     @Autowired
     private ProductItemManagementService productItemManagementService;
 
-    @Autowired
-    private ProductQuantityRepository productQuantityRepository;
-
     @PostMapping("/add")
-    public List<ProductItemResponse> createProductItems(@RequestBody @Valid List<ProductItemRequest> productItemRequests, BindingResult result) {
+    public void createProductItems(@RequestBody @Valid List<ProductItemRequest> productItemRequests, BindingResult result) {
         if (result.hasErrors()) {
             throw new InputValidationException(result);
         }
-        return productItemManagementService.createProductItems(productItemRequests);
+        try {
+            productItemManagementService.createProductItems(productItemRequests);
+        } catch (ProductNotFoundException e) {
+            e.httpStatus();
+        }
     }
 
     @GetMapping("/get/{id}")
     public List<ProductItemResponse> findAndMarkAsSold(@PathVariable("id") Long id) {
         return productItemManagementService.findAndMarkAsSold(id);
-    }
-
-    @GetMapping("/getQ")
-    public List<ProductQuantity> findAndMarkAsSold() {
-        return productQuantityRepository.findAll();
     }
 
 }

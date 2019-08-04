@@ -12,7 +12,6 @@ public class ProductItemRequestToProductItem implements Converter<ProductItemReq
     public ProductItem convert(ProductItemRequest source) {
         return ProductItem.builder()
                 .weightKg(source.getWeightKg())
-                .productStatus(source.getProductStatus())
                 .build();
     }
 }

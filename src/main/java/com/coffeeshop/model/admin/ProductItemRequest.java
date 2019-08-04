@@ -1,6 +1,5 @@
 package com.coffeeshop.model.admin;
 
-import com.coffeeshop.model.entity.type.ProductStatus;
 import lombok.*;
 
 import javax.validation.constraints.Min;
@@ -20,6 +19,4 @@ public class ProductItemRequest {
     @NotNull
     private Integer weightKg;
 
-    @NotNull
-    private ProductStatus productStatus;
 }
