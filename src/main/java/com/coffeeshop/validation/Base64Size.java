@@ -1,4 +1,6 @@
 package com.coffeeshop.validation;
+import com.coffeeshop.validation.validator.Base64SizeValidator;
+
 import javax.validation.Constraint;
 import javax.validation.Payload;
 import java.lang.annotation.*;

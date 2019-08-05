@@ -11,6 +11,6 @@ import java.util.List;
 @Builder
 public class ProductListResponse {
 
-    private ProductDto popular;
-    private List<ProductDto> products;
+    private ProductResponse popular;
+    private List<ProductResponse> products;
 }
