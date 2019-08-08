@@ -37,7 +37,7 @@ public class ProductItemManagementController {
         }
     }
 
-    @GetMapping("/findAndMark")
+    @PutMapping("/findAndMark")
     public List<ProductItemRequest> findAndMarkAsSold() {
         return new ArrayList<>();
     }
