@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.OptimisticLockException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -46,20 +47,24 @@ public class ProductItemManagementServiceImpl implements ProductItemManagementSe
     @Transactional(propagation = Propagation.REQUIRES_NEW, rollbackFor = ProductNotFoundException.class)
     public void createProductItem(ProductItemRequest productItemRequest) throws ProductNotFoundException {
         try {
-            ProductItem productItem = productItemConverter.getProductItemRequestToProductItem().convert(productItemRequest);
             Product product = productRepository.findById(productItemRequest.getProductId())
                     .orElseThrow(() -> new ProductNotFoundException("Product doesn't exist by id: " + productItemRequest.getProductId()));
-            productItem.setProduct(product);
-            productItemRepository.save(productItem);
-            productQuantityRepository.save(plusQuantity(product));
+            Integer quantity = productItemRequest.getWeightKg();
+            for(int i = quantity; i > 0; i--) {
+                ProductItem productItem = productItemConverter.getProductItemRequestToProductItem().convert(productItemRequest);
+                productItem.setWeightKg(1);
+                productItem.setProduct(product);
+                productItemRepository.save(productItem);
+            }
+            productQuantityRepository.save(plusQuantity(product, quantity));
         }catch (ProductNotFoundException e) {
             e.httpStatus();
         }
     }
 
-    public ProductQuantity plusQuantity(Product product) {
+    public ProductQuantity plusQuantity(Product product, Integer quantity) {
         ProductQuantity productQuantity = productQuantityRepository.findByProductId(product.getId());
-        productQuantity.setQuantity(productQuantity.getQuantity() + 1);
+        productQuantity.setQuantity(productQuantity.getQuantity() + quantity);
         return productQuantity;
     }
 
@@ -71,18 +76,7 @@ public class ProductItemManagementServiceImpl implements ProductItemManagementSe
 
     @Override
     @Transactional
-    public List<ProductItemResponse> findAndMarkAsSold(Long id) {
-        ProductItem productItem = productItemRepository.findById(id)
-                .orElseThrow(() -> new ProductNotFoundException("Product item doesn't exist by id: " + id));
-        if(productItem.getVersion() == 1) {
-            throw new OptimisticLockException("Product have sold yet.");
-        }else {
-            productItem.setProductStatus(ProductStatus.SOLD);
-            productItemRepository.save(productItem);
-            productQuantityRepository.save(minusQuantity(productItem));
-        }
-        List<ProductItem> productItems = productItemRepository.findAll();
-        return productItems.stream().map(item -> productItemConverter.getProductItemToProductItemResponse()
-        .convert(item)).collect(Collectors.toList());
+    public List<ProductItemResponse> findAndMarkAsSold(Integer amount) {
+        return new ArrayList<>();
     }
 }

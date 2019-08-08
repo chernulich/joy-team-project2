@@ -4,7 +4,9 @@ import com.coffeeshop.exception.InputValidationException;
 import com.coffeeshop.exception.ProductNotFoundException;
 import com.coffeeshop.model.admin.ProductItemRequest;
 import com.coffeeshop.model.admin.ProductItemResponse;
+import com.coffeeshop.model.entity.ProductItem;
 import com.coffeeshop.model.entity.ProductQuantity;
+import com.coffeeshop.repository.ProductItemRepository;
 import com.coffeeshop.repository.ProductQuantityRepository;
 import com.coffeeshop.service.item.ProductItemManagementService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -21,8 +24,9 @@ public class ProductItemManagementController {
     @Autowired
     private ProductItemManagementService productItemManagementService;
 
+
     @PostMapping("/add")
-    public void createProductItems(@RequestBody @Valid List<ProductItemRequest> productItemRequests, BindingResult result) {
+    public void createProductItems(@RequestBody List<@Valid ProductItemRequest> productItemRequests, BindingResult result) {
         if (result.hasErrors()) {
             throw new InputValidationException(result);
         }
@@ -33,9 +37,9 @@ public class ProductItemManagementController {
         }
     }
 
-    @GetMapping("/get/{id}")
-    public List<ProductItemResponse> findAndMarkAsSold(@PathVariable("id") Long id) {
-        return productItemManagementService.findAndMarkAsSold(id);
+    @GetMapping("/findAndMark")
+    public List<ProductItemRequest> findAndMarkAsSold() {
+        return new ArrayList<>();
     }
 
 }

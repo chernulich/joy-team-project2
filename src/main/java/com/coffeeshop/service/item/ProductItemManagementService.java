@@ -8,5 +8,5 @@ import java.util.List;
 public interface ProductItemManagementService {
 
     void createProductItems(List<ProductItemRequest> productItemRequests);
-    List<ProductItemResponse> findAndMarkAsSold(Long id);
+    List<ProductItemResponse> findAndMarkAsSold(Integer amount);
 }
