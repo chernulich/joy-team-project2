@@ -24,22 +24,22 @@ public class ProductItemManagementController {
     @Autowired
     private ProductItemManagementService productItemManagementService;
 
+    @Autowired
+    private ProductItemRepository productItemRepository;
+
 
     @PostMapping("/add")
     public void createProductItems(@RequestBody List<@Valid ProductItemRequest> productItemRequests, BindingResult result) {
         if (result.hasErrors()) {
             throw new InputValidationException(result);
         }
-        try {
-            productItemManagementService.createProductItems(productItemRequests);
-        } catch (ProductNotFoundException e) {
-            e.httpStatus();
-        }
+        productItemManagementService.createProductItems(productItemRequests);
+
     }
 
     @PutMapping("/findAndMark")
-    public List<ProductItemRequest> findAndMarkAsSold() {
-        return new ArrayList<>();
+    public List<ProductItem> findAndMarkAsSold() {
+        return productItemRepository.findAll();
     }
 
 }

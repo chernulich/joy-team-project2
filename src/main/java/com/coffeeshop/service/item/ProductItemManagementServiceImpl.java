@@ -56,22 +56,24 @@ public class ProductItemManagementServiceImpl implements ProductItemManagementSe
                 productItem.setProduct(product);
                 productItemRepository.save(productItem);
             }
-            productQuantityRepository.save(plusQuantity(product, quantity));
+            Long productId = product.getId();
+            ProductQuantity productQuantity = productQuantityRepository.findByProductId(productId)
+                    .orElseThrow(() -> new ProductNotFoundException("Product quantity doesn't exist by product id: " + productId));
+            plusQuantity(productQuantity, quantity);
+            productQuantityRepository.save(productQuantity);
         }catch (ProductNotFoundException e) {
             e.httpStatus();
         }
     }
 
-    public ProductQuantity plusQuantity(Product product, Integer quantity) {
-        ProductQuantity productQuantity = productQuantityRepository.findByProductId(product.getId());
+    public void plusQuantity(ProductQuantity productQuantity, Integer quantity) {
         productQuantity.setQuantity(productQuantity.getQuantity() + quantity);
-        return productQuantity;
     }
 
-    public ProductQuantity minusQuantity(ProductItem productItem) {
-        ProductQuantity productQuantity = productQuantityRepository.findByProductId(productItem.getProduct().getId());
-        productQuantity.setQuantity(productQuantity.getQuantity() - 1);
-        return productQuantity;
+    public void minusQuantity(ProductQuantity productQuantity) {
+        if(productQuantity.getQuantity() != 0) {
+            productQuantity.setQuantity(productQuantity.getQuantity() - 1);
+        }
     }
 
     @Override

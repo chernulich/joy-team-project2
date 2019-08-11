@@ -5,9 +5,12 @@ import org.springframework.http.HttpStatus;
 
 public class ProductNotFoundException extends BaseException {
 
+    private static final String DEFAULT_MESSAGE = "Product doesn't exist by this id.";
+
     private static final HttpStatus BAD_REQUEST = HttpStatus.BAD_REQUEST;
 
     public ProductNotFoundException() {
+        super(DEFAULT_MESSAGE);
     }
 
     public ProductNotFoundException(String message) {
