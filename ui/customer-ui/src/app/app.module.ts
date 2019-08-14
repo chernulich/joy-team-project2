@@ -15,6 +15,9 @@ import {ProductDetailsComponent} from "./product-details/product-details.compone
 import { FooterComponent } from './footer/footer.component';
 import { ProductListHeaderComponent } from './product-list-header/product-list-header.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {ProductSearchModule} from "./product-search/product-search.module";
+
+
 
 @NgModule({
   declarations: [
@@ -35,6 +38,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     FormsModule,
     HttpClientModule,
     NgbModule,
+    ProductSearchModule
   ],
   providers: [],
   bootstrap: [AppComponent]

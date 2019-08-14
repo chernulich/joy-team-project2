@@ -25,9 +25,6 @@ export class ProductListComponent implements OnInit {
       this.productsList = data;
       this.json = JSON.stringify(this.productsList);
     });
-
-
-
   }
 
 }
