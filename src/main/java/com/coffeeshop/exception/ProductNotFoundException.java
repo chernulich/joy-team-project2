@@ -10,6 +10,7 @@ public class ProductNotFoundException extends BaseException {
     private static final HttpStatus BAD_REQUEST = HttpStatus.BAD_REQUEST;
 
     public ProductNotFoundException() {
+        super(DEFAULT_MESSAGE);
     }
 
     public ProductNotFoundException(String message) {
@@ -19,7 +20,7 @@ public class ProductNotFoundException extends BaseException {
     @Override
     public ErrorResponse errorResponse() {
         return ErrorResponse.builder()
-                .message(DEFAULT_MESSAGE)
+                .message(this.getMessage())
                 .build();
     }
 
