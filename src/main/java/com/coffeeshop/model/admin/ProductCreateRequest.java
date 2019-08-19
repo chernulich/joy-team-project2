@@ -17,6 +17,9 @@ import javax.validation.constraints.NotNull;
 public class ProductCreateRequest {
 
     @NotBlank
+    private String productName;
+
+    @NotBlank
     private String shortDescription;
 
     @Length(min = 6, max = 500)

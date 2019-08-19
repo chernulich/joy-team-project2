@@ -391,4 +391,14 @@
 
     </changeSet>
 
+    <changeSet id="3" author="Dana">
+
+        <addColumn tableName="PRODUCT">
+            <column name="PRODUCT_NAME" type="VARCHAR(100)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+        </addColumn>
+
+    </changeSet>
+
 </databaseChangeLog>

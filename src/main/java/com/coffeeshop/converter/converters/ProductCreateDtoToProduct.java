@@ -11,6 +11,7 @@ public class ProductCreateDtoToProduct implements Converter<ProductCreateRequest
     @Override
     public Product convert(ProductCreateRequest source) {
         return Product.builder()
+                .productName(source.getProductName())
                 .shortDescription(source.getShortDescription())
                 .description(source.getDescription())
                 .previewImage(source.getPreviewImage())
