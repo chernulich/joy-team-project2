@@ -15,7 +15,8 @@
   width: 100%;
 }
 
-.form-radio{
+.form-radio,
+.form-checkbox{
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
@@ -26,7 +27,8 @@
   margin-right: 0.5rem;
 }
 
-.form-radio:checked{
+.form-radio:checked,
+.form-checkbox:checked{
   border: 1px solid #5cb85c;
   padding: 1px;
   background-color: #5cb85c;

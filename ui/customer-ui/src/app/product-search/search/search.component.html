@@ -5,7 +5,7 @@
   <form [formGroup]="productSearchForm" (ngSubmit)="onFormSubmit()">
     <div class="">
       <input
-        [formControlName]="'search'"
+        [formControlName]="'productName'"
         type="text"
         class="form-control border-top-0 border-left-0 border-right-0 pl-0 search-button"
         placeholder="Search..."
@@ -42,63 +42,18 @@
           </div>
 
           <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
-            <div class="card-body show ml-2">
-              <div>
+            <div class="card-body show ml-2" [formGroupName]="'bitter'">
+              <div *ngFor="let mark of coffeeCharacteristicsMarks;">
                 <label class="form-check-label">
                   <input
-                    [formControlName]="'bitter'"
-                    type="radio"
-                    class="form-radio"
-                    value="1"
+                    [formControlName]="'bitter' + mark"
+                    type="checkbox"
+                    class="form-checkbox"
                     name="bitter"
-                  >1
+                  >{{mark}}
                 </label>
+              </div>
 
-              </div>
-              <div class="">
-                <label class="form-check-label">
-                  <input
-                    [formControlName]="'bitter'"
-                    type="radio"
-                    class="form-radio"
-                    value="2"
-                    name="bitter"
-                  >2
-                </label>
-              </div>
-              <div class="">
-                <label class="form-check-label">
-                  <input
-                    type="radio"
-                    class="form-radio"
-                    value="3"
-                    name="bitter"
-                    [formControlName]="'bitter'"
-                  >3
-                </label>
-              </div>
-              <div class="">
-                <label class="form-check-label">
-                  <input
-                    [formControlName]="'bitter'"
-                    type="radio"
-                    class="form-radio"
-                    value="4"
-                    name="bitter"
-                  >4
-                </label>
-              </div>
-              <div class="">
-                <label class="form-check-label">
-                  <input
-                    [formControlName]="'bitter'"
-                    type="radio"
-                    class="form-radio"
-                    value="5"
-                    name="bitter"
-                  >5
-                </label>
-              </div>
             </div>
           </div>
 
@@ -114,60 +69,14 @@
           </div>
 
           <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
-            <div class="card-body show ml-2">
-              <div class="">
+            <div class="card-body show ml-2" [formGroupName]="'sour'">
+              <div class="" *ngFor="let mark of coffeeCharacteristicsMarks;">
                 <label class="form-check-label">
                   <input
-                    [formControlName]="'sour'"
-                    type="radio"
-                    class="form-radio"
-                    value="1"
-                    name="sour"
-                  >1
-                </label>
-              </div>
-              <div class="">
-                <label class="form-check-label">
-                  <input
-                    [formControlName]="'sour'"
-                    type="radio"
-                    class="form-radio"
-                    value="2"
-                    name="sour"
-                  >2
-                </label>
-              </div>
-              <div class="">
-                <label class="form-check-label">
-                  <input
-                    [formControlName]="'sour'"
-                    type="radio"
-                    class="form-radio"
-                    value="3"
-                    name="sour"
-                  >3
-                </label>
-              </div>
-              <div class="">
-                <label class="form-check-label">
-                  <input
-                    [formControlName]="'sour'"
-                    type="radio"
-                    class="form-radio"
-                    value="4"
-                    name="sour"
-                  >4
-                </label>
-              </div>
-              <div class="">
-                <label class="form-check-label">
-                  <input
-                    [formControlName]="'sour'"
-                    type="radio"
-                    class="form-radio"
-                    value="5"
-                    name="sour"
-                  >5
+                    [formControlName]="'sour' + mark"
+                    type="checkbox"
+                    class="form-checkbox"
+                  >{{mark}}
                 </label>
               </div>
             </div>
@@ -184,60 +93,14 @@
           </div>
 
           <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
-            <div class="card-body show ml-2">
-              <div class="form-check">
+            <div class="card-body show ml-2" [formGroupName]="'strong'">
+              <div class="form-check" *ngFor="let mark of coffeeCharacteristicsMarks;">
                 <label class="form-check-label">
                   <input
-                    [formControlName]="'strong'"
-                    type="radio"
-                    class="form-radio"
-                    value="1"
-                    name="strong"
-                  >1
-                </label>
-              </div>
-              <div class="form-check">
-                <label class="form-check-label">
-                  <input
-                    [formControlName]="'strong'"
-                    type="radio"
-                    class="form-radio"
-                    value="2"
-                    name="strong"
-                  >2
-                </label>
-              </div>
-              <div class="form-check">
-                <label class="form-check-label">
-                  <input
-                    [formControlName]="'strong'"
-                    type="radio"
-                    class="form-radio"
-                    value="3"
-                    name="strong"
-                  >3
-                </label>
-              </div>
-              <div class="form-check">
-                <label class="form-check-label">
-                  <input
-                    [formControlName]="'strong'"
-                    type="radio"
-                    class="form-radio"
-                    value="4"
-                    name="strong"
-                  >4
-                </label>
-              </div>
-              <div class="form-check">
-                <label class="form-check-label">
-                  <input
-                    [formControlName]="'strong'"
-                    type="radio"
-                    class="form-radio"
-                    value="5"
-                    name="strong"
-                  >5
+                    [formControlName]="'strong' + mark"
+                    type="checkbox"
+                    class="form-checkbox"
+                  >{{mark}}
                 </label>
               </div>
             </div>
@@ -360,7 +223,7 @@
 
     <div class="font-weight-bold my-4 text-center">
       <button type="submit" class="btn btn-outline-success button-reset mb-2">APPLY FILTER</button>
-      <button type="submit" class="btn btn-outline-secondary button-reset">RESET FILTER</button>
+      <button type="reset" class="btn btn-outline-secondary button-reset" (click)="onReset()">RESET FILTER</button>
     </div>
 
   </form>

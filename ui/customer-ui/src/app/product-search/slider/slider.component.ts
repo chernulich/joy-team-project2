@@ -2,26 +2,29 @@ import {
   AfterViewChecked,
   Component,
   OnInit,
-  Input,
+  Input
 } from '@angular/core';
+import {SliderService} from "../service/slider-service/slider.service";
 
 @Component({
   selector: 'app-slider',
   templateUrl: './slider.component.html',
   styleUrls: ['./slider.component.css']
 })
-export class SliderComponent implements OnInit,AfterViewChecked {
+export class SliderComponent implements OnInit {
 
-  constructor() { }
+  constructor(private sliderService: SliderService) { }
 
   handle1;
   handle2;
   sliderFill;
   slider;
   percent: number;
-  isInitialized = false;
   currLower: number;
   currUpper: number;
+  currHandle1PercentPosition: number;
+  currHandle2PercentPosition: number;
+
 
 
   @Input('handleSize') handleSize: number = 10;
@@ -32,10 +35,22 @@ export class SliderComponent implements OnInit,AfterViewChecked {
   @Input('sliderHeight') sliderHeight: number = 4;
   @Input('handleType') handleType: string = 'square';
 
+
   ngOnInit() {
+    this.sliderService.initialSliderValues.next({lowerPrice: this.lowerValue, upperPrice: this.upperValue});
+    this.sliderService.sliderReset
+      .subscribe(() => {
+        this.slideInit();
+        this.calcHandlePositionPercent();
+        this.calcRangeValues();
+        this.sliderFill.style.left = (parseInt(getComputedStyle(this.handle1).left) + this.handle1.offsetWidth) + "px";
+        this.sliderFill.style.width =  (parseInt(getComputedStyle(this.handle1).left) - this.handle1.offsetWidth) + parseInt(getComputedStyle(this.handle2).left) + "px";
+      });
     this.registerElems();
     this.slideInit();
+    this.calcHandlePositionPercent();
     this.calcRangeValues();
+    window.addEventListener('resize',this.onResize.bind(this));
   }
 
   registerElems(){
@@ -45,8 +60,12 @@ export class SliderComponent implements OnInit,AfterViewChecked {
     this.slider = document.querySelector('.slider');
   }
 
-  ngAfterViewChecked(){
+  calcHandlePositionPercent(){
 
+    let handle1Left = parseInt(getComputedStyle(this.handle1).left);
+    let handle2Left = parseInt(getComputedStyle(this.handle2).left);
+    this.currHandle1PercentPosition = (handle1Left / (Math.ceil(this.slider.offsetWidth)));
+    this.currHandle2PercentPosition = (handle2Left / (Math.ceil(this.slider.offsetWidth) - this.handle2.offsetWidth));
   }
 
   handleMouseDown(event){
@@ -64,7 +83,7 @@ export class SliderComponent implements OnInit,AfterViewChecked {
     }
   }
 
-  // calPercent(){
+  // calcPercent(){
   //   let sliderFillWidth = parseInt(getComputedStyle(this.sliderFill).width);
   //   let sliderWidth = parseInt(getComputedStyle(this.slider).width);
   //   let handleWidth = this.handle1.offsetWidth;
@@ -72,10 +91,14 @@ export class SliderComponent implements OnInit,AfterViewChecked {
   // }
 
   calcRangeValues(){
-    let handle1Left = this.handle1.offsetLeft;
-    this.currLower =  Math.floor(this.lowerValue + (this.upperValue - this.lowerValue) *  (handle1Left / (this.slider.offsetWidth - this.handle1.offsetWidth * 2)));
-    let handle2Left = this.handle2.offsetLeft - this.handle2.offsetWidth;
-    this.currUpper =  Math.floor(this.lowerValue + (this.upperValue - this.lowerValue) *  (handle2Left / (this.slider.offsetWidth - this.handle2.offsetWidth * 2)));
+    let lowerValue = Math.floor(+this.currHandle1PercentPosition.toFixed(2) * +this.upperValue);
+    let upperValue = Math.floor(+this.currHandle2PercentPosition.toFixed(2) * +this.upperValue);
+    this.currLower =  lowerValue;
+    this.currUpper =  upperValue;
+    this.sliderService.sliderValueChanges.next({
+      lowerPrice: lowerValue,
+      upperPrice: upperValue
+    })
   }
 
   posititonAt(clientX,shiftX,element){
@@ -98,11 +121,26 @@ export class SliderComponent implements OnInit,AfterViewChecked {
         (<HTMLElement>this.sliderFill).style.left = parseInt(getComputedStyle(this.handle1).left) + element.offsetWidth + 'px';
       }
     }
+    this.calcHandlePositionPercent();
     this.calcRangeValues();
   }
 
   handleMouseUp(){
     document.onmousemove =  null;
+  }
+
+  onResize(){
+
+    let sliderWidth = Math.ceil(this.slider.offsetWidth);
+    this.handle1.style.left =  Math.ceil(sliderWidth * this.currHandle1PercentPosition) + 'px';
+    this.handle2.style.left = Math.ceil(sliderWidth * this.currHandle2PercentPosition - this.handle2.offsetWidth) + 'px';
+    let handle1Left = parseInt(getComputedStyle(this.handle1).left);
+    let handle2Left = parseInt(getComputedStyle(this.handle2).left);
+    let resizedWidth =  handle2Left - (handle1Left + this.handle1.offsetWidth);
+    (<HTMLElement>this.sliderFill).style.width = resizedWidth + "px";
+    (<HTMLElement>this.sliderFill).style.left = parseInt(getComputedStyle(this.handle1).left) +  this.handle1.offsetWidth + "px";
+    // this.calcHandlePositionPercent();
+    //console.log("Handle 1: " + this.currHandle1PercentPosition, "Handle 2: " + this.currHandle2PercentPosition);
   }
 
   slideInit(){
@@ -111,11 +149,7 @@ export class SliderComponent implements OnInit,AfterViewChecked {
     (<HTMLElement>handle1).onmousedown = this.handleMouseDown.bind(this);
     (<HTMLElement>handle2).onmousedown = this.handleMouseDown.bind(this);
     document.onmouseup = this.handleMouseUp.bind(this);
-
-    if(!this.isInitialized){
-      this.sliderFill.style.width = this.sliderFill.offsetWidth - this.handle1.offsetWidth * 2 + "px";
-      this.sliderFill.style.left = this.handle1.offsetWidth + "px";
-      this.handle1.style.height = this.handleSize + "px";
+     this.handle1.style.height = this.handleSize + "px";
       this.handle1.style.width = this.handleSize + "px";
       this.handle2.style.height = this.handleSize + "px";
       this.handle2.style.width = this.handleSize + "px";
@@ -123,6 +157,10 @@ export class SliderComponent implements OnInit,AfterViewChecked {
       this.sliderFill.style.background = this.fillColor;
       this.handle1.style.background = this.handleColor;
       this.handle2.style.background = this.handleColor;
+      this.handle1.style.left = 0 + "px";
+      this.handle2.style.left = Math.ceil(this.slider.offsetWidth) - this.handle2.offsetWidth + "px";
+      this.sliderFill.style.width = this.sliderFill.offsetWidth - this.handle1.offsetWidth * 2 + "px";
+      this.sliderFill.style.left = this.handle1.offsetWidth + "px";
       if(this.handleType === 'square'){
         this.handle2.style.borderRadius = '';
         this.handle1.style.borderRadius = '';
@@ -131,13 +169,5 @@ export class SliderComponent implements OnInit,AfterViewChecked {
         this.handle2.style.borderRadius = '50%';
         this.handle1.style.borderRadius = '50%';
       }
-      this.isInitialized = true;
-    }
   }
-
-
-  // onHClick(event,t){
-  //   let target = event.target;
-  //   console.log(t);
-  // }
 }

@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import {HttpService} from "./service/http/http.service";
+import {Product} from "../model/product.model";
+import {ProductsDataStorageService} from "./service/data-storage/products-data-storage.service";
 
 @Component({
   selector: 'app-product-search',
@@ -7,9 +10,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProductSearchComponent implements OnInit {
 
-  constructor() { }
+  constructor(private httpService: HttpService,
+              private productDataStorage: ProductsDataStorageService) { }
 
   ngOnInit() {
+    this.httpService.getAllProducts()
+      .subscribe((products: Product[]) => {
+        this.productDataStorage.productStore.next(products);
+      })
   }
 
 }
