@@ -18,6 +18,9 @@ import java.time.LocalDateTime;
 @Table(name = "PRODUCT")
 public class Product extends BaseDate {
 
+    @Column(name = "PRODUCT_NAME", nullable = false, unique = true)
+    private String productName;
+
     @Column(name = "SHORT_DESCRIPTION", length = 100, nullable = false)
     private String shortDescription;
 
@@ -42,10 +45,11 @@ public class Product extends BaseDate {
     private Integer version;
 
     @Builder
-    public Product(Long id, LocalDateTime createdOn, LocalDateTime updatedOn, String shortDescription,
+    public Product(Long id, LocalDateTime createdOn, LocalDateTime updatedOn, String productName, String shortDescription,
                    String description, String previewImage, Double unitPrice,
                    ProductCategory productCategory, boolean available, Integer version) {
         super(id, createdOn, updatedOn);
+        this.productName = productName;
         this.shortDescription = shortDescription;
         this.description = description;
         this.previewImage = previewImage;
