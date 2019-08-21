@@ -4,7 +4,7 @@ import {
   OnInit,
   Input
 } from '@angular/core';
-import {SliderService} from "../service/slider-service/slider.service";
+import {SliderService} from "../../service/slider-service/slider.service";
 
 @Component({
   selector: 'app-slider',
