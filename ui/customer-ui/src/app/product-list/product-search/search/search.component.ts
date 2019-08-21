@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup} from "@angular/forms";
 import {SliderService} from "../service/slider-service/slider.service";
 import {SliderValues} from "../service/slider-service/slider.service";
-import {Product} from "../../model/product.model";
+import {Product} from "../../../model/product.model";
 import {ProductsDataStorageService} from "../service/data-storage/products-data-storage.service";
 
 interface Filter {
