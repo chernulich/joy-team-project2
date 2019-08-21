@@ -61,7 +61,7 @@ public class ProductSearchServiceImpl implements ProductSearchService {
 
     @Override
     public List<RichProductResponse> searchProductByParameters() {
-        List<Long> ids = productRepository.getAllIds();
+        List<Long> ids = productRepository.getAllIds().orElseThrow(ProductNotFoundException::new);
         return ids.stream()
                 .map(this::findProductById)
                 .collect(Collectors.toList());
