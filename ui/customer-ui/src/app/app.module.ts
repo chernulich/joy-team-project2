@@ -16,6 +16,7 @@ import { FooterComponent } from './footer/footer.component';
 import { ProductListHeaderComponent } from './product-list-header/product-list-header.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {ProductSearchModule} from "./product-list/product-search/product-search.module";
+// import {ProductSearchComponent} from "./product-list/product-search/product-search.component";
 
 
 
@@ -30,7 +31,6 @@ import {ProductSearchModule} from "./product-list/product-search/product-search.
     FooterComponent,
     CheckoutComponent,
     ProductListHeaderComponent,
-    ProductSearchModule
   ],
   imports: [
     BrowserModule,
@@ -39,6 +39,7 @@ import {ProductSearchModule} from "./product-list/product-search/product-search.
     FormsModule,
     HttpClientModule,
     NgbModule,
+    ProductSearchModule
   ],
   providers: [],
   bootstrap: [AppComponent]
