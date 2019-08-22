@@ -6,7 +6,7 @@ import {ResultComponent} from "./result/result.component";
 
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {CommonModule} from "@angular/common";
-import {SliderComponent} from "./slider/slider.component";
+import {SliderComponent} from "./search/slider/slider.component";
 
 
 @NgModule({
