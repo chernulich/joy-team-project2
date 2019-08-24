@@ -21,4 +21,5 @@ export class ExampleHttpService {
   saveExample(name: string) {
     return this.httpClient.post<Example>('/api/examples', {name: name});
   }
+
 }
