@@ -11,7 +11,9 @@ import com.coffeeshop.model.web.product.ProductRequest;
 import com.coffeeshop.model.web.productDetails.CharacteristicResponse;
 import com.coffeeshop.model.web.productDetails.InStockResponse;
 import com.coffeeshop.model.web.productDetails.RichProductResponse;
+import com.coffeeshop.repository.search.ProductSearchRepository;
 import org.apache.commons.io.IOUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,35 +25,39 @@ import java.util.Collections;
 @RequestMapping("/api/customer")
 public class ProductController {
 
+    @Autowired
+    private ProductSearchRepository searchRepository;
+
     @PostMapping("/products")
     public ProductListResponse getProductList(@RequestBody ProductRequest productRequest) {
-        return ProductListResponse.builder()
-                .popular(ProductResponse.builder()
-                        .productId(1L)
-                        .title("Kenya AA")
-                        .previewImage("image1")
-                        .shortDescription("It is very good coffee!")
-                        .price(30.00)
-                        .inStockCount(20)
-                        .type(ProductType.COFFEE.name())
-                        .productParametersResponse(ProductParametersResponse.builder()
-                                .flavour("strong")
-                                .rate(1.0)
-                                .coffeeType(CoffeeType.ARABICA.name().toLowerCase())
-                                .decaf(true).build()).build())
-                .products(Collections.singletonList(ProductResponse.builder()
-                        .productId(2L)
-                        .title("Brazilian Santos")
-                        .previewImage("image2")
-                        .shortDescription("It is very good coffee too!")
-                        .price(45.00)
-                        .inStockCount(360)
-                        .type(ProductType.COFFEE.name())
-                        .productParametersResponse(ProductParametersResponse.builder()
-                                .flavour("strong")
-                                .rate(1.0)
-                                .coffeeType(CoffeeType.ARABICA.name().toLowerCase())
-                                .decaf(false).build()).build())).build();
+        return searchRepository.getProductsViaSearchProductRequest(productRequest);
+//        return ProductListResponse.builder()
+//                .popular(ProductResponse.builder()
+//                        .productId(1L)
+//                        .title("Kenya AA")
+//                        .previewImage("image1")
+//                        .shortDescription("It is very good coffee!")
+//                        .price(30.00)
+//                        .inStockCount(20)
+//                        .type(ProductType.COFFEE.name())
+//                        .productParametersResponse(ProductParametersResponse.builder()
+//                                .flavour("strong")
+//                                .rate(1.0)
+//                                .coffeeType(CoffeeType.ARABICA.name().toLowerCase())
+//                                .decaf(true).build()).build())
+//                .products(Collections.singletonList(ProductResponse.builder()
+//                        .productId(2L)
+//                        .title("Brazilian Santos")
+//                        .previewImage("image2")
+//                        .shortDescription("It is very good coffee too!")
+//                        .price(45.00)
+//                        .inStockCount(360)
+//                        .type(ProductType.COFFEE.name())
+//                        .productParametersResponse(ProductParametersResponse.builder()
+//                                .flavour("strong")
+//                                .rate(1.0)
+//                                .coffeeType(CoffeeType.ARABICA.name().toLowerCase())
+//                                .decaf(false).build()).build())).build();
     }
 
     @GetMapping("/products/{id}")

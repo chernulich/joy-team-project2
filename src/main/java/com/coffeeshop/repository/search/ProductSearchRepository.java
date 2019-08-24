@@ -1,5 +1,8 @@
 package com.coffeeshop.repository.search;
 
-public interface ProductSearchRepository {
+import com.coffeeshop.model.web.product.ProductListResponse;
+import com.coffeeshop.model.web.product.ProductRequest;
 
+public interface ProductSearchRepository {
+    public ProductListResponse getProductsViaSearchProductRequest(ProductRequest request);
 }

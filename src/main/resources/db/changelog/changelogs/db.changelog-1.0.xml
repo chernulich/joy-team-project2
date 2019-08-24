@@ -16,7 +16,7 @@
                 <constraints nullable="false"/>
             </column>
 
-            <column name="DESCRIPTION" type="LONGTEXT">
+            <column name="DESCRIPTION" type="VARCHAR(500)">
                 <constraints nullable="false"/>
             </column>
 
