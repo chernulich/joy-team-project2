@@ -15,8 +15,6 @@ public class ProductWeightQuantityRequest {
     @ApiModelProperty(example = "123123")
     private Long productId;
 
-    private Double weight;
-
     @ApiModelProperty(example = "10")
     private Integer quantity;
 }
