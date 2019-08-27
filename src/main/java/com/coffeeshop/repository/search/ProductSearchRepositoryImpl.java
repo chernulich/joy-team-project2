@@ -32,16 +32,29 @@ public class ProductSearchRepositoryImpl implements ProductSearchRepository {
         String search = request.getSearch();
         String sortBy = request.getSortBy();
 
-        String query = "SELECT p FROM PRODUCT p WHERE p.PRODUCT_NAME LIKE " + search + "% " +
-                "INNER JOIN PRODUCT_COFFEE WHERE PRICE BETWEEN " + priceMin + " AND " + priceMax +
-                " AND SOUR BETWEEN " + sourFrom + " AND " + sourTo +
-                " AND STRONG BETWEEN " + strongFrom + " AND " + strongTo +
-                " AND BITTER BETWEEN " + bitterFrom + " AND " + bitterTo + " ORDER BY " + sortBy +
-                " ON p.ID = PRODUCT_COFFEE.PRODUCT_ID";
+//        String query = "SELECT p FROM PRODUCT p WHERE p.PRODUCT_NAME LIKE " + search + "% " +
+//                "JOIN PRODUCT_COFFEE pc WHERE pc.PRICE BETWEEN :priceMin AND :priceMax" +
+//                " AND pc.SOUR BETWEEN :sourFrom AND :sourTo" +
+//                " AND pc.STRONG BETWEEN :strongFrom AND :strongTo" +
+//                " AND pc.BITTER BETWEEN :bitterFrom AND :bitterTo ORDER BY :sortBy" +
+//                " ON p.ID = pc.PRODUCT_ID";
+        String query = "select pc from productCoffee pc join pc.product p join ";
+//                "(select p from product p where p.productName" + "like :search%)";
 
-        List<ProductResponse> responseList = new ArrayList<>();
+                List<ProductResponse> responseList = new ArrayList<>();
         TypedQuery<ProductResponse> typedQuery = entityManager
                 .createQuery(query, ProductResponse.class);
+//        typedQuery.setParameter("priceMin", priceMin);
+//        typedQuery.setParameter("priceMax", priceMax);
+//        typedQuery.setParameter("sourFrom", sourFrom);
+//        typedQuery.setParameter("sourTo", sourTo);
+//        typedQuery.setParameter("strongFrom", strongFrom);
+//        typedQuery.setParameter("strongTo", strongTo);
+//        typedQuery.setParameter("bitterFrom", bitterFrom);
+//        typedQuery.setParameter("bitterTo", bitterTo);
+//        typedQuery.setParameter("sortBy", sortBy);
+//        typedQuery.setParameter("search", request.getSearch());
+
         responseList = typedQuery.getResultList();
 
         return ProductListResponse.builder().popular(responseList.get(0)).products(responseList).build();
