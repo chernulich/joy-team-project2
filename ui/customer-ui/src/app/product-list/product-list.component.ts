@@ -17,14 +17,14 @@ export class ProductListComponent implements OnInit {
 
 
   ngOnInit() {
-    this.getProductList(this.defaultProductListRequest);
+    // this.getProductList(this.defaultProductListRequest);
   }
 
-  getProductList(productListRequest: ProductListRequest){
-    return this.productListService.getProductList(productListRequest).subscribe(data => {
-      this.productsList = data;
-      this.json = JSON.stringify(this.productsList);
-    });
-  }
+  // getProductList(productListRequest: ProductListRequest){
+  //   return this.productListService.getProductList(productListRequest).subscribe(data => {
+  //     this.productsList = data;
+  //     this.json = JSON.stringify(this.productsList);
+  //   });
+  // }
 
 }

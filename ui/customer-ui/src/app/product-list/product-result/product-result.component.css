@@ -1,0 +1,29 @@
+
+.btn {
+  width: 100%;
+  border-radius: 0 !important;
+}
+
+.card {
+  margin-left: 10rem;
+  box-shadow: 2vh 2vh 3vh 0 rgba(0, 0, 0, 0.25);
+  border-radius: 0 !important;
+
+}
+
+.card-left:hover{
+  box-shadow: 2vh 2vh 4vh 1vh rgba(0, 0, 0, 0.25);
+}
+.card-right{
+  border-left-style: hidden;
+}
+.card-left{
+  border-right-style: hidden;
+}
+.number-input{
+  width: 5rem;
+}
+.number-input:hover{
+  border-color: green!important;
+  box-shadow: 1vh 1vh 1.5vh 0.5vh rgba(0, 0, 0, 0.25);
+}
