@@ -56,7 +56,10 @@ public class Runner implements CommandLineRunner {
         productManagementService.createProductAndQuantity(ProductCreateRequest.builder()
                 .productName("Mary-Geoise")
                 .shortDescription("Best coffee in the world")
-                .description("Mary-Geoise is located on the Red Line and serves as the official route for people to cross between the two halves of the Grand Line, although only people acting inside the law are allowed passage;")
+                .description("Mary-Geoise is located on the Red Line " +
+                        "and serves as the official route for people to " +
+                        "cross between the two halves of the Grand Line, " +
+                        "although only people acting inside the law are allowed passage;")
                 .productCategory(ProductCategory.COFFEE)
                 .previewImage("http://customer-ui/products/2/image/2")
                 .unitPrice(159.9)
