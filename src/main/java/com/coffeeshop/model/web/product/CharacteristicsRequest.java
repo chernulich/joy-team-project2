@@ -33,6 +33,7 @@ public class CharacteristicsRequest {
     @ApiModelProperty(example = "false")
     private Boolean decaf;
 
+    @ApiModelProperty(example = "true")
     private Boolean ground;
 
     @ApiModelProperty(example = "arabica")

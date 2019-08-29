@@ -29,19 +29,13 @@ public class ProductSearchRepositoryImpl implements ProductSearchRepository {
         Integer strongTo = request.getCharacteristics().getStrongTo();
         Integer bitterFrom = request.getCharacteristics().getBitterFrom();
         Integer bitterTo = request.getCharacteristics().getBitterTo();
-        String search = request.getSearch();
         String sortBy = request.getSortBy();
 
-//        String query = "SELECT p FROM PRODUCT p WHERE p.PRODUCT_NAME LIKE " + search + "% " +
-//                "JOIN PRODUCT_COFFEE pc WHERE pc.PRICE BETWEEN :priceMin AND :priceMax" +
-//                " AND pc.SOUR BETWEEN :sourFrom AND :sourTo" +
-//                " AND pc.STRONG BETWEEN :strongFrom AND :strongTo" +
-//                " AND pc.BITTER BETWEEN :bitterFrom AND :bitterTo ORDER BY :sortBy" +
-//                " ON p.ID = pc.PRODUCT_ID";
-        String query = "select pc from productCoffee pc join pc.product p join ";
-//                "(select p from product p where p.productName" + "like :search%)";
-
-                List<ProductResponse> responseList = new ArrayList<>();
+        String query = "select new com.coffeeshop.model.web.product.ProductRequest(pc.product.id, p.title, " +
+                "p.shortDescription, p.price, p.previewImage, pq.quantity)" +
+                "from ProductCoffee pc, Product p, ProductQuantity pq where p.id = pc.product.id" +
+                " and  pq.product.id = pc.product.id";
+        List<ProductResponse> responseList = new ArrayList<>();
         TypedQuery<ProductResponse> typedQuery = entityManager
                 .createQuery(query, ProductResponse.class);
 //        typedQuery.setParameter("priceMin", priceMin);
@@ -53,7 +47,6 @@ public class ProductSearchRepositoryImpl implements ProductSearchRepository {
 //        typedQuery.setParameter("bitterFrom", bitterFrom);
 //        typedQuery.setParameter("bitterTo", bitterTo);
 //        typedQuery.setParameter("sortBy", sortBy);
-//        typedQuery.setParameter("search", request.getSearch());
 
         responseList = typedQuery.getResultList();
 
