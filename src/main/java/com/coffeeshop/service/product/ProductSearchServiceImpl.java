@@ -78,9 +78,11 @@ public class ProductSearchServiceImpl implements ProductSearchService {
                 .strong(productCoffee.getStrong())
                 .build();
 
+        Integer quantityAvailable = productItem.getWeightKg() * productQuantity.getQuantity();
+
         InStockResponse inStockResponse = InStockResponse.builder()
                 .isAvailable(product.isAvailable())
-                .quantityAvailable(productQuantity.getQuantity())
+                .quantityAvailable(quantityAvailable)
                 .build();
 
         String[] imageLinks = createImageLinks(product.getId(), productImages.size());
