@@ -92,7 +92,7 @@ public class ProductSearchServiceImpl implements ProductSearchService {
                 .description(product.getDescription())
                 .characteristicResponse(characteristicResponse)
                 .inStockResponse(inStockResponse)
-                .productName(product.getProductName())
+                .productName(product.getTitle())
                 .quantityAvailableKg(productItem.getWeightKg())
                 .productImages(imageLinks)
                 .build();

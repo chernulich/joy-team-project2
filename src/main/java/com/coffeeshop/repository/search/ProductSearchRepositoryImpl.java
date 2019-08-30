@@ -31,10 +31,7 @@ public class ProductSearchRepositoryImpl implements ProductSearchRepository {
         Integer bitterTo = request.getCharacteristics().getBitterTo();
         String sortBy = request.getSortBy();
 
-        String query = "select new com.coffeeshop.model.web.product.ProductRequest(pc.product.id, p.title, " +
-                "p.shortDescription, p.price, p.previewImage, pq.quantity)" +
-                "from ProductCoffee pc, Product p, ProductQuantity pq where p.id = pc.product.id" +
-                " and  pq.product.id = pc.product.id";
+        String query = "select new com.coffeeshop.model.web.product.ProductResponse(p.title, p.shortDescription, p.unitPrice, p.previewImage) from Product p ";
         List<ProductResponse> responseList = new ArrayList<>();
         TypedQuery<ProductResponse> typedQuery = entityManager
                 .createQuery(query, ProductResponse.class);
