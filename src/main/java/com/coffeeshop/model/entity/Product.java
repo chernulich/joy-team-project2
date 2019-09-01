@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
 public class Product extends BaseDate {
 
     @Column(name = "PRODUCT_NAME", nullable = false, unique = true)
-    private String title;
+    private String productName;
 
     @Column(name = "SHORT_DESCRIPTION", length = 100, nullable = false)
     private String shortDescription;
@@ -49,7 +49,7 @@ public class Product extends BaseDate {
                    String description, String previewImage, Double unitPrice,
                    ProductCategory productCategory, boolean available, Integer version) {
         super(id, createdOn, updatedOn);
-        this.title = productName;
+        this.productName = productName;
         this.shortDescription = shortDescription;
         this.description = description;
         this.previewImage = previewImage;

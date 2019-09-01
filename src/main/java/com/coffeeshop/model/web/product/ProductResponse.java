@@ -9,14 +9,13 @@ import lombok.*;
 @Builder
 public class ProductResponse {
 
-//    private Long productId;
+    private Long productId;
     private String title;
     private String shortDescription;
-//    private String type;
+    private String type;
     private Double unitPrice;
     private String previewImage;
-
-//    private Integer quantity; //inStockCount
+    private Integer quantity;
 //    private ProductParametersResponse productParametersResponse;
 
 

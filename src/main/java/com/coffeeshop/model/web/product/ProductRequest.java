@@ -18,6 +18,9 @@ public class ProductRequest {
     @ApiModelProperty(example = "10")
     private Integer results;
 
+    @ApiModelProperty(example = "Ala")
+    private String search;
+
     @ApiModelProperty(example = "10")
     private Double priceMin;
 
