@@ -35,6 +35,9 @@ public class ProductController {
                         .availableAmount(20)
                         .type(ProductType.COFFEE.name())
                         .productParametersResponse(ProductParametersResponse.builder()
+                                .sour(1)
+                                .bitter(3)
+                                .strong(5)
                                 .coffeeType(CoffeeType.ARABICA.name().toLowerCase())
                                 .decaf(true).build()).build())
                 .products(Collections.singletonList(ProductResponse.builder()
@@ -46,6 +49,9 @@ public class ProductController {
                         .availableAmount(360)
                         .type(ProductType.COFFEE.name())
                         .productParametersResponse(ProductParametersResponse.builder()
+                                .sour(2)
+                                .bitter(2)
+                                .strong(2)
                                 .coffeeType(CoffeeType.ARABICA.name().toLowerCase())
                                 .decaf(false).build()).build())).build();
     }
