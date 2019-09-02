@@ -15,7 +15,7 @@ public class ProductResponse {
     private String type;
     private String previewImage;
     private Double price;
-    private Integer inStockCount;
+    private Integer availableAmount;
     private ProductParametersResponse productParametersResponse;
 
 
