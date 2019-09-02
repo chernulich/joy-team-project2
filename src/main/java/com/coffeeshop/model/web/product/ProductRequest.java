@@ -27,7 +27,7 @@ public class ProductRequest {
     @ApiModelProperty(example = "100")
     private Double priceMax;
 
-    @ApiModelProperty(example = "popular")
+    @ApiModelProperty(example = "price")
     private String sortBy;
 
     private CharacteristicsRequest characteristics;

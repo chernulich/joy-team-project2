@@ -19,46 +19,58 @@ public class ProductSearchRepositoryImpl implements ProductSearchRepository {
 
     @Override
     public ProductListResponse getProductsViaSearchProductRequest(ProductRequest request) {
-        Integer page = request.getPage();
-        Integer results = request.getResults();
-        String search = request.getSearch();
-        Integer sourFrom = request.getCharacteristics().getSourFrom();
-        Integer sourTo = request.getCharacteristics().getSourTo();
-        Double priceMin = request.getPriceMin();
-        Double priceMax = request.getPriceMax();
-        Integer strongFrom = request.getCharacteristics().getStrongFrom();
-        Integer strongTo = request.getCharacteristics().getStrongTo();
-        Integer bitterFrom = request.getCharacteristics().getBitterFrom();
-        Integer bitterTo = request.getCharacteristics().getBitterTo();
-        String sortBy = request.getSortBy();
 
-//        StringBuilder query = new StringBuilder();
-//        query.append("select new com.coffeeshop.model.web.product.ProductResponse");
-//        query.append("pc.product.id, p.productName, p.shortDescription, p.unitPrice, p.previewImage");
+        String query = getQuery(request.getSortBy());
 
-        String query = "select new com.coffeeshop.model.web.product.ProductResponse" +
-                "(pc.product.id, p.productName, p.shortDescription, p.productCategory, p.unitPrice, p.previewImage, pq.quantity)" +
-                " from Product p " +
-                " join ProductCoffee pc on p.id=pc.product.id" +
-                " join ProductQuantity pq on pc.product.id=pq.product.id " +
-                " where p.productName like :search " +
-                " ";
         List<ProductResponse> responseList = new ArrayList<>();
-        TypedQuery<ProductResponse> typedQuery = entityManager
-                .createQuery(query, ProductResponse.class);
-//        typedQuery.setParameter("priceMin", priceMin);
-//        typedQuery.setParameter("priceMax", priceMax);
-//        typedQuery.setParameter("sourFrom", sourFrom);
-//        typedQuery.setParameter("sourTo", sourTo);
-//        typedQuery.setParameter("strongFrom", strongFrom);
-//        typedQuery.setParameter("strongTo", strongTo);
-//        typedQuery.setParameter("bitterFrom", bitterFrom);
-//        typedQuery.setParameter("bitterTo", bitterTo);
-//        typedQuery.setParameter("sortBy", sortBy);
-        typedQuery.setParameter("search", search.concat("%"));
+        TypedQuery<ProductResponse> typedQuery = entityManager.createQuery(query, ProductResponse.class);
+        typedQuery.setParameter("priceMin", request.getPriceMin());
+        typedQuery.setParameter("priceMax", request.getPriceMax());
+        typedQuery.setParameter("sourFrom", request.getCharacteristics().getSourFrom());
+        typedQuery.setParameter("sourTo", request.getCharacteristics().getSourTo());
+        typedQuery.setParameter("strongFrom", request.getCharacteristics().getStrongFrom());
+        typedQuery.setParameter("strongTo", request.getCharacteristics().getStrongTo());
+        typedQuery.setParameter("bitterFrom", request.getCharacteristics().getBitterFrom());
+        typedQuery.setParameter("bitterTo", request.getCharacteristics().getBitterTo());
+        typedQuery.setParameter("decaf", request.getCharacteristics().getDecaf());
+        typedQuery.setParameter("ground", request.getCharacteristics().getGround());
+        typedQuery.setParameter("search", request.getSearch().concat("%"));
 
         responseList = typedQuery.getResultList();
-
+        if (responseList.isEmpty()) {
+            return new ProductListResponse(new ProductResponse(), new ArrayList<ProductResponse>());
+        }
         return ProductListResponse.builder().popular(responseList.get(0)).products(responseList).build();
+    }
+
+    private String getQuery(String sortBy) {
+        StringBuilder query = new StringBuilder()
+                .append("select new com.coffeeshop.model.web.product.ProductResponse")
+                .append("(pc.product.id, p.productName, p.shortDescription, p.unitPrice, p.previewImage, pq.quantity,")
+                .append(" new com.coffeeshop.model.web.product.ProductParametersResponse")   //TODO
+                .append("(pc.strong, pc.bitter, pc.sour, pc.decaf))")                        //TODO
+                .append(" from Product p ")
+                .append(" join ProductCoffee pc on p.id=pc.product.id")
+                .append(" join ProductQuantity pq on pc.product.id=pq.product.id ");
+        if (sortBy.equals("popular")) {
+            query.append(" join ProductItem pi on pi.product.id=pq.product.id");             //TODO
+        }
+        query.append(" where p.productName like :search")
+                .append(" and p.unitPrice between :priceMin and :priceMax")
+                .append(" and pc.bitter between :bitterFrom and :bitterTo")
+                .append(" and pc.sour between :sourFrom and :sourTo")
+                .append(" and pc.strong between :strongFrom and :strongTo")
+                .append(" and pc.decaf = :decaf")
+                .append(" and pc.ground = :ground")
+                .append(" order by");
+
+        if (sortBy.equals("price")) {
+            query.append(" p.unitPrice");
+        }else if (sortBy.equals("name")) {
+            query.append(" p.productName");
+        }else {
+            query.append(" pi.");                    //TODO
+        }
+        return query.toString();
     }
 }
