@@ -9,7 +9,6 @@ import com.coffeeshop.model.web.product.ProductParametersResponse;
 import com.coffeeshop.model.web.product.ProductRequest;
 import com.coffeeshop.model.web.product.ProductResponse;
 import com.coffeeshop.model.web.productDetails.CharacteristicResponse;
-import com.coffeeshop.model.web.productDetails.InStockResponse;
 import com.coffeeshop.model.web.productDetails.RichProductResponse;
 import org.apache.commons.io.IOUtils;
 import org.springframework.http.MediaType;
@@ -64,18 +63,15 @@ public class ProductController {
                 .sour(2)
                 .bitter(2)
                 .build();
-        InStockResponse inStock = InStockResponse.builder()
-                .isAvailable(true)
-                .quantityAvailable(20)
-                .build();
+
         return RichProductResponse.builder()
                 .productName("Alabasta")
-                .quantityAvailableKg(300)
+                .amountAvailable(300)
                 .productImages(img)
                 .characteristicResponse(characteristic)
                 .description("!!!!")
-                .inStockResponse(inStock)
-                .unitPrice(100.0)
+                .shortDescription("!!")
+                .price(100.0)
                 .build();
 
     }
