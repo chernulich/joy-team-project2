@@ -9,9 +9,9 @@ import {ProductListRequest} from "./model/product-list-request";
   styleUrls: ['./product-list.component.css']
 })
 export class ProductListComponent implements OnInit {
-  public json: string;
-  public productsList: ProductList;
-  public defaultProductListRequest: ProductListRequest = ProductListRequest.prototype.getDefaultProductListRequest();
+  // public json: string;
+  // public productsList: ProductList;
+  // public defaultProductListRequest: ProductListRequest = ProductListRequest.prototype.getDefaultProductListRequest();
 
   constructor(private productListService: ProductListHttpService) { }
 
