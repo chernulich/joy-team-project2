@@ -11,10 +11,11 @@ public class RichProductResponse {
 
     private Long id;
     private String productName;
-    private Integer quantityAvailableKg;
-    private String[] productImages;
-    private CharacteristicResponse characteristicResponse;
     private String description;
-    private InStockResponse inStockResponse;
-    private Double unitPrice;
+    private String shortDescription;
+    private String[] productImages;
+    private String previewImage;
+    private CharacteristicResponse characteristicResponse;
+    private Integer amountAvailable;
+    private Double price;
 }

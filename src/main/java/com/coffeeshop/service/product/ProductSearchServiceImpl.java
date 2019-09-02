@@ -3,7 +3,6 @@ package com.coffeeshop.service.product;
 import com.coffeeshop.exception.*;
 import com.coffeeshop.model.entity.*;
 import com.coffeeshop.model.web.productDetails.CharacteristicResponse;
-import com.coffeeshop.model.web.productDetails.InStockResponse;
 import com.coffeeshop.model.web.productDetails.RichProductResponse;
 import com.coffeeshop.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,25 +77,17 @@ public class ProductSearchServiceImpl implements ProductSearchService {
                 .strong(productCoffee.getStrong())
                 .build();
 
-        Integer quantityAvailable = productItem.getWeightKg() * productQuantity.getQuantity();
-
-        InStockResponse inStockResponse = InStockResponse.builder()
-                .isAvailable(product.isAvailable())
-                .quantityAvailable(quantityAvailable)
-                .build();
-
         String[] imageLinks = createImageLinks(product.getId(), productImages.size());
 
 
         return RichProductResponse.builder()
-                .id(product.getId())
-                .unitPrice(product.getUnitPrice())
-                .description(product.getDescription())
-                .characteristicResponse(characteristicResponse)
-                .inStockResponse(inStockResponse)
                 .productName(product.getProductName())
-                .quantityAvailableKg(productItem.getWeightKg())
+                .description(product.getDescription())
+                .shortDescription(product.getShortDescription())
                 .productImages(imageLinks)
+                .characteristicResponse(characteristicResponse)
+                .amountAvailable(productQuantity.getQuantity())
+                .price(product.getUnitPrice())
                 .build();
     }
 
