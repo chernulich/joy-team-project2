@@ -12,11 +12,10 @@ public class ProductResponse {
     private Long productId;
     private String title;
     private String shortDescription;
-//    private String type;
+    private String type;
     private Double price;
     private String previewImage;
     private Integer availableAmount;
-    private ProductParametersResponse productParameters;
-
+    private ProductParametersResponse productParametersResponse;
 
 }

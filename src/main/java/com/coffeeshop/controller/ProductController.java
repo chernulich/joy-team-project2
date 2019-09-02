@@ -4,12 +4,11 @@ import com.coffeeshop.model.common.CoffeeType;
 import com.coffeeshop.model.common.ProductType;
 import com.coffeeshop.model.web.checkout.CheckoutRequest;
 import com.coffeeshop.model.web.checkout.CheckoutResponse;
-import com.coffeeshop.model.web.product.ProductResponse;
 import com.coffeeshop.model.web.product.ProductListResponse;
 import com.coffeeshop.model.web.product.ProductParametersResponse;
 import com.coffeeshop.model.web.product.ProductRequest;
+import com.coffeeshop.model.web.product.ProductResponse;
 import com.coffeeshop.model.web.productDetails.CharacteristicResponse;
-import com.coffeeshop.model.web.productDetails.InStockResponse;
 import com.coffeeshop.model.web.productDetails.RichProductResponse;
 import com.coffeeshop.repository.search.ProductSearchRepository;
 import org.apache.commons.io.IOUtils;
@@ -38,11 +37,12 @@ public class ProductController {
 //                        .previewImage("image1")
 //                        .shortDescription("It is very good coffee!")
 //                        .price(30.00)
-//                        .inStockCount(20)
+//                        .availableAmount(20)
 //                        .type(ProductType.COFFEE.name())
 //                        .productParametersResponse(ProductParametersResponse.builder()
-//                                .flavour("strong")
-//                                .rate(1.0)
+//                                .sour(1)
+//                                .bitter(3)
+//                                .strong(5)
 //                                .coffeeType(CoffeeType.ARABICA.name().toLowerCase())
 //                                .decaf(true).build()).build())
 //                .products(Collections.singletonList(ProductResponse.builder()
@@ -51,14 +51,15 @@ public class ProductController {
 //                        .previewImage("image2")
 //                        .shortDescription("It is very good coffee too!")
 //                        .price(45.00)
-//                        .inStockCount(360)
+//                        .availableAmount(360)
 //                        .type(ProductType.COFFEE.name())
 //                        .productParametersResponse(ProductParametersResponse.builder()
-//                                .flavour("strong")
-//                                .rate(1.0)
+//                                .sour(2)
+//                                .bitter(2)
+//                                .strong(2)
 //                                .coffeeType(CoffeeType.ARABICA.name().toLowerCase())
 //                                .decaf(false).build()).build())).build();
-    }
+//    }
 
     @GetMapping("/products/{id}")
     public RichProductResponse getById(@PathVariable("id") Long productId) {
@@ -68,18 +69,15 @@ public class ProductController {
                 .sour(2)
                 .bitter(2)
                 .build();
-        InStockResponse inStock = InStockResponse.builder()
-                .isAvailable(true)
-                .quantityAvailable(20)
-                .build();
+
         return RichProductResponse.builder()
                 .productName("Alabasta")
-                .quantityAvailableKg(300)
+                .amountAvailable(300)
                 .productImages(img)
                 .characteristicResponse(characteristic)
                 .description("!!!!")
-                .inStockResponse(inStock)
-                .unitPrice(100.0)
+                .shortDescription("!!")
+                .price(100.0)
                 .build();
 
     }

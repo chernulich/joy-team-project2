@@ -10,9 +10,9 @@ import lombok.*;
 public class ProductParametersResponse {
 
     private Integer strong;
-    private Integer bitter;
     private Integer sour;
+    private Integer bitter;
     private Boolean decaf;
-//    private String coffeeType;
+    private String coffeeType;
 
 }
