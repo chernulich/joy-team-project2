@@ -74,8 +74,8 @@ public class ProductItemManagementServiceImpl implements ProductItemManagementSe
     @Scheduled(fixedRate = 120000)
     public void productQuantityUpdate() {
         List<ProductQuantity> productQuantities = productQuantityRepository.findAll().stream()
-                .filter(productQuantity -> checkQuantity(productQuantity)).collect(Collectors.toList());
-        productQuantities.stream().map(productQuantity -> updateQuantity(productQuantity)).collect(Collectors.toList());
+                .filter(productQuantity -> checkQuantity(productQuantity))
+                .map(productQuantity -> updateQuantity(productQuantity)).collect(Collectors.toList());
         productQuantityRepository.saveAll(productQuantities);
     }
 
