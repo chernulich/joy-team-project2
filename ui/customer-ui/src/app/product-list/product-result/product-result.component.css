@@ -1,0 +1,76 @@
+
+.btn {
+  width: 100%;
+  border-radius: 0 !important;
+}
+
+.card-group{
+  /*margin-left: 10rem!important;*/
+}
+
+.card {
+  border-radius: 0 !important;
+  position: relative;
+}
+
+.card-left:hover ~ .card-right{
+  max-width: 30rem!important;
+  max-height: 50rem!important;
+  /*padding: 1rem!important;*/
+
+  /*opacity: 1;*/
+  transition: max-width 0.4s ease-in-out;
+  /*display: block!important;*/
+}
+
+/*.card-left:hover{*/
+/*  box-shadow: 2vh 2vh 4vh 1vh rgba(0, 0, 0, 0.25);*/
+/*}*/
+
+.card-right{
+  border-left-style: hidden;
+  overflow: hidden;
+  /*padding: 0!important;*/
+  max-height: 0!important;
+  max-width: 0 !important;
+  /*opacity: 0;*/
+  /*display: none!important;*/
+  transition: max-width 0.4s ease-in-out;
+}
+.card-left{
+  border-right-style: hidden;
+}
+.number-input{
+  width: 5rem;
+}
+.number-input:hover{
+  border-color: green!important;
+  box-shadow: 1vh 1vh 1.5vh 0.5vh rgba(0, 0, 0, 0.25);
+}
+
+/*TEST*/
+
+.wrp{
+  display: flex;
+}
+.one{
+  background: #fd7a1e;
+}
+
+.two{
+  background: #00a8e6;
+  max-width: 0;
+  transition: all 0.4s linear;
+  overflow: hidden;
+}
+
+.wrp:hover .one ~ .two{
+  max-width: 20rem;
+  transition: max-width 0.4s linear;
+}
+
+.two p,
+.one p{
+  margin: 0;
+  padding: 1rem 1rem 0.5rem 1rem;
+}

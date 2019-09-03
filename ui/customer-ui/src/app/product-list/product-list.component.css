@@ -1,0 +1,14 @@
+.image-coffee{
+  background-image: url("../../assets/images/Image_Product Listing.png") !important ;
+  width: 100%;
+  height: 600px;
+  z-index: 4;
+}
+
+.image-coffee-text{
+  padding-top: 15%!important;
+  /*font-size: 2rem;*/
+}
+
+
+

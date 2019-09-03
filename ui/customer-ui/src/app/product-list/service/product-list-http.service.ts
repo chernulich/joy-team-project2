@@ -10,7 +10,7 @@ export class ProductListHttpService {
 
   constructor(private httpClient: HttpClient) { }
 
-  getProductList(requestDto: ProductListRequest) {
-    return this.httpClient.post<ProductList>('/api/customer/products', {requestDto});
-  }
+  // getProductList(requestDto: ProductListRequest) {
+  //   return this.httpClient.post<ProductList>('/api/customer/products', {requestDto});
+  // }
 }
