@@ -12,6 +12,8 @@ import com.coffeeshop.repository.ProductItemRepository;
 import com.coffeeshop.repository.ProductQuantityRepository;
 import com.coffeeshop.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,6 +24,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@EnableScheduling
 public class ProductItemManagementServiceImpl implements ProductItemManagementService {
 
     @Autowired
@@ -66,14 +69,33 @@ public class ProductItemManagementServiceImpl implements ProductItemManagementSe
         }
     }
 
-    public void plusQuantity(ProductQuantity productQuantity, Integer quantity) {
+    @Override
+    @Transactional
+    @Scheduled(fixedRate = 120000)
+    public void productQuantityUpdate() {
+        List<ProductQuantity> productQuantities = productQuantityRepository.findAll().stream()
+                .map(productQuantity -> checkQuantity(productQuantity)).collect(Collectors.toList());
+        productQuantityRepository.saveAll(productQuantities);
+    }
+
+    private ProductQuantity checkQuantity(ProductQuantity productQuantity) {
+        Product product = productQuantity.getProduct();
+        ProductStatus status = ProductStatus.AVAILABLE;
+        List<ProductItem> productItems = productItemRepository.findAllByProductStatusAndProduct(status, product);
+        Integer available = productItems.size();
+        Integer quantity = productQuantity.getQuantity();
+        if(available < quantity) {
+            updateQuantity(productQuantity, available);
+        }
+        return productQuantity;
+    }
+
+    private void plusQuantity(ProductQuantity productQuantity, Integer quantity) {
         productQuantity.setQuantity(productQuantity.getQuantity() + quantity);
     }
 
-    public void minusQuantity(ProductQuantity productQuantity) {
-        if(productQuantity.getQuantity() != 0) {
-            productQuantity.setQuantity(productQuantity.getQuantity() - 1);
-        }
+    private void updateQuantity(ProductQuantity productQuantity, Integer available) {
+        productQuantity.setQuantity(available);
     }
 
     @Override
