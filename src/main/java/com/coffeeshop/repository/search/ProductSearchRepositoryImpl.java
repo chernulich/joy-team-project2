@@ -3,6 +3,7 @@ package com.coffeeshop.repository.search;
 import com.coffeeshop.model.web.product.ProductListResponse;
 import com.coffeeshop.model.web.product.ProductRequest;
 import com.coffeeshop.model.web.product.ProductResponse;
+import com.coffeeshop.model.web.product.ProductParametersResponse;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -21,6 +22,10 @@ public class ProductSearchRepositoryImpl implements ProductSearchRepository {
     public ProductListResponse getProductsViaSearchProductRequest(ProductRequest request) {
 
         String query = getQuery(request.getSortBy());
+//        String query = "select new com.coffeeshop.model.web.product.ProductResponse" +
+//                "(pc.product.id, p.productName, p.shortDescription, p.unitPrice, p.previewImage, pq.quantity,) " +
+//                " from Product p " +
+//                " join ProductCoffee pc on p.id=pc.product.id  join ProductQuantity pq on pc.product.id=pq.product.id ";
 
         List<ProductResponse> responseList = new ArrayList<>();
         TypedQuery<ProductResponse> typedQuery = entityManager.createQuery(query, ProductResponse.class);
@@ -46,14 +51,15 @@ public class ProductSearchRepositoryImpl implements ProductSearchRepository {
     private String getQuery(String sortBy) {
         StringBuilder query = new StringBuilder()
                 .append("select new com.coffeeshop.model.web.product.ProductResponse")
-                .append("(pc.product.id, p.productName, p.shortDescription, p.unitPrice, p.previewImage, pq.quantity,")
-                .append(" new com.coffeeshop.model.web.product.ProductParametersResponse")   //TODO
-                .append("(pc.strong, pc.bitter, pc.sour, pc.decaf))")                        //TODO
+                .append("(pc.product.id, p.productName, p.shortDescription, p.unitPrice, p.previewImage, pq.quantity)")
+//                .append(" new com.coffeeshop.model.web.product.ProductParametersResponse")   //TODO
+//                .append("(pc.strong, pc.sour, pc.bitter, pc.decaf))")                        //TODO
                 .append(" from Product p ")
                 .append(" join ProductCoffee pc on p.id=pc.product.id")
                 .append(" join ProductQuantity pq on pc.product.id=pq.product.id ");
         if (sortBy.equals("popular")) {
-            query.append(" join ProductItem pi on pi.product.id=pq.product.id");             //TODO
+            query.append(" left join ProductItem pi on pi.product.id=pq.product.id " +    //TODO
+                    " and pi.productStatus.id=2");             //TODO
         }
         query.append(" where p.productName like :search")
                 .append(" and p.unitPrice between :priceMin and :priceMax")
@@ -69,8 +75,9 @@ public class ProductSearchRepositoryImpl implements ProductSearchRepository {
         }else if (sortBy.equals("name")) {
             query.append(" p.productName");
         }else {
-            query.append(" pi.");                    //TODO
+            query.append(" count(pi)");                    //TODO
         }
         return query.toString();
     }
+
 }

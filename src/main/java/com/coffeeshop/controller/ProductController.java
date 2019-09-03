@@ -59,7 +59,7 @@ public class ProductController {
 //                                .strong(2)
 //                                .coffeeType(CoffeeType.ARABICA.name().toLowerCase())
 //                                .decaf(false).build()).build())).build();
-//    }
+    }
 
     @GetMapping("/products/{id}")
     public RichProductResponse getById(@PathVariable("id") Long productId) {

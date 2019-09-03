@@ -36,7 +36,7 @@ public class CharacteristicsRequest {
     @ApiModelProperty(example = "true")
     private Boolean ground;
 
-//    @ApiModelProperty(example = "arabica")  //There is no such field in the database
-//    private String coffeeType;
+    @ApiModelProperty(example = "arabica")  //There is no such field in the database
+    private String coffeeType;
 
 }
