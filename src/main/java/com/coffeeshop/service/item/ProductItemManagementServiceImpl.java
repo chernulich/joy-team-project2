@@ -74,28 +74,36 @@ public class ProductItemManagementServiceImpl implements ProductItemManagementSe
     @Scheduled(fixedRate = 120000)
     public void productQuantityUpdate() {
         List<ProductQuantity> productQuantities = productQuantityRepository.findAll().stream()
-                .map(productQuantity -> checkQuantity(productQuantity)).collect(Collectors.toList());
+                .filter(productQuantity -> checkQuantity(productQuantity)).collect(Collectors.toList());
+        productQuantities.stream().map(productQuantity -> updateQuantity(productQuantity)).collect(Collectors.toList());
         productQuantityRepository.saveAll(productQuantities);
     }
 
-    private ProductQuantity checkQuantity(ProductQuantity productQuantity) {
+    private Integer getAvailableAmount(ProductQuantity productQuantity) {
         Product product = productQuantity.getProduct();
         ProductStatus status = ProductStatus.AVAILABLE;
         List<ProductItem> productItems = productItemRepository.findAllByProductStatusAndProduct(status, product);
-        Integer available = productItems.size();
+        Integer availableAmount = productItems.size();
+        return availableAmount;
+    }
+
+    private boolean checkQuantity(ProductQuantity productQuantity) {
+        Integer availableAmount = getAvailableAmount(productQuantity);
         Integer quantity = productQuantity.getQuantity();
-        if(available < quantity) {
-            updateQuantity(productQuantity, available);
+        if(availableAmount < quantity) {
+            return true;
         }
-        return productQuantity;
+        return false;
     }
 
     private void plusQuantity(ProductQuantity productQuantity, Integer quantity) {
         productQuantity.setQuantity(productQuantity.getQuantity() + quantity);
     }
 
-    private void updateQuantity(ProductQuantity productQuantity, Integer available) {
-        productQuantity.setQuantity(available);
+    private ProductQuantity updateQuantity(ProductQuantity productQuantity) {
+        Integer availableAmount = getAvailableAmount(productQuantity);
+        productQuantity.setQuantity(availableAmount);
+        return productQuantity;
     }
 
     @Override
