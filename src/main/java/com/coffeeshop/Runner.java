@@ -49,7 +49,7 @@ public class Runner implements CommandLineRunner {
                 .description("Product description")
                 .productCategory(ProductCategory.COFFEE)
                 .previewImage("http://customer-ui/products/1/image/1")
-                .unitPrice(99.99)
+                .unitPrice(159.99)
                 .productCoffeeDto(productCoffeeDto1)
                 .build());
 
@@ -62,7 +62,7 @@ public class Runner implements CommandLineRunner {
                         "although only people acting inside the law are allowed passage;")
                 .productCategory(ProductCategory.COFFEE)
                 .previewImage("http://customer-ui/products/2/image/2")
-                .unitPrice(159.9)
+                .unitPrice(78.57)
                 .productCoffeeDto(productCoffeeDto1)
                 .build());
 
