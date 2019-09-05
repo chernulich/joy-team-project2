@@ -7,7 +7,6 @@ import com.coffeeshop.model.admin.ProductItemResponse;
 import com.coffeeshop.model.entity.Product;
 import com.coffeeshop.model.entity.ProductItem;
 import com.coffeeshop.model.entity.ProductQuantity;
-import com.coffeeshop.model.entity.type.ProductStatus;
 import com.coffeeshop.repository.ProductItemRepository;
 import com.coffeeshop.repository.ProductQuantityRepository;
 import com.coffeeshop.repository.ProductRepository;
@@ -16,10 +15,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.OptimisticLockException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Map;
 
 @Service
 public class ProductItemManagementServiceImpl implements ProductItemManagementService {
@@ -66,19 +64,36 @@ public class ProductItemManagementServiceImpl implements ProductItemManagementSe
         }
     }
 
-    public void plusQuantity(ProductQuantity productQuantity, Integer quantity) {
+    private void plusQuantity(ProductQuantity productQuantity, Integer quantity) {
         productQuantity.setQuantity(productQuantity.getQuantity() + quantity);
     }
 
-    public void minusQuantity(ProductQuantity productQuantity) {
+    private void minusQuantity(ProductQuantity productQuantity) {
         if(productQuantity.getQuantity() != 0) {
             productQuantity.setQuantity(productQuantity.getQuantity() - 1);
         }
     }
 
     @Override
-    @Transactional
-    public List<ProductItemResponse> findAndMarkAsSold(Integer amount) {
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public List<ProductItem> findAndMarkAsSold(Product product, Integer amount) {
         return new ArrayList<>();
+    }
+
+    @Override
+    @Transactional
+    public List<ProductItemResponse> findAndMarkAsSold(Map<Long, Integer> items) {
+        List<ProductItem> markedAsSoldItems = new ArrayList<>();
+        for (Map.Entry<Long, Integer> entry : items.entrySet()) {
+            Product product = productRepository.findProductByIdAndAvailableIsTrue(entry.getKey()).orElseThrow(ProductNotFoundException::new);
+            markedAsSoldItems.addAll(findAndMarkAsSold(product, entry.getValue()));
+        }
+
+        List<ProductItemResponse> result = new ArrayList<>();
+        markedAsSoldItems.forEach(item -> productItemConverter.getProductItemToProductItemResponse().convert(item));
+
+        return result;
+
+
     }
 }
