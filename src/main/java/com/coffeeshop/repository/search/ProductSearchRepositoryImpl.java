@@ -9,7 +9,6 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -21,10 +20,22 @@ public class ProductSearchRepositoryImpl implements ProductSearchRepository {
     private EntityManager entityManager;
 
     @Override
-    public ProductListResponse getProductsViaSearchProductRequest(ProductRequest request) {
-        String query = getQuery(request.getSortBy());
+    public ProductListResponse searchProductsViaParams(ProductRequest request) {
+        TypedQuery<Object[]> typedQuery = createTypedQuery(request);
 
-        List<Object[]> responseFromDB = new ArrayList<>();
+        List<Object[]> dbResponse = typedQuery.getResultList();
+        if (dbResponse.isEmpty()) {
+            return new ProductListResponse();
+        }
+        List<ProductResponse> responseList = convertDBresponseToProductResponses(dbResponse);
+
+        return ProductListResponse.builder()
+                .popular(responseList.get(0))
+                .products(responseList).build();
+    }
+
+    private TypedQuery<Object[]> createTypedQuery(ProductRequest request) {
+        String query = getQuery();
 
         TypedQuery<Object[]> typedQuery = entityManager.createQuery(query, Object[].class);
         typedQuery.setParameter("priceMin", request.getPriceMin());
@@ -38,32 +49,37 @@ public class ProductSearchRepositoryImpl implements ProductSearchRepository {
         typedQuery.setParameter("decaf", request.getCharacteristics().getDecaf());
         typedQuery.setParameter("ground", request.getCharacteristics().getGround());
         typedQuery.setParameter("search", request.getSearch().concat("%"));
-
-        responseFromDB = typedQuery.getResultList();
-        responseFromDB.forEach(res -> System.out.println(Arrays.toString(res)));
-        if (responseFromDB.isEmpty()) {
-            return new ProductListResponse(new ProductResponse(), new ArrayList<ProductResponse>());
-        }
-        List<ProductResponse> responseList = new ArrayList<>();
-        responseList = responseFromDB.stream().map(array -> {
-            List<Object> objects = Arrays.asList(array);
-            List<String> names = objects.stream().map(object -> object.toString()).collect(Collectors.toList());
-            return  new ProductResponse(Long.getLong(names.get(0)), names.get(1), names.get(2), names.get(3),
-                    Double.valueOf(names.get(4)), names.get(5), Integer.getInteger(names.get(6)),
-                    new ProductParametersResponse(Integer.getInteger(names.get(6)), Integer.getInteger(names.get(7)),
-                            Integer.getInteger(names.get(9)), Boolean.getBoolean(names.get(10))));
-        }).collect(Collectors.toList());
-
-        return ProductListResponse.builder().popular(responseList.get(0)).products(responseList).build();
+        return typedQuery;
     }
 
-    private String getQuery(String sortBy) {
-        StringBuilder query = new StringBuilder()
-//                .append("select new com.coffeeshop.model.web.product.ProductResponse")
-//                .append("(pc.product.id, p.productName, p.shortDescription, p.unitPrice, p.previewImage, pq.quantity)")
-                .append("select ")   //TODO
+    private List<ProductResponse> convertDBresponseToProductResponses(List<Object[]> dbResponse) {
+        return dbResponse.stream()
+                .map(array -> {
+                    List<Object> objects = Arrays.asList(array);
+                    List<String> names = objects.stream().map(Object::toString).collect(Collectors.toList());
+                    return ProductResponse.builder()
+                            .productId(Long.parseLong(names.get(0)))
+                            .title(names.get(1))
+                            .shortDescription(names.get(2))
+                            .type(names.get(3))
+                            .price(Double.valueOf(names.get(4)))
+                            .previewImage(names.get(5))
+                            .availableAmount(Integer.parseInt(names.get(6)))
+                            .productParametersResponse(
+                                    ProductParametersResponse.builder()
+                                            .strong(Integer.parseInt(names.get(7)))
+                                            .sour(Integer.parseInt(names.get(8)))
+                                            .bitter(Integer.parseInt(names.get(9)))
+                                            .decaf(Boolean.getBoolean(names.get(10)))
+                                            .build()).build();
+                }).collect(Collectors.toList());
+    }
+
+    private String getQuery() {
+        return new StringBuilder()
+                .append("select ")
                 .append("pc.product.id, p.productName, p.shortDescription, p.productCategory, p.unitPrice, p.previewImage, pq.quantity,")
-                .append(" pc.strong, pc.sour, pc.bitter, pc.decaf")                        //TODO
+                .append(" pc.strong, pc.sour, pc.bitter, pc.decaf")
                 .append(" from Product p ")
                 .append(" join ProductCoffee pc on p.id=pc.product.id")
                 .append(" join ProductQuantity pq on pc.product.id=pq.product.id ")
@@ -75,8 +91,8 @@ public class ProductSearchRepositoryImpl implements ProductSearchRepository {
                 .append(" and pc.decaf = :decaf")
                 .append(" and pc.ground = :ground")
                 .append(" order by")
-                .append(" p.unitPrice, p.productName");
-        return query.toString();
+                .append(" p.unitPrice, p.productName")
+                .toString();
     }
 
 }

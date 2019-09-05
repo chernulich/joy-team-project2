@@ -1,24 +1,22 @@
 package com.coffeeshop.controller;
 
-import com.coffeeshop.model.common.CoffeeType;
-import com.coffeeshop.model.common.ProductType;
+import com.coffeeshop.exception.BaseException;
+import com.coffeeshop.exception.InputValidationException;
 import com.coffeeshop.model.web.checkout.CheckoutRequest;
 import com.coffeeshop.model.web.checkout.CheckoutResponse;
 import com.coffeeshop.model.web.product.ProductListResponse;
-import com.coffeeshop.model.web.product.ProductParametersResponse;
 import com.coffeeshop.model.web.product.ProductRequest;
-import com.coffeeshop.model.web.product.ProductResponse;
 import com.coffeeshop.model.web.productDetails.CharacteristicResponse;
 import com.coffeeshop.model.web.productDetails.RichProductResponse;
 import com.coffeeshop.repository.search.ProductSearchRepository;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Collections;
 
 @RestController
 @RequestMapping("/api/customer")
@@ -28,8 +26,11 @@ public class ProductController {
     private ProductSearchRepository searchRepository;
 
     @PostMapping("/products")
-    public ProductListResponse getProductList(@RequestBody ProductRequest productRequest) {
-        return searchRepository.getProductsViaSearchProductRequest(productRequest);
+    public ProductListResponse getProductList(@RequestBody ProductRequest productRequest, BindingResult result) throws NoSuchFieldException {
+        if (result.hasErrors()) {
+            throw new InputValidationException(result);
+        }
+        return searchRepository.searchProductsViaParams(productRequest);
 //        return ProductListResponse.builder()
 //                .popular(ProductResponse.builder()
 //                        .productId(1L)
