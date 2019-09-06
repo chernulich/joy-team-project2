@@ -26,10 +26,7 @@ public class ProductController {
     private ProductSearchRepository searchRepository;
 
     @PostMapping("/products")
-    public ProductListResponse getProductList(@RequestBody ProductRequest productRequest, BindingResult result) throws NoSuchFieldException {
-        if (result.hasErrors()) {
-            throw new InputValidationException(result);
-        }
+    public ProductListResponse getProductList(@RequestBody ProductRequest productRequest){
         return searchRepository.searchProductsViaParams(productRequest);
 //        return ProductListResponse.builder()
 //                .popular(ProductResponse.builder()
