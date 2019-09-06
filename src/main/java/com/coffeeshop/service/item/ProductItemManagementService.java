@@ -9,5 +9,4 @@ public interface ProductItemManagementService {
 
     void createProductItems(List<ProductItemRequest> productItemRequests);
     List<ProductItemResponse> findAndMarkAsSold(Integer amount);
-    void productQuantityUpdate();
 }

@@ -12,7 +12,6 @@ import com.coffeeshop.repository.ProductItemRepository;
 import com.coffeeshop.repository.ProductQuantityRepository;
 import com.coffeeshop.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -24,7 +23,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@EnableScheduling
 public class ProductItemManagementServiceImpl implements ProductItemManagementService {
 
     @Autowired
@@ -68,42 +66,8 @@ public class ProductItemManagementServiceImpl implements ProductItemManagementSe
             e.httpStatus();
         }
     }
-
-    @Override
-    @Transactional
-    @Scheduled(fixedRate = 120000)
-    public void productQuantityUpdate() {
-        List<ProductQuantity> productQuantities = productQuantityRepository.findAll().stream()
-                .filter(productQuantity -> checkQuantity(productQuantity))
-                .map(productQuantity -> updateQuantity(productQuantity)).collect(Collectors.toList());
-        productQuantityRepository.saveAll(productQuantities);
-    }
-
-    private Integer getAvailableAmount(ProductQuantity productQuantity) {
-        Product product = productQuantity.getProduct();
-        ProductStatus status = ProductStatus.AVAILABLE;
-        List<ProductItem> productItems = productItemRepository.findAllByProductStatusAndProduct(status, product);
-        Integer availableAmount = productItems.size();
-        return availableAmount;
-    }
-
-    private boolean checkQuantity(ProductQuantity productQuantity) {
-        Integer availableAmount = getAvailableAmount(productQuantity);
-        Integer quantity = productQuantity.getQuantity();
-        if(availableAmount < quantity) {
-            return true;
-        }
-        return false;
-    }
-
     private void plusQuantity(ProductQuantity productQuantity, Integer quantity) {
         productQuantity.setQuantity(productQuantity.getQuantity() + quantity);
-    }
-
-    private ProductQuantity updateQuantity(ProductQuantity productQuantity) {
-        Integer availableAmount = getAvailableAmount(productQuantity);
-        productQuantity.setQuantity(availableAmount);
-        return productQuantity;
     }
 
     @Override
