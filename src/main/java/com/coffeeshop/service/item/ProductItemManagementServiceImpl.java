@@ -1,6 +1,7 @@
 package com.coffeeshop.service.item;
 
 import com.coffeeshop.converter.CommonProductItemConverter;
+import com.coffeeshop.exception.ProductException;
 import com.coffeeshop.exception.ProductNotFoundException;
 import com.coffeeshop.model.admin.ProductItemRequest;
 import com.coffeeshop.model.admin.ProductItemResponse;
@@ -11,6 +12,8 @@ import com.coffeeshop.repository.ProductItemRepository;
 import com.coffeeshop.repository.ProductQuantityRepository;
 import com.coffeeshop.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.retry.annotation.Backoff;
+import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,6 +21,11 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import static com.coffeeshop.exception.ProductExceptionType.*;
+import static com.coffeeshop.model.entity.type.ProductStatus.AVAILABLE;
+import static com.coffeeshop.model.entity.type.ProductStatus.SOLD;
+import static java.util.stream.Collectors.toList;
 
 @Service
 public class ProductItemManagementServiceImpl implements ProductItemManagementService {
@@ -77,22 +85,50 @@ public class ProductItemManagementServiceImpl implements ProductItemManagementSe
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public List<ProductItem> findAndMarkAsSold(Product product, Integer amount) {
-        return new ArrayList<>();
+
+        List<ProductItem> result = productItemRepository.findProductItemByProductAndProductStatusLimitIs(product,
+                AVAILABLE, amount);
+
+        if (result.size() < amount) {
+            throw new ProductException(product.getId(), ILLEGAL_QUANTITY);
+        }
+
+        for (ProductItem productItem : result) {
+            productItem.setProductStatus(SOLD);
+        }
+
+        productItemRepository.saveAll(result);
+
+        return result.size() == amount ? result : new ArrayList<>();
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = ProductException.class)
+    @Retryable(
+            value = org.hibernate.StaleObjectStateException.class,
+            maxAttempts = 5,
+            exclude = ProductException.class,
+            backoff = @Backoff(delay = 500)
+    )
     public List<ProductItemResponse> findAndMarkAsSold(Map<Long, Integer> items) {
-        List<ProductItem> markedAsSoldItems = new ArrayList<>();
+
+        List<ProductItem> result = new ArrayList<>();
+
         for (Map.Entry<Long, Integer> entry : items.entrySet()) {
-            Product product = productRepository.findProductByIdAndAvailableIsTrue(entry.getKey()).orElseThrow(ProductNotFoundException::new);
-            markedAsSoldItems.addAll(findAndMarkAsSold(product, entry.getValue()));
+            Product product1 = productRepository.findProductByIdAndAvailableIsTrue(entry.getKey())
+                    .orElseThrow(() -> new ProductException(entry.getKey(), PRODUCT_NOT_AVAILABLE));
+            List<ProductItem> markAsSold = findAndMarkAsSold(product1, entry.getValue());
+
+            if (markAsSold.isEmpty()) {
+                throw new ProductException(entry.getKey(), OUT_OF_STOCK);
+            }
+
+            result.addAll(markAsSold);
         }
 
-        List<ProductItemResponse> result = new ArrayList<>();
-        markedAsSoldItems.forEach(item -> productItemConverter.getProductItemToProductItemResponse().convert(item));
-
-        return result;
+        return result.stream()
+                .map(productItem -> productItemConverter.getProductItemToProductItemResponse().convert(productItem))
+                .collect(toList());
 
 
     }
