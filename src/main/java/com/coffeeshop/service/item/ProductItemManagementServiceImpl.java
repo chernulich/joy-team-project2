@@ -115,15 +115,15 @@ public class ProductItemManagementServiceImpl implements ProductItemManagementSe
         List<ProductItem> result = new ArrayList<>();
 
         for (Map.Entry<Long, Integer> entry : items.entrySet()) {
-            Product product1 = productRepository.findProductByIdAndAvailableIsTrue(entry.getKey())
+            Product product = productRepository.findProductByIdAndAvailableIsTrue(entry.getKey())
                     .orElseThrow(() -> new ProductException(entry.getKey(), PRODUCT_NOT_AVAILABLE));
-            List<ProductItem> markAsSold = findAndMarkAsSold(product1, entry.getValue());
+            List<ProductItem> markAsSoldList = findAndMarkAsSold(product, entry.getValue());
 
-            if (markAsSold.isEmpty()) {
+            if (markAsSoldList.isEmpty()) {
                 throw new ProductException(entry.getKey(), OUT_OF_STOCK);
             }
 
-            result.addAll(markAsSold);
+            result.addAll(markAsSoldList);
         }
 
         return result.stream()
