@@ -23,7 +23,7 @@ import java.util.Collections;
 public class ProductController {
 
     @PostMapping("/products")
-    public ProductListResponse getProductList(@RequestBody ProductRequest productRequest){
+    public ProductListResponse getProductList(@RequestBody ProductRequest productRequest) {
         return ProductListResponse.builder()
                 .popular(ProductResponse.builder()
                         .productId(1L)
