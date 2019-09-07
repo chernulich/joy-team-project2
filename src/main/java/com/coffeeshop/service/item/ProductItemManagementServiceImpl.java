@@ -12,6 +12,7 @@ import com.coffeeshop.repository.ProductItemRepository;
 import com.coffeeshop.repository.ProductQuantityRepository;
 import com.coffeeshop.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -65,15 +66,8 @@ public class ProductItemManagementServiceImpl implements ProductItemManagementSe
             e.httpStatus();
         }
     }
-
-    public void plusQuantity(ProductQuantity productQuantity, Integer quantity) {
+    private void plusQuantity(ProductQuantity productQuantity, Integer quantity) {
         productQuantity.setQuantity(productQuantity.getQuantity() + quantity);
-    }
-
-    public void minusQuantity(ProductQuantity productQuantity) {
-        if(productQuantity.getQuantity() != 0) {
-            productQuantity.setQuantity(productQuantity.getQuantity() - 1);
-        }
     }
 
     @Override
