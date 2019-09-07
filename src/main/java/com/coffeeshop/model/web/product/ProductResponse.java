@@ -18,4 +18,5 @@ public class ProductResponse {
     private Integer availableAmount;
     private ProductParametersResponse productParametersResponse;
 
+
 }

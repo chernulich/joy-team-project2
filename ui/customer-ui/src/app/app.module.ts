@@ -16,7 +16,6 @@ import {FooterComponent} from './footer/footer.component';
 import {ProductListHeaderComponent} from './product-list-header/product-list-header.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {ProductSearchModule} from "./product-list/product-search/product-search.module";
-import { ProductResultComponent } from './product-list/product-result/product-result.component';
 
 
 @NgModule({
@@ -30,7 +29,6 @@ import { ProductResultComponent } from './product-list/product-result/product-re
     FooterComponent,
     CheckoutComponent,
     ProductListHeaderComponent,
-    ProductResultComponent,
   ],
   imports: [
     BrowserModule,
