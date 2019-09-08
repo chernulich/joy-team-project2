@@ -24,7 +24,7 @@ public class ProductSearchRepositoryImpl implements ProductSearchRepository {
         TypedQuery<Object[]> typedQuery = createTypedQuery(request);
 
         List<Object[]> dbResponse = typedQuery.getResultList();
-        dbResponse.forEach(x -> System.out.println(Arrays.toString(x)));
+
         if (dbResponse.isEmpty()) {
             return new ProductListResponse();
         }
@@ -41,24 +41,12 @@ public class ProductSearchRepositoryImpl implements ProductSearchRepository {
         TypedQuery<Object[]> typedQuery = entityManager.createQuery(query, Object[].class);
         typedQuery.setParameter("priceMin", request.getPriceMin());
         typedQuery.setParameter("priceMax", request.getPriceMax());
-        typedQuery.setParameter("sourFrom",
-                request.getCharacteristics().getSourFrom() != 0 ? request.getCharacteristics().getSourFrom()
-                        : request.getCharacteristics().getSourTo() != 0 ? request.getCharacteristics().getSourTo() : 1);
-        typedQuery.setParameter("sourTo",
-                request.getCharacteristics().getSourTo() != 0 ? request.getCharacteristics().getSourTo()
-                        : request.getCharacteristics().getSourFrom() != 0 ? request.getCharacteristics().getSourFrom() : 5);
-        typedQuery.setParameter("strongFrom",
-                request.getCharacteristics().getStrongFrom() != 0 ? request.getCharacteristics().getStrongFrom()
-                        : request.getCharacteristics().getStrongTo() != 0 ? request.getCharacteristics().getStrongTo() : 1);
-        typedQuery.setParameter("strongTo",
-                request.getCharacteristics().getStrongTo() != 0 ? request.getCharacteristics().getStrongTo()
-                        : request.getCharacteristics().getStrongFrom() !=0 ? request.getCharacteristics().getStrongFrom() : 5);
-        typedQuery.setParameter("bitterFrom",
-                request.getCharacteristics().getBitterFrom() != 0 ? request.getCharacteristics().getBitterFrom()
-                        : request.getCharacteristics().getBitterTo() != 0 ? request.getCharacteristics().getBitterTo() : 1);
-        typedQuery.setParameter("bitterTo",
-                request.getCharacteristics().getBitterTo() != 0 ? request.getCharacteristics().getBitterTo()
-                        : request.getCharacteristics().getBitterFrom() != 0 ? request.getCharacteristics().getBitterFrom() : 5);
+        typedQuery.setParameter("sourFrom", request.getCharacteristics().getSourFrom());
+        typedQuery.setParameter("sourTo", request.getCharacteristics().getSourTo());
+        typedQuery.setParameter("strongFrom", request.getCharacteristics().getStrongFrom());
+        typedQuery.setParameter("strongTo", request.getCharacteristics().getStrongTo());
+        typedQuery.setParameter("bitterFrom", request.getCharacteristics().getBitterFrom());
+        typedQuery.setParameter("bitterTo", request.getCharacteristics().getBitterTo());
         typedQuery.setParameter("decaf", request.getCharacteristics().getDecaf());
         typedQuery.setParameter("ground", request.getCharacteristics().getGround());
         typedQuery.setParameter("search", request.getSearch().concat("%"));
