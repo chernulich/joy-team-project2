@@ -8,6 +8,7 @@ import {Example} from "../../model/example";
 export class ExampleHttpService {
 
   constructor(private httpClient: HttpClient) {
+
   }
 
   // getExamples() {

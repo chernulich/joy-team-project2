@@ -1,30 +1,29 @@
 import { Component, OnInit } from '@angular/core';
-import {ProductListHttpService} from "./service/product-list-http.service";
-import {ProductList} from "./model/product-list";
-import {ProductListRequest} from "./model/product-list-request";
+
+import {ProductsDataStorageService} from "./product-search/service/data-storage/products-data-storage.service";
+import {Product} from "../model/product.model";
+import {HttpService} from "../service/http/http.service";
 
 @Component({
   selector: 'app-product-list',
   templateUrl: './product-list.component.html',
-  styleUrls: ['./product-list.component.css']
+  styleUrls: ['./product-list.component.css'],
 })
 export class ProductListComponent implements OnInit {
-  // public json: string;
-  // public productsList: ProductList;
-  // public defaultProductListRequest: ProductListRequest = ProductListRequest.prototype.getDefaultProductListRequest();
-
-  constructor(private productListService: ProductListHttpService) { }
-
+  constructor(private httpService: HttpService,
+              private productDataStorage: ProductsDataStorageService) { }
 
   ngOnInit() {
-    // this.getProductList(this.defaultProductListRequest);
-  }
+    this.httpService.getAllProducts()
+      .subscribe((products: Product[]) => {
+        this.productDataStorage.productStore.next(products);
+        console.log(products);
+      });
 
-  // getProductList(productListRequest: ProductListRequest){
-  //   return this.productListService.getProductList(productListRequest).subscribe(data => {
-  //     this.productsList = data;
-  //     this.json = JSON.stringify(this.productsList);
-  //   });
-  // }
+    this.httpService.getMostPopular()
+      .subscribe((mostPopular) => {
+        this.productDataStorage.mostPopular.next(mostPopular);
+      })
+  }
 
 }

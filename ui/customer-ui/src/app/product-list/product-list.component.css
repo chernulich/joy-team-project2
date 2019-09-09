@@ -10,5 +10,12 @@
   /*font-size: 2rem;*/
 }
 
+@media (max-width: 576px) {
+  .search-container{
+    max-width: 80%;
+  }
+
+}
+
 
 

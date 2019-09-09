@@ -1,8 +1,7 @@
-<!--<p>{{json}}</p>-->
-<div class="container-fluid p-0 bg-white">
-  <div class="col-12 p-0">
-    <app-header></app-header>
-  </div>
+<!--<div class="container-fluid p-0 bg-white">-->
+<!--  <div class="col-12 p-0">-->
+<!--    <app-header></app-header>-->
+<!--  </div>-->
   <div class="image-coffee p-0" style="width: 100%;">
     <h1 class="text-center pl-lg-5 text-white image-coffee-text">Coffee</h1>
     <div class="container text-center pl-lg-5" style="width: 50%;">
@@ -14,15 +13,17 @@
   <div class="pt-2">
     <h5 class="text-center text-dark">Popular right now</h5>
   </div>
-  <div class="row px-2 py-1 my-3 bg-light">
-    <div class="col-md-3 pl-5">
-      <app-search></app-search>
+  <div class="py-1 my-3 bg-light search-container d-flex flex-row flex-nowrap">
+    <div class="pl-3 col-3">
+      <app-product-search></app-product-search>
     </div>
-    <div class="col-md-9 mb-4">
+    <div class="col-8 mb-4 card-container">
       <app-product-result></app-product-result>
     </div>
-    <div class="col-12 p-0">
-      <app-footer></app-footer>
-    </div>
+
   </div>
-</div>
+<!--  <div class="col-12 p-0">-->
+<!--    <app-footer></app-footer>-->
+<!--  </div>-->
+<!--</div>-->
+
