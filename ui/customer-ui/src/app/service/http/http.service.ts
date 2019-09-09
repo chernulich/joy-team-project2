@@ -7,7 +7,8 @@ import {Product} from "../../model/product.model";
   providedIn: "root"
 })
 export class HttpService {
-
+  // when proper backend for the part of getting products, getting filtered, getting most popular product
+  // will be ready i'll change the service according to it and some logic in components which using this service
   constructor(private http: HttpClient) {
 
   }
@@ -19,6 +20,4 @@ export class HttpService {
   getAllProducts(){
     return this.http.get<Product[]>("http://localhost:3000/products");
   }
-
-
 }
