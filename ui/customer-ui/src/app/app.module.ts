@@ -13,7 +13,7 @@ import {CheckoutComponent} from './checkout-customer/checkout.component';
 import {ProductListComponent} from "./product-list/product-list.component";
 import {ProductDetailsComponent} from "./product-details/product-details.component";
 import {FooterComponent} from './footer/footer.component';
-import {ProductListHeaderComponent} from './product-list-header/product-list-header.component';
+import {ProductListHeaderComponent} from './product-list/product-list-header/product-list-header.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { ProductResultComponent } from './product-list/product-result/product-result.component';
 import {ProductSearchModule} from "./product-list/product-search/product-search.module";
