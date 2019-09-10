@@ -15,7 +15,6 @@ public class ProductItemToProductItemResponse implements Converter<ProductItem, 
                 .productId(source.getProduct().getId())
                 .weightKG(source.getWeightKg())
                 .status(source.getProductStatus())
-                .version(source.getVersion())
                 .build();
     }
 }

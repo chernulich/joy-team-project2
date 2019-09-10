@@ -11,4 +11,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     @Query("select p.id from Product p")
     Optional<List<Long>> getAllIds();
+
+    Optional<Product> findProductByIdAndAvailableIsTrue(Long id);
 }
