@@ -21,7 +21,6 @@ import java.util.Collections;
 @RestController
 @RequestMapping("/api/customer")
 public class ProductController {
-
     @PostMapping("/products")
     public ProductListResponse getProductList(@RequestBody ProductRequest productRequest) {
         return ProductListResponse.builder()

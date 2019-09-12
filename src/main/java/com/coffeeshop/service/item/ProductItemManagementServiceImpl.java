@@ -1,26 +1,31 @@
 package com.coffeeshop.service.item;
 
 import com.coffeeshop.converter.CommonProductItemConverter;
+import com.coffeeshop.exception.ProductException;
 import com.coffeeshop.exception.ProductNotFoundException;
 import com.coffeeshop.model.admin.ProductItemRequest;
 import com.coffeeshop.model.admin.ProductItemResponse;
 import com.coffeeshop.model.entity.Product;
 import com.coffeeshop.model.entity.ProductItem;
 import com.coffeeshop.model.entity.ProductQuantity;
-import com.coffeeshop.model.entity.type.ProductStatus;
 import com.coffeeshop.repository.ProductItemRepository;
 import com.coffeeshop.repository.ProductQuantityRepository;
 import com.coffeeshop.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.retry.annotation.Backoff;
+import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.OptimisticLockException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Map;
+
+import static com.coffeeshop.exception.ProductExceptionType.*;
+import static com.coffeeshop.model.entity.type.ProductStatus.AVAILABLE;
+import static com.coffeeshop.model.entity.type.ProductStatus.SOLD;
+import static java.util.stream.Collectors.toList;
 
 @Service
 public class ProductItemManagementServiceImpl implements ProductItemManagementService {
@@ -66,13 +71,65 @@ public class ProductItemManagementServiceImpl implements ProductItemManagementSe
             e.httpStatus();
         }
     }
+
     private void plusQuantity(ProductQuantity productQuantity, Integer quantity) {
         productQuantity.setQuantity(productQuantity.getQuantity() + quantity);
     }
 
+    private void minusQuantity(ProductQuantity productQuantity) {
+        if(productQuantity.getQuantity() != 0) {
+            productQuantity.setQuantity(productQuantity.getQuantity() - 1);
+        }
+    }
+
     @Override
-    @Transactional
-    public List<ProductItemResponse> findAndMarkAsSold(Integer amount) {
-        return new ArrayList<>();
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public List<ProductItem> findAndMarkAsSold(Product product, Integer amount) {
+
+        List<ProductItem> result = productItemRepository.findProductItemByProductAndProductStatusLimitIs(product,
+                AVAILABLE, amount);
+
+        if (result.size() < amount) {
+            throw new ProductException(product.getId(), ILLEGAL_QUANTITY);
+        }
+
+        for (ProductItem productItem : result) {
+            productItem.setProductStatus(SOLD);
+        }
+
+        productItemRepository.saveAll(result);
+
+        return result.size() == amount ? result : new ArrayList<>();
+    }
+
+    @Override
+    @Transactional(rollbackFor = ProductException.class)
+    @Retryable(
+            value = org.hibernate.StaleObjectStateException.class,
+            maxAttempts = 5,
+            exclude = ProductException.class,
+            backoff = @Backoff(delay = 500)
+    )
+    public List<ProductItemResponse> findAndMarkAsSold(Map<Long, Integer> items) {
+
+        List<ProductItem> result = new ArrayList<>();
+
+        for (Map.Entry<Long, Integer> entry : items.entrySet()) {
+            Product product = productRepository.findProductByIdAndAvailableIsTrue(entry.getKey())
+                    .orElseThrow(() -> new ProductException(entry.getKey(), PRODUCT_NOT_AVAILABLE));
+            List<ProductItem> markAsSoldList = findAndMarkAsSold(product, entry.getValue());
+
+            if (markAsSoldList.isEmpty()) {
+                throw new ProductException(entry.getKey(), OUT_OF_STOCK);
+            }
+
+            result.addAll(markAsSoldList);
+        }
+
+        return result.stream()
+                .map(productItem -> productItemConverter.getProductItemToProductItemResponse().convert(productItem))
+                .collect(toList());
+
+
     }
 }
