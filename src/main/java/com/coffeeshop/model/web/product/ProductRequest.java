@@ -18,13 +18,16 @@ public class ProductRequest {
     @ApiModelProperty(example = "10")
     private Integer results;
 
+    @ApiModelProperty(example = "Ala")
+    private String search;
+
     @ApiModelProperty(example = "10")
     private Double priceMin;
 
     @ApiModelProperty(example = "100")
     private Double priceMax;
 
-    @ApiModelProperty(example = "popular")
+    @ApiModelProperty(example = "price")
     private String sortBy;
 
     private CharacteristicsRequest characteristics;

@@ -13,8 +13,8 @@ public class ProductResponse {
     private String title;
     private String shortDescription;
     private String type;
-    private String previewImage;
     private Double price;
+    private String previewImage;
     private Integer availableAmount;
     private ProductParametersResponse productParametersResponse;
 

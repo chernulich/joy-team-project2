@@ -63,7 +63,7 @@ public class Runner implements CommandLineRunner {
                 .productCategory(ProductCategory.COFFEE)
                 .previewImage("http://customer-ui/products/2/image/2")
                 .unitPrice(159.9)
-                .productCoffeeDto(productCoffeeDto1)
+                .productCoffeeDto(productCoffeeDto2)
                 .build());
 
         ProductItemRequest productItemRequest1 = ProductItemRequest.builder()
@@ -83,6 +83,6 @@ public class Runner implements CommandLineRunner {
 
         productItemManagementService.createProductItems(productItemRequests);
 
-
     }
 }
+
