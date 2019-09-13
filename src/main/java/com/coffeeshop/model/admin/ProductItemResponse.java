@@ -14,5 +14,4 @@ public class ProductItemResponse {
     private Long productId;
     private Integer weightKG;
     private ProductStatus status;
-    private Integer version;
 }
