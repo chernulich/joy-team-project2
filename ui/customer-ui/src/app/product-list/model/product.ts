@@ -8,17 +8,18 @@ export class Product {
     private _type: string;
     private _previewImage: string;
     private _price: number;
-    private _inStockCount: number;
+    private _availableAmount: number;
     private _productParameters: Parameters;
 
-    constructor(productId: number, title: string, shortDescription: string, type: string, previewImage: string, price: number, inStockCount: number, productParameters: Parameters) {
+    constructor(productId: number, title: string, shortDescription: string, type: string, previewImage: string,
+                price: number, availableAmount: number, productParameters: Parameters) {
         this._productId = productId;
         this._title = title;
         this._shortDescription = shortDescription;
         this._type = type;
         this._previewImage = previewImage;
         this._price = price;
-        this._inStockCount = inStockCount;
+        this._availableAmount = availableAmount;
         this._productParameters = productParameters;
     }
 
@@ -70,12 +71,12 @@ export class Product {
         this._price = value;
     }
 
-    get inStockCount(): number {
-        return this._inStockCount;
+    get availableAmount(): number {
+        return this._availableAmount;
     }
 
-    set inStockCount(value: number) {
-        this._inStockCount = value;
+    set availableAmount(value: number) {
+        this._availableAmount = value;
     }
 
     get productParameters(): Parameters {

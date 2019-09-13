@@ -9,8 +9,9 @@ import lombok.*;
 @Builder
 public class ProductParametersResponse {
 
-    private String flavour;
-    private Double rate;
+    private Integer strong;
+    private Integer sour;
+    private Integer bitter;
     private Boolean decaf;
     private String coffeeType;
 

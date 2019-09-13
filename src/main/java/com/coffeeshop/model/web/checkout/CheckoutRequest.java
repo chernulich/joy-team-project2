@@ -14,5 +14,4 @@ public class CheckoutRequest {
     private CustomerInfoRequest customerInfo;
     private DeliveryRequest delivery;
     private List<ProductWeightQuantityRequest> products;
-    private ChargesRequest charges;
 }

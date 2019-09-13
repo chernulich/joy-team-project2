@@ -36,7 +36,7 @@ export class Product {
   private _price: number;
   private _productId: number;
   private _available: number;
-  private _previewImage: string
+  private _previewImage: string;
   private _sour: number;
   private _bitter: number;
   private _strong: number;
