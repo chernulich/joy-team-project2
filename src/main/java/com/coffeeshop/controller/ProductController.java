@@ -1,57 +1,36 @@
 package com.coffeeshop.controller;
 
-import com.coffeeshop.model.common.CoffeeType;
-import com.coffeeshop.model.common.ProductType;
+import com.coffeeshop.exception.InputValidationException;
 import com.coffeeshop.model.web.checkout.CheckoutRequest;
 import com.coffeeshop.model.web.checkout.CheckoutResponse;
 import com.coffeeshop.model.web.product.ProductListResponse;
-import com.coffeeshop.model.web.product.ProductParametersResponse;
 import com.coffeeshop.model.web.product.ProductRequest;
-import com.coffeeshop.model.web.product.ProductResponse;
 import com.coffeeshop.model.web.productDetails.CharacteristicResponse;
 import com.coffeeshop.model.web.productDetails.RichProductResponse;
+import com.coffeeshop.repository.search.ProductSearchRepository;
+import lombok.AllArgsConstructor;
 import org.apache.commons.io.IOUtils;
 import org.springframework.http.MediaType;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Collections;
 
 @RestController
 @RequestMapping("/api/customer")
+@AllArgsConstructor
 public class ProductController {
+
+    private final ProductSearchRepository productSearchRepository;
+
     @PostMapping("/products")
-    public ProductListResponse getProductList(@RequestBody ProductRequest productRequest) {
-        return ProductListResponse.builder()
-                .popular(ProductResponse.builder()
-                        .productId(1L)
-                        .title("Kenya AA")
-                        .previewImage("image1")
-                        .shortDescription("It is very good coffee!")
-                        .price(30.00)
-                        .availableAmount(20)
-                        .type(ProductType.COFFEE.name())
-                        .productParametersResponse(ProductParametersResponse.builder()
-                                .sour(1)
-                                .bitter(3)
-                                .strong(5)
-                                .coffeeType(CoffeeType.ARABICA.name().toLowerCase())
-                                .decaf(true).build()).build())
-                .products(Collections.singletonList(ProductResponse.builder()
-                        .productId(2L)
-                        .title("Brazilian Santos")
-                        .previewImage("image2")
-                        .shortDescription("It is very good coffee too!")
-                        .price(45.00)
-                        .availableAmount(360)
-                        .type(ProductType.COFFEE.name())
-                        .productParametersResponse(ProductParametersResponse.builder()
-                                .sour(2)
-                                .bitter(2)
-                                .strong(2)
-                                .coffeeType(CoffeeType.ARABICA.name().toLowerCase())
-                                .decaf(false).build()).build())).build();
+    public ProductListResponse getProductList(@RequestBody @Valid ProductRequest productRequest, BindingResult result) {
+        if (result.hasErrors()) {
+            throw new InputValidationException(result);
+        }
+        return productSearchRepository.searchProductsViaParams(productRequest);
     }
 
     @GetMapping("/products/{id}")
