@@ -8,8 +8,10 @@ import com.coffeeshop.model.web.product.ProductRequest;
 import com.coffeeshop.model.web.productDetails.CharacteristicResponse;
 import com.coffeeshop.model.web.productDetails.RichProductResponse;
 import com.coffeeshop.repository.search.ProductSearchRepository;
-import lombok.AllArgsConstructor;
 import org.apache.commons.io.IOUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.MediaType;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -20,16 +22,37 @@ import java.io.InputStream;
 
 @RestController
 @RequestMapping("/api/customer")
-@AllArgsConstructor
+@PropertySource(value = "classpath:defaultDtoValues.properties")
 public class ProductController {
 
-    private final ProductSearchRepository productSearchRepository;
+    @Value(value = "${default.page.size}")
+    private Integer defaultPageSize;
+
+    @Value(value = "${default.result.size}")
+    private Integer defaultResultSize;
+
+    @Value(value = "${default.max.result.size}")
+    private Integer defaultMaxResultSize;
+
+    @Autowired
+    private ProductSearchRepository productSearchRepository;
 
     @PostMapping("/products")
     public ProductListResponse getProductList(@RequestBody @Valid ProductRequest productRequest, BindingResult result) {
         if (result.hasErrors()) {
             throw new InputValidationException(result);
         }
+
+        if(productRequest.getPage() == null){
+            productRequest.setPage(defaultPageSize);
+        }
+
+        if (productRequest.getResults() == null) {
+            productRequest.setResults(defaultResultSize);
+        } else if (productRequest.getResults() > 20) {
+            productRequest.setResults(defaultMaxResultSize);
+        }
+
         return productSearchRepository.searchProductsViaParams(productRequest);
     }
 
