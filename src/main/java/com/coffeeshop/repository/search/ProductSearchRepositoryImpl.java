@@ -38,7 +38,7 @@ public class ProductSearchRepositoryImpl implements ProductSearchRepository {
 
         return ProductListResponse.builder()
                 .popular(responseList.get(0))
-                .products(responseList).build();
+                .products(responseList.subList(1,responseList.size())).build();
     }
 
     private TypedQuery<Object[]> createTypedQuery(ProductRequest request) {
