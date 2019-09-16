@@ -1,9 +1,9 @@
 package com.coffeeshop.repository.search;
 
 import com.coffeeshop.model.web.product.ProductListResponse;
+import com.coffeeshop.model.web.product.ProductParametersResponse;
 import com.coffeeshop.model.web.product.ProductRequest;
 import com.coffeeshop.model.web.product.ProductResponse;
-import com.coffeeshop.model.web.product.ProductParametersResponse;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -23,6 +23,12 @@ public class ProductSearchRepositoryImpl implements ProductSearchRepository {
     public ProductListResponse searchProductsViaParams(ProductRequest request) {
         TypedQuery<Object[]> typedQuery = createTypedQuery(request);
 
+        int pageNumber = request.getPage();
+        int pageSize = request.getResults();
+
+        typedQuery.setFirstResult((pageNumber - 1) * pageSize);
+        typedQuery.setMaxResults(pageSize);
+
         List<Object[]> dbResponse = typedQuery.getResultList();
 
         if (dbResponse.isEmpty()) {
@@ -32,7 +38,7 @@ public class ProductSearchRepositoryImpl implements ProductSearchRepository {
 
         return ProductListResponse.builder()
                 .popular(responseList.get(0))
-                .products(responseList).build();
+                .products(responseList.subList(1,responseList.size())).build();
     }
 
     private TypedQuery<Object[]> createTypedQuery(ProductRequest request) {

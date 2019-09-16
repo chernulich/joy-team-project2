@@ -4,6 +4,8 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
+import javax.validation.constraints.Min;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -12,10 +14,13 @@ import lombok.*;
 @ApiModel
 public class ProductRequest {
 
+
     @ApiModelProperty(example = "1")
+    @Min(1)
     private Integer page;
 
     @ApiModelProperty(example = "10")
+    @Min(1)
     private Integer results;
 
     @ApiModelProperty(example = "Ala")
