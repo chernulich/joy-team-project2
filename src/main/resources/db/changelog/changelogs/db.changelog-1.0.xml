@@ -346,7 +346,6 @@
 
     </changeSet>
 
-
     <changeSet id="2" author="Alex">
 
         <addDefaultValue
@@ -389,6 +388,16 @@
                 columnName="STATUS"
                 defaultValueNumeric="1"/>
 
+        <addDefaultValue
+                tableName="ORDER_CONFIRMATION_EMAIL"
+                columnName="IS_SEND_FAILED"
+                defaultValueBoolean="true"/>
+
+        <addDefaultValue
+                tableName="ORDER_CONFIRMATION_EMAIL"
+                columnName="IS_LOCKED"
+                defaultValueBoolean="false"/>
+
     </changeSet>
 
     <changeSet id="3" author="Dana">
@@ -398,6 +407,54 @@
                 <constraints nullable="false" unique="true"/>
             </column>
         </addColumn>
+
+    </changeSet>
+
+    <changeSet id="4" author="Nir">
+
+        <createTable tableName="ORDER_CONFIRMATION_EMAIL">
+
+            <column name="ID" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+
+            <column name="ORDER_ID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="ORDER_EMAIL" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="EMAIL_PARTS" type="LONGTEXT">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="IS_SEND_FAILED" type="BIT">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="IS_LOCKED" type="BIT">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="LOCK_ACQUIRED_ON" type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="VERSION" type="INT">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="UPDATE_ON" type="DATETIME">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="CREATED_ON" type="DATETIME">
+                <constraints nullable="true"/>
+            </column>
+
+        </createTable>
 
     </changeSet>
 
