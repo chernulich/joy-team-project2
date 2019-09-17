@@ -1,4 +1,4 @@
-package com.coffeeshop.controller;
+package com.coffeeshop.controller.customer;
 
 import com.coffeeshop.exception.InputValidationException;
 import com.coffeeshop.model.web.checkout.CheckoutRequest;
