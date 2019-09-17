@@ -16,8 +16,12 @@ import java.util.Map;
 @RequestMapping("/api/admin/productItem")
 public class ProductItemManagementController {
 
+    private final ProductItemManagementService productItemManagementService;
+
     @Autowired
-    private ProductItemManagementService productItemManagementService;
+    public ProductItemManagementController(ProductItemManagementService productItemManagementService) {
+        this.productItemManagementService = productItemManagementService;
+    }
 
     @PostMapping("/add")
     public void createProductItems(@RequestBody List<@Valid ProductItemRequest> productItemRequests, BindingResult result) {
