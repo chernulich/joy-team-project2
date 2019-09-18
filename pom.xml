@@ -118,6 +118,13 @@
 
     <profiles>
         <profile>
+            <id>docker</id>
+            <properties>
+                <maven.test.skip>true</maven.test.skip>
+                <jar.finalName>csp-docker</jar.finalName>
+            </properties>
+        </profile>
+        <profile>
             <id>frontend</id>
             <build>
                 <plugins>
@@ -152,6 +159,16 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <finalName>csp</finalName>
+                </configuration>
             </plugin>
         </plugins>
     </build>
