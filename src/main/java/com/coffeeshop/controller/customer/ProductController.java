@@ -7,7 +7,7 @@ import com.coffeeshop.model.web.product.ProductListResponse;
 import com.coffeeshop.model.web.product.ProductRequest;
 import com.coffeeshop.model.web.productDetails.CharacteristicResponse;
 import com.coffeeshop.model.web.productDetails.RichProductResponse;
-import com.coffeeshop.repository.search.ProductSearchRepository;
+import com.coffeeshop.service.product.ProductSearchService;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -34,8 +34,12 @@ public class ProductController {
     @Value(value = "${default.max.result.size}")
     private Integer defaultMaxResultSize;
 
+    private final ProductSearchService productSearchService;
+
     @Autowired
-    private ProductSearchRepository productSearchRepository;
+    public ProductController(ProductSearchService productSearchService) {
+        this.productSearchService = productSearchService;
+    }
 
     @PostMapping("/products")
     public ProductListResponse getProductList(@RequestBody @Valid ProductRequest productRequest, BindingResult result) {
@@ -53,7 +57,7 @@ public class ProductController {
             productRequest.setResults(defaultMaxResultSize);
         }
 
-        return productSearchRepository.searchProductsViaParams(productRequest);
+        return productSearchService.searchProductByParameters(productRequest);
     }
 
     @GetMapping("/products/{id}")

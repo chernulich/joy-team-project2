@@ -78,7 +78,7 @@ public class ProductSearchRepositoryImpl implements ProductSearchRepository {
                                             .strong(Integer.parseInt(names.get(7)))
                                             .sour(Integer.parseInt(names.get(8)))
                                             .bitter(Integer.parseInt(names.get(9)))
-                                            .decaf(Boolean.getBoolean(names.get(10)))
+                                            .decaf(Boolean.valueOf(names.get(10)))
                                             .build()).build();
                 }).collect(Collectors.toList());
     }

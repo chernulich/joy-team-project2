@@ -2,6 +2,8 @@ package com.coffeeshop.service.product;
 
 import com.coffeeshop.exception.*;
 import com.coffeeshop.model.entity.*;
+import com.coffeeshop.model.web.product.ProductListResponse;
+import com.coffeeshop.model.web.product.ProductRequest;
 import com.coffeeshop.model.web.productDetails.CharacteristicResponse;
 import com.coffeeshop.model.web.productDetails.RichProductResponse;
 import com.coffeeshop.repository.*;
@@ -10,7 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class ProductSearchServiceImpl implements ProductSearchService {
@@ -20,7 +21,6 @@ public class ProductSearchServiceImpl implements ProductSearchService {
     private final ProductImageRepository productImageRepository;
     private final ProductCoffeeRepository productCoffeeRepository;
     private final ProductItemRepository productItemRepository;
-
 
     @Autowired
     public ProductSearchServiceImpl(ProductRepository productRepository,
@@ -59,11 +59,9 @@ public class ProductSearchServiceImpl implements ProductSearchService {
     }
 
     @Override
-    public List<RichProductResponse> searchProductByParameters() {
-        List<Long> ids = productRepository.getAllIds().orElseThrow(ProductNotFoundException::new);
-        return ids.stream()
-                .map(this::findProductById)
-                .collect(Collectors.toList());
+    @Transactional(readOnly = true)
+    public ProductListResponse searchProductByParameters(ProductRequest productRequest) {
+        return productRepository.searchProductsViaParams(productRequest);
     }
 
     private RichProductResponse convertProductToRichProductResponse(Product product, ProductQuantity productQuantity,
