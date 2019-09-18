@@ -12,13 +12,14 @@ import java.time.LocalDateTime;
 
 @DynamicInsert
 @Entity
+@Table(name = "ORDER_CONFIRMATION_EMAIL")
 public class OrderConfirmationEmail extends BaseDate {
 
     @OneToOne
     @JoinColumn(name = "ORDER_ID" , referencedColumnName = "ID" , nullable = false)
     private Orders order;
 
-    @Column(name = "ORDER_EMAIL" , nullable = false)
+    @Column(name = "ORDER_EMAIL" , nullable = false , length = 50)
     private String orderEmail;
 
     @Column(name = "EMAIL_PARTS" , nullable = false)
