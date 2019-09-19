@@ -19,7 +19,7 @@ public class ProductImageRequest {
     @ApiModelProperty(example = "3")
     private Long productId;
 
-    @ApiModelProperty(dataType = "List<file>", example = "[image/coffee.jpg," +
-            "ui/customer-ui/server/mock/image/rose-blue-flower-rose-blooms-67636.jpeg]")
+    @ApiModelProperty(dataType = "List<file>", example = "[image/Image_Brazilian Santos_Product Listing.png," +
+            "image/Image_Kenya_Product Description.png]")
     private List<String> base64Images;
 }
