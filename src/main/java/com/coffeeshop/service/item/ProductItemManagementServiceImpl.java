@@ -50,8 +50,8 @@ public class ProductItemManagementServiceImpl implements ProductItemManagementSe
         }
     }
 
-    @Transactional(propagation = Propagation.REQUIRES_NEW, rollbackFor = ProductNotFoundException.class)
-    public void createProductItem(ProductItemRequest productItemRequest) throws ProductNotFoundException {
+   // @Transactional(propagation = Propagation.REQUIRES_NEW, rollbackFor = ProductNotFoundException.class)
+    private void createProductItem(ProductItemRequest productItemRequest) {
         try {
             Product product = productRepository.findById(productItemRequest.getProductId())
                     .orElseThrow(() -> new ProductNotFoundException("Product doesn't exist by id: " + productItemRequest.getProductId()));
