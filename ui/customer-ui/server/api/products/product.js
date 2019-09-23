@@ -4,14 +4,15 @@ let configuration = require('../../config/backend-config');
 const jsonFile = require('jsonfile');
 
 exports.getProductList = function (request, response) {
-    const file = '../customer-ui/server/mock/json/productsList.json';
-    jsonFile.readFile(file, function (err, obj) {
-        if (err) {
-            console.error(err);
-        }
-        response.send(obj);
-    })
 
+  rest.postJson(configuration.perEnvironment.backendUrl + '/customer/products',request.body)
+    .on('success', (backendResponseBody, backendResponseMeta) => {
+      response.json(backendResponseBody);
+    })
+    .on('fail', (backendResponseBody, backendResponseMeta) => {
+
+      response.status(backendResponseMeta.statusCode).send(backendResponseBody);
+    });
 };
 
 exports.getImagesById = function (request, response) {
