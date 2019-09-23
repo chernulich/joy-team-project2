@@ -126,7 +126,6 @@ public class ProductSearchRepositoryImpl implements ProductSearchRepository {
                 .append(" join ProductCoffee pc on p.id=pc.product.id")
                 .append(" join ProductQuantity pq on pc.product.id=pq.product.id ")
                 .append(" order by")
-                .append(" p.unitPrice, p.productName")
                 .toString();
     }
 
