@@ -29,7 +29,9 @@ public class DeliveryRequest {
     private String apartment;
 
     @ApiModelProperty(example = "5")
-    private Integer floor;
+    private String floor;
+
+    private boolean selfPickup;
 
     @ApiModelProperty(example = "Мертвец весь день трудится над докладом. " +
                                 "Присутствие кончается. И вот - " +
