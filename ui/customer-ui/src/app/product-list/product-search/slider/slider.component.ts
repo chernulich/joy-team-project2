@@ -91,7 +91,8 @@ export class SliderComponent implements OnInit {
   // }
 
   calcRangeValues(){
-    let lowerValue = Math.floor(+this.currHandle1PercentPosition.toFixed(2) * +this.upperValue);
+    let lowerValue = Math.floor(+this.currHandle1PercentPosition.toFixed(2) *  +this.upperValue + this.lowerValue);
+
     let upperValue = Math.floor(+this.currHandle2PercentPosition.toFixed(2) * +this.upperValue);
     this.currLower =  lowerValue;
     this.currUpper =  upperValue;

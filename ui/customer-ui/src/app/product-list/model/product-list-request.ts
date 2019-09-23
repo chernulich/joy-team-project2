@@ -2,15 +2,21 @@ import {Characteristics} from "./characteristics";
 
 export class ProductListRequest {
 
-    private _page: number;
-    private _results: number;
-    private _search: string;
-    private _priceMin: number;
-    private _priceMax: number;
-    private _sortBy: string;
-    private _characteristics: Characteristics;
+    private _page?: number;
+    private _results?: number;
+    private _search?: string;
+    private _priceMin?: number;
+    private _priceMax?: number;
+    private _sortBy?: string;
+    private _characteristics?: Characteristics;
 
-    constructor(page: number, results: number, search: string, priceMin: number, priceMax: number, sortBy: string, characteristics: Characteristics) {
+    constructor(page: number = 1,
+                results: number = 10,
+                search: string = "",
+                priceMin: number = 10,
+                priceMax: number = 100,
+                sortBy: string = 'popular',
+                characteristics: Characteristics = new Characteristics()) {
         this._page = page;
         this._results = results;
         this._search = search;

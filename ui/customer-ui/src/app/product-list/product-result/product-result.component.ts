@@ -21,24 +21,7 @@ export class ProductResultComponent implements OnInit {
   }
 
   getProductList(){
-   return  combineLatest(this.productDataStorage.filteredProducts,this.productDataStorage.mostPopular)
-      .pipe(map((result) => {
-        let res: number;
-        let sorted = [];
-        res = result[0].findIndex((e: Product) => {
-          return e.productName === result[1].productName;
-        });
-        if(result[1].productName !== ''){
-          result[0].splice(res,1);
-          sorted = result[0];
-          sorted.unshift(result[1]);
-          return sorted;
-        }
-        else{
-          return result[0];
-        }
 
-      }));
   }
 
 

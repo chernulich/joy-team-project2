@@ -1,18 +1,21 @@
 import { Injectable } from '@angular/core';
 import {BehaviorSubject, Subject} from "rxjs";
 import {Product} from "../../../../model/product.model";
+import {HttpService} from "../../../../service/http/http.service";
+import {ProductListRequest} from "../../../model/product-list-request";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductsDataStorageService {
 
-  constructor() { }
+  constructor(private http: HttpService) { }
   productStore: BehaviorSubject<Product[]> = new BehaviorSubject([]);
-  filteredProducts: BehaviorSubject<Product[]> = new BehaviorSubject(this.productStore.value);
-  mostPopular: BehaviorSubject<Product> = new BehaviorSubject(
-    new Product('','', '',
-                0, -1,-1,'',
-                -1,-1,-1,false,false,false)
-  );
+
+  httpGetFilteredProducts(requestBody: {}){
+    this.http.getFilteredProducts(requestBody)
+      .subscribe((products) => {
+        console.log(products);
+      });
+  }
 }

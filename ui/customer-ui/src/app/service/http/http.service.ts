@@ -1,7 +1,8 @@
 import {Injectable} from "@angular/core";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Product} from "../../model/product.model";
+import {ProductListRequest} from "../../product-list/model/product-list-request";
 
 @Injectable({
   providedIn: "root"
@@ -13,11 +14,9 @@ export class HttpService {
 
   }
 
-  getMostPopular(): Observable<Product>{
-    return this.http.get<Product>(`http://localhost:3000/popular`);
-  }
-
-  getAllProducts(){
-    return this.http.get<Product[]>("http://localhost:3000/products");
+  getFilteredProducts(requestBody: {}){
+    console.log(requestBody);
+    // debugger;
+    return this.http.post('api/customer/products',requestBody);
   }
 }
