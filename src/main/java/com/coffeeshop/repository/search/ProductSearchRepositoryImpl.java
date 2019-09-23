@@ -4,13 +4,16 @@ import com.coffeeshop.model.web.product.ProductListResponse;
 import com.coffeeshop.model.web.product.ProductParametersResponse;
 import com.coffeeshop.model.web.product.ProductRequest;
 import com.coffeeshop.model.web.product.ProductResponse;
+import com.coffeeshop.model.web.product.type.SortStatus;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Repository
@@ -18,6 +21,13 @@ public class ProductSearchRepositoryImpl implements ProductSearchRepository {
 
     @PersistenceContext
     private EntityManager entityManager;
+
+    public static final Map<SortStatus, String> map = new HashMap();
+
+    static {
+        map.put(SortStatus.PRICE, " p.unitPrice, p.productName");
+        map.put(SortStatus.NAME, " p.productName, p.unitPrice");
+    }
 
     @Override
     public ProductListResponse searchProductsViaParams(ProductRequest request) {
@@ -42,7 +52,11 @@ public class ProductSearchRepositoryImpl implements ProductSearchRepository {
     }
 
     private TypedQuery<Object[]> createTypedQuery(ProductRequest request) {
-        String query = getQuery();
+        if(request.getSortBy().equals(null)) {
+            request.setSortBy(SortStatus.PRICE);
+        }
+        String sortBy = map.get(request.getSortBy());
+        String query = getQuery(sortBy);
 
         TypedQuery<Object[]> typedQuery = entityManager.createQuery(query, Object[].class);
         typedQuery.setParameter("priceMin", request.getPriceMin());
@@ -83,7 +97,7 @@ public class ProductSearchRepositoryImpl implements ProductSearchRepository {
                 }).collect(Collectors.toList());
     }
 
-    private String getQuery() {
+    private String getQuery(String sortBy) {
         return new StringBuilder()
                 .append("select ")
                 .append("pc.product.id, p.productName, p.shortDescription, p.productCategory, p.unitPrice, p.previewImage, pq.quantity,")
@@ -98,6 +112,19 @@ public class ProductSearchRepositoryImpl implements ProductSearchRepository {
                 .append(" and pc.strong between :strongFrom and :strongTo")
                 .append(" and pc.decaf = :decaf")
                 .append(" and pc.ground = :ground")
+                .append(" order by")
+                .append(sortBy)
+                .toString();
+    }
+
+    private String getQuery() {
+        return new StringBuilder()
+                .append("select ")
+                .append("pc.product.id, p.productName, p.shortDescription, p.productCategory, p.unitPrice, p.previewImage, pq.quantity,")
+                .append(" pc.strong, pc.sour, pc.bitter, pc.decaf")
+                .append(" from Product p ")
+                .append(" join ProductCoffee pc on p.id=pc.product.id")
+                .append(" join ProductQuantity pq on pc.product.id=pq.product.id ")
                 .append(" order by")
                 .append(" p.unitPrice, p.productName")
                 .toString();

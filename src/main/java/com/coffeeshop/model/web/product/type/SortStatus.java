@@ -1,6 +1,7 @@
 package com.coffeeshop.model.web.product.type;
 
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 import java.util.Arrays;
 
@@ -26,4 +27,5 @@ public enum SortStatus {
     public Integer getId() {
         return id;
     }
+
 }

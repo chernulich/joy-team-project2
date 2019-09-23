@@ -33,6 +33,7 @@ public class ProductRequest {
     @ApiModelProperty(example = "100")
     private Double priceMax;
 
+    @ApiModelProperty(example = "PRICE")
     private SortStatus sortBy;
 
     private CharacteristicsRequest characteristics;
