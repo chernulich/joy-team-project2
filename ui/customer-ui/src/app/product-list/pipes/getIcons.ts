@@ -6,8 +6,8 @@ import {Pipe, PipeTransform} from "@angular/core";
 })
 export class GetIconsPipe implements PipeTransform{
 
-  transform(value: any, index: number): any {
-    if(index + 1 <= value){
+  transform(value: any, index: number, characteristicName: string): any {
+    if(index + 1 <= value.productParametersResponse[characteristicName]){
       return "../../../assets/images/bean_black.png";
     }
     else{

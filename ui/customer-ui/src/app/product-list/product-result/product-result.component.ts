@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {ProductsDataStorageService} from "../product-search/service/data-storage/products-data-storage.service";
-import {Product} from "../../model/product.model";
-import {combineLatest} from "rxjs";
-import {distinct, map} from "rxjs/operators";
+import {Product} from "../model/product";
+import {BehaviorSubject} from "rxjs";
+
 
 @Component({
   selector: 'app-product-result',
@@ -13,15 +13,23 @@ export class ProductResultComponent implements OnInit {
 
   constructor(public productDataStorage: ProductsDataStorageService) { }
 
- maxCoffeeCharacteristic = 5; // temporary for determining how many coffee beans to put in ui
-  // will take this from DB Later
+ maxCoffeeCharacteristic = 5;
+ characteristics = ['strong','sour','bitter'];
 
   ngOnInit() {
      // this.getProductList();
+    this.productDataStorage.productsStore
+      .subscribe((products) => {
+        console.log("Product Store: ", products);
+      });
   }
 
-  getProductList(){
+  firstLetterUpper(value: string){
+    return value.charAt(0).toUpperCase() + value.slice(1);
+  }
 
+  getProductList(): BehaviorSubject<Product[]>{
+    return this.productDataStorage.productsStore;
   }
 
 

@@ -37,14 +37,23 @@ export class CharacteristicRangeComponent implements OnInit {
     return this.coffeeCharacteristicsMarks;
   }
 
- reset(){
+ setToInitial(){
     const children = Array.from(this.beansContainer.nativeElement.children);
     children.forEach((image: HTMLImageElement) => {
       image.src = this.lightBean;
     });
   }
 
-  rangeSelect(start,end){
+  reset(){
+    this.setToInitial();
+    this.rangeStart = -1;
+    this.rangeEnd = -1;
+    this.isSelected = false;
+  }
+
+
+
+  rangeSelect(start,end){ // change images in range to selected (black Bean)
     const children = Array
       .from(this.beansContainer.nativeElement.children);
     children.slice(start,end + 1).forEach((e,i) => {
@@ -53,32 +62,40 @@ export class CharacteristicRangeComponent implements OnInit {
   }
 
   onBeanHover(element: HTMLImageElement,index){
+    // if not selected only start to select beans
     if(!this.isSelected){
-      this.reset();
+      // set to initial state
+      this.setToInitial();
+      // if moving backwards and start index grater then current bean
+      // set start and end indexes to initial
       if(this.rangeStart > index){
         this.rangeStart = -1;
         this.rangeEnd = -1;
       }
+      // if currently no start index put current index to range start
       if(this.rangeStart < 0){
         this.rangeStart = index;
       }
+      // if currently there is start index put current index to  range end
       if(this.rangeStart >= 0){
         this.rangeEnd = index;
       }
+
+      // call range select to chane images for selected
       this.rangeSelect(this.rangeStart,this.rangeEnd);
     }
   }
 
   onWidgetLeave(){
+    // if leaving beans area and no beans selected reset to initial state
     if(!this.isSelected){
       this.reset();
-      this.rangeStart = -1;
-      this.rangeEnd = -1;
     }
   }
 
   onBeanClick(element: HTMLImageElement,index) {
-    // console.log("selectedIndex: " + selectedIndex, "endIndex: " + this.rangeEnd);
+
+    // if clicked on last bean make deselection
     if (index === this.rangeEnd && this.isSelected) {
       this.isSelected = false;
       this.onWidgetLeave();
@@ -86,11 +103,11 @@ export class CharacteristicRangeComponent implements OnInit {
         .next({from: 1, to: 5});
       return;
     }
+    // if previously not selected select current range
     if (!this.isSelected) {
       this.isSelected = true;
       this.characteristicsRangeService[this.characteristicName + 'State']
         .next({from: this.rangeStart + 1, to: this.rangeEnd + 1});
-
     }
   }
 }

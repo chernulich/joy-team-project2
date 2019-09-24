@@ -1,10 +1,9 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, QueryList, ViewChildren} from '@angular/core';
 import {SliderService, SliderValues} from "./service/slider-service/slider.service";
 import {ProductsDataStorageService} from "./service/data-storage/products-data-storage.service";
 import {FormControl, FormGroup} from "@angular/forms";
 import {Product} from "../../model/product.model";
 import {ProductListRequest} from "../model/product-list-request";
-import {Characteristics} from "../model/characteristics";
 import {CharacteristicRangeComponent} from "./characteristic-range/characteristic-range.component";
 import {CharacteristicsRangeService} from "./service/charachteristics-range-service/characteristics-range.service";
 
@@ -24,10 +23,9 @@ interface Filter {
   templateUrl: './product-search.component.html',
   styleUrls: ['./product-search.component.css']
 })
-export class ProductSearchComponent implements OnInit, AfterViewInit {
+export class ProductSearchComponent implements OnInit {
 
-  @ViewChild(CharacteristicRangeComponent,
-    {static: false}) characteristicRangeComponent: CharacteristicRangeComponent;
+  @ViewChildren(CharacteristicRangeComponent) characteristicRangeComponents: QueryList<CharacteristicRangeComponent>;
 
   constructor(private sliderService: SliderService,
               private productDataStorage: ProductsDataStorageService,
@@ -36,7 +34,6 @@ export class ProductSearchComponent implements OnInit, AfterViewInit {
   productSearchForm: FormGroup;
   priceRange: SliderValues;
   products: Product [] = [];
-  productsToShow: Product [] = [];
   coffeeCharacteristicsMarks = [1,2,3,4,5];
   initialSliderValues: SliderValues;
   characteristics: Array<string> = ['bitter','sour','strong'];
@@ -44,11 +41,6 @@ export class ProductSearchComponent implements OnInit, AfterViewInit {
 
   private tempRequestBody: ProductListRequest = new ProductListRequest();
   private requestBody: {} = new ProductListRequest();
-  private requestCharacteristics: Characteristics = new Characteristics();
-
-  ngAfterViewInit(): void {
-    console.log("range: ", this.characteristicRangeComponent);
-  }
 
   ngOnInit() {
     this.productSearchForm = new FormGroup({
@@ -72,21 +64,21 @@ export class ProductSearchComponent implements OnInit, AfterViewInit {
 
     this.characteristicsRangeService.bitterState
       .subscribe((bitterState) => {
-        console.log('Bitter: ', bitterState);
+        // console.log('Bitter: ', bitterState);
         this.tempRequestBody.characteristics.bitterFrom = bitterState.from;
         this.tempRequestBody.characteristics.bitterTo = bitterState.to;
       });
 
     this.characteristicsRangeService.sourState
       .subscribe((sourState) => {
-        console.log('Sour: ', sourState);
+        // console.log('Sour: ', sourState);
         this.tempRequestBody.characteristics.sourFrom = sourState.from;
         this.tempRequestBody.characteristics.sourTo = sourState.to;
       });
 
     this.characteristicsRangeService.strongState
       .subscribe((strongState) => {
-        console.log('strongState: ', strongState);
+        // console.log('strongState: ', strongState);
         this.tempRequestBody.characteristics.strongFrom = strongState.from;
         this.tempRequestBody.characteristics.strongTo = strongState.to;
       });
@@ -95,16 +87,15 @@ export class ProductSearchComponent implements OnInit, AfterViewInit {
   createRequestObject(request): {}{
     const result = {};
     const keys = Object.keys(request);
-    let x;
+    let midResult;
     keys.forEach((key) => {
 
-      if(request[key] instanceof Object){
-        // debugger;
-        x = this.createRequestObject(request[key]);
+      if(request[key] instanceof Object && !(request[key] instanceof Array)){
+        midResult = this.createRequestObject(request[key]);
       }
 
-      if(!!x){
-        result[key.slice(1)] = x;
+      if(!!midResult){
+        result[key.slice(1)] = midResult;
       }
       else{
         result[key.slice(1)] = request[key];
@@ -114,19 +105,25 @@ export class ProductSearchComponent implements OnInit, AfterViewInit {
   }
 
   onFormSubmit() {
-    console.log("Form: ", this.productSearchForm.value, "RequestBody: " , this.requestBody);
     this.tempRequestBody.characteristics.decaf = this.productSearchForm.value.decaf === 'yes';
     this.tempRequestBody.characteristics.ground = this.productSearchForm.value.ground === 'yes';
     this.tempRequestBody.search = this.productSearchForm.value.productName;
     this.requestBody = this.createRequestObject(this.tempRequestBody);
-    //console.log(this.requestBody);
     this.productDataStorage.httpGetFilteredProducts(this.requestBody);
-    // debugger;
   }
 
   onReset(){
-    this.productsToShow = this.products.slice(0);
+
     this.sliderService.sliderReset.next();
+    this.productSearchForm.setValue({
+      productName: "",
+      decaf: "",
+      ground: ""
+    });
+    this.tempRequestBody = new ProductListRequest();
+    this.characteristicRangeComponents.forEach((component: CharacteristicRangeComponent) => {
+      component.reset();
+    })
   }
 
   firstLetterUpper(value: string){
