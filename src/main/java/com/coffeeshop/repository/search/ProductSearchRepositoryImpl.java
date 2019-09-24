@@ -63,22 +63,14 @@ public class ProductSearchRepositoryImpl implements ProductSearchRepository {
         TypedQuery<Object[]> typedQuery = entityManager.createQuery(query, Object[].class);
         typedQuery.setParameter("priceMin", request.getPriceMin());
         typedQuery.setParameter("priceMax", request.getPriceMax());
-        typedQuery.setParameter("sourFrom",
-                request.getCharacteristics().getSourFrom() != null ? request.getCharacteristics().getSourFrom() : 1);
-        typedQuery.setParameter("sourTo",
-                request.getCharacteristics().getSourTo() != null ? request.getCharacteristics().getSourTo() : 5);
-        typedQuery.setParameter("strongFrom",
-                request.getCharacteristics().getStrongFrom() != null ? request.getCharacteristics().getStrongFrom() : 1);
-        typedQuery.setParameter("strongTo",
-                request.getCharacteristics().getStrongTo() != null ? request.getCharacteristics().getSourTo() : 5);
-        typedQuery.setParameter("bitterFrom",
-                request.getCharacteristics().getBitterFrom() != null ? request.getCharacteristics().getBitterFrom() : 1);
-        typedQuery.setParameter("bitterTo",
-                request.getCharacteristics().getBitterTo() != null ? request.getCharacteristics().getBitterTo() : 5);
-        typedQuery.setParameter("decaf",
-                request.getCharacteristics().getDecaf() != null ? request.getCharacteristics().getDecaf() : true);
-        typedQuery.setParameter("ground",
-                request.getCharacteristics().getGround() != null ? request.getCharacteristics().getGround() : true);
+        typedQuery.setParameter("sourFrom", request.getCharacteristics().getSourFrom());
+        typedQuery.setParameter("sourTo", request.getCharacteristics().getSourTo());
+        typedQuery.setParameter("strongFrom", request.getCharacteristics().getStrongFrom());
+        typedQuery.setParameter("strongTo", request.getCharacteristics().getStrongTo());
+        typedQuery.setParameter("bitterFrom", request.getCharacteristics().getBitterFrom());
+        typedQuery.setParameter("bitterTo", request.getCharacteristics().getBitterTo());
+        typedQuery.setParameter("decaf", request.getCharacteristics().getDecaf());
+        typedQuery.setParameter("ground", request.getCharacteristics().getGround());
         typedQuery.setParameter("search", request.getSearch().concat("%"));
 
         return typedQuery;
