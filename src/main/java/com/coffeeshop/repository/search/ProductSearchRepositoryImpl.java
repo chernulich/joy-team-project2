@@ -28,17 +28,13 @@ public class ProductSearchRepositoryImpl implements ProductSearchRepository {
 
         if(requestIsEmpty(request)) {
             TypedQuery<Object[]> typedQuery = entityManager.createQuery(getQuery(), Object[].class);
+            setPageAndMaxResult(request, typedQuery);
             List<Object[]> dbResponse = typedQuery.getResultList();
             return convertDBResponseToProductResponses(dbResponse);
         }
+
         TypedQuery<Object[]> typedQuery = createTypedQuery(request);
-
-        int pageNumber = request.getPage();
-        int pageSize = request.getResults();
-
-        typedQuery.setFirstResult((pageNumber - 1) * pageSize);
-        typedQuery.setMaxResults(pageSize);
-
+        setPageAndMaxResult(request, typedQuery);
         List<Object[]> dbResponse = typedQuery.getResultList();
 
         if (dbResponse.isEmpty()) {
@@ -46,6 +42,13 @@ public class ProductSearchRepositoryImpl implements ProductSearchRepository {
         }
 
         return convertDBResponseToProductResponses(dbResponse);
+    }
+
+    private void setPageAndMaxResult(ProductRequest request, TypedQuery<Object[]> typedQuery) {
+        int pageNumber = request.getPage();
+        int pageSize = request.getResults();
+        typedQuery.setFirstResult((pageNumber - 1) * pageSize);
+        typedQuery.setMaxResults(pageSize);
     }
 
     private boolean requestIsEmpty(ProductRequest request) {
