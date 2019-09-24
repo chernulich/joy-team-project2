@@ -127,7 +127,7 @@ public class ProductSearchRepositoryImpl implements ProductSearchRepository {
         return new StringBuilder()
                 .append("select ")
                 .append("pc.product.id, p.productName, p.shortDescription, p.productCategory, p.unitPrice, p.previewImage, pq.quantity,")
-                .append(" pc.strong, pc.sour, pc.bitter, pc.decaf")
+                .append(" pc.strong, pc.sour, pc.bitter, pc.decaf, pc.ground")
                 .append(" from Product p ")
                 .append(" join ProductCoffee pc on p.id=pc.product.id")
                 .append(" join ProductQuantity pq on pc.product.id=pq.product.id ")
