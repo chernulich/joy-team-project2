@@ -22,15 +22,15 @@ public class ProductSearchRepositoryImpl implements ProductSearchRepository {
     @PersistenceContext
     private EntityManager entityManager;
 
-    public static final Map<SortStatus, String> map = new HashMap();
-
-    static {
-        map.put(SortStatus.PRICE, " p.unitPrice, p.productName");
-        map.put(SortStatus.NAME, " p.productName, p.unitPrice");
-    }
 
     @Override
     public ProductListResponse searchProductsViaParams(ProductRequest request) {
+
+        if(requestIsEmpty(request)) {
+            TypedQuery<Object[]> typedQuery = entityManager.createQuery(getQuery(), Object[].class);
+            List<Object[]> dbResponse = typedQuery.getResultList();
+            return convertDBResponseToProductResponses(dbResponse);
+        }
         TypedQuery<Object[]> typedQuery = createTypedQuery(request);
 
         int pageNumber = request.getPage();
@@ -44,38 +44,48 @@ public class ProductSearchRepositoryImpl implements ProductSearchRepository {
         if (dbResponse.isEmpty()) {
             return new ProductListResponse();
         }
-        List<ProductResponse> responseList = convertDBResponseToProductResponses(dbResponse);
 
-        return ProductListResponse.builder()
-                .popular(responseList.get(0))
-                .products(responseList.subList(1,responseList.size())).build();
+        return convertDBResponseToProductResponses(dbResponse);
+    }
+
+    private boolean requestIsEmpty(ProductRequest request) {
+        return request.getPriceMax() == null && request.getPriceMin() == null && request.getCharacteristics() == null
+                && request.getSearch() == null && request.getSortBy()==null;
     }
 
     private TypedQuery<Object[]> createTypedQuery(ProductRequest request) {
-        if(request.getSortBy().equals(null)) {
+        if(request.getSortBy() == null) {
             request.setSortBy(SortStatus.PRICE);
         }
-        String sortBy = map.get(request.getSortBy());
+        String sortBy = request.getSortBy().toString();
         String query = getQuery(sortBy);
 
         TypedQuery<Object[]> typedQuery = entityManager.createQuery(query, Object[].class);
         typedQuery.setParameter("priceMin", request.getPriceMin());
         typedQuery.setParameter("priceMax", request.getPriceMax());
-        typedQuery.setParameter("sourFrom", request.getCharacteristics().getSourFrom());
-        typedQuery.setParameter("sourTo", request.getCharacteristics().getSourTo());
-        typedQuery.setParameter("strongFrom", request.getCharacteristics().getStrongFrom());
-        typedQuery.setParameter("strongTo", request.getCharacteristics().getStrongTo());
-        typedQuery.setParameter("bitterFrom", request.getCharacteristics().getBitterFrom());
-        typedQuery.setParameter("bitterTo", request.getCharacteristics().getBitterTo());
-        typedQuery.setParameter("decaf", request.getCharacteristics().getDecaf());
-        typedQuery.setParameter("ground", request.getCharacteristics().getGround());
+        typedQuery.setParameter("sourFrom",
+                request.getCharacteristics().getSourFrom() != null ? request.getCharacteristics().getSourFrom() : 1);
+        typedQuery.setParameter("sourTo",
+                request.getCharacteristics().getSourTo() != null ? request.getCharacteristics().getSourTo() : 5);
+        typedQuery.setParameter("strongFrom",
+                request.getCharacteristics().getStrongFrom() != null ? request.getCharacteristics().getStrongFrom() : 1);
+        typedQuery.setParameter("strongTo",
+                request.getCharacteristics().getStrongTo() != null ? request.getCharacteristics().getSourTo() : 5);
+        typedQuery.setParameter("bitterFrom",
+                request.getCharacteristics().getBitterFrom() != null ? request.getCharacteristics().getBitterFrom() : 1);
+        typedQuery.setParameter("bitterTo",
+                request.getCharacteristics().getBitterTo() != null ? request.getCharacteristics().getBitterTo() : 5);
+        typedQuery.setParameter("decaf",
+                request.getCharacteristics().getDecaf() != null ? request.getCharacteristics().getDecaf() : true);
+        typedQuery.setParameter("ground",
+                request.getCharacteristics().getGround() != null ? request.getCharacteristics().getGround() : true);
         typedQuery.setParameter("search", request.getSearch().concat("%"));
 
         return typedQuery;
     }
 
-    private List<ProductResponse> convertDBResponseToProductResponses(List<Object[]> dbResponse) {
-        return dbResponse.stream()
+    private ProductListResponse convertDBResponseToProductResponses(List<Object[]> dbResponse) {
+        List<ProductResponse> productResponseList = dbResponse.stream()
                 .map(array -> {
                     List<Object> objects = Arrays.asList(array);
                     List<String> names = objects.stream().map(Object::toString).collect(Collectors.toList());
@@ -93,18 +103,22 @@ public class ProductSearchRepositoryImpl implements ProductSearchRepository {
                                             .sour(Integer.parseInt(names.get(8)))
                                             .bitter(Integer.parseInt(names.get(9)))
                                             .decaf(Boolean.valueOf(names.get(10)))
+                                            .ground(Boolean.valueOf(names.get(11)))
                                             .build()).build();
                 }).collect(Collectors.toList());
+        return ProductListResponse.builder()
+                .popular(productResponseList.get(0))
+                .products(productResponseList.subList(1,productResponseList.size())).build();
     }
 
     private String getQuery(String sortBy) {
         return new StringBuilder()
                 .append("select ")
                 .append("pc.product.id, p.productName, p.shortDescription, p.productCategory, p.unitPrice, p.previewImage, pq.quantity,")
-                .append(" pc.strong, pc.sour, pc.bitter, pc.decaf")
+                .append(" pc.strong, pc.sour, pc.bitter, pc.decaf, pc.ground")
                 .append(" from Product p ")
                 .append(" join ProductCoffee pc on p.id=pc.product.id")
-                .append(" join ProductQuantity pq on pc.product.id=pq.product.id ")
+                .append(" join ProductQuantity pq on pc.product.id=pq.product.id")
                 .append(" where p.productName like :search")
                 .append(" and p.unitPrice between :priceMin and :priceMax")
                 .append(" and pc.bitter between :bitterFrom and :bitterTo")
@@ -125,7 +139,6 @@ public class ProductSearchRepositoryImpl implements ProductSearchRepository {
                 .append(" from Product p ")
                 .append(" join ProductCoffee pc on p.id=pc.product.id")
                 .append(" join ProductQuantity pq on pc.product.id=pq.product.id ")
-                .append(" order by")
                 .toString();
     }
 

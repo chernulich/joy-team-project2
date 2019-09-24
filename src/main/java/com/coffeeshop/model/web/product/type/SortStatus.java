@@ -1,31 +1,19 @@
 package com.coffeeshop.model.web.product.type;
 
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 
-import java.util.Arrays;
 
 @AllArgsConstructor
 public enum SortStatus {
 
-    POPULAR(1),
-    PRICE(2),
-    NAME(3);
+    POPULAR(""),
+    PRICE(" p.unitPrice, p.productName"),
+    NAME(" p.productName, p.unitPrice");
 
-    private Integer id;
+    private final String name;
 
-    public static SortStatus getById(Integer id) {
-        if (id == null) {
-            return SortStatus.PRICE;
-        }
-        return Arrays.stream(values())
-                .filter(sortStatus -> sortStatus.getId().equals(id))
-                .findFirst()
-                .get();
-    }
-
-    public Integer getId() {
-        return id;
+    public String toString() {
+        return this.name;
     }
 
 }
