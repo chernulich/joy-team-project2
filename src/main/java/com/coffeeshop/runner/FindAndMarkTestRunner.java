@@ -15,7 +15,7 @@ import java.util.List;
 
 
 @Component
-@Profile("dev")
+@Profile("test")
 public class FindAndMarkTestRunner implements ApplicationRunner {
 
     private final ProductRepository productRepository;
@@ -28,44 +28,45 @@ public class FindAndMarkTestRunner implements ApplicationRunner {
 
 
     @Override
-    public void run(ApplicationArguments args) throws Exception {
+    public void run(ApplicationArguments args) {
 
-        Product product = Product.builder()
-                .productName("1")
-                .description("1")
-                .previewImage("1")
-                .available(true)
-                .shortDescription("")
-                .unitPrice(12.50)
-                .build();
-        Product product2 = Product.builder()
-                .productName("12")
-                .description("12")
-                .previewImage("12")
-                .available(true)
-                .shortDescription("")
-                .unitPrice(12.50)
-                .build();
+        Product product = createProduct("firstProduct");
+        Product product2 = createProduct("secondProduct");
+        Product product3 = createProduct("thirdProduct");
+        Product product4 = createProduct("FourthProduct");
 
         List<ProductItem> itemList = new ArrayList<>();
         productRepository.save(product);
         productRepository.save(product2);
+        productRepository.save(product3);
+        productRepository.save(product4);
 
-        for (int i = 0; i < 100; i++) {
+        createProductItem(product, itemList, 100);
+        createProductItem(product2, itemList, 99);
+        createProductItem(product3, itemList, 100);
+        createProductItem(product4, itemList, 5);
+
+        productItemRepository.saveAll(itemList);
+    }
+
+    private Product createProduct(String s) {
+        return Product.builder()
+                .productName(s)
+                .description(s)
+                .previewImage(s)
+                .available(true)
+                .shortDescription("")
+                .unitPrice(12.50)
+                .build();
+    }
+
+    private void createProductItem(Product product, List<ProductItem> itemList, int amount) {
+        for (int i = 0; i < amount; i++) {
             itemList.add(ProductItem.builder()
                     .product(product)
                     .weightKg(1)
                     .productStatus(ProductStatus.AVAILABLE)
                     .build());
         }
-        for (int i = 0; i < 5; i++) {
-            itemList.add(ProductItem.builder()
-                    .product(product2)
-                    .weightKg(1)
-                    .productStatus(ProductStatus.AVAILABLE)
-                    .build());
-        }
-
-        productItemRepository.saveAll(itemList);
     }
 }
