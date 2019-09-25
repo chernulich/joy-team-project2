@@ -13,6 +13,7 @@ public class ProductParametersResponse {
     private Integer sour;
     private Integer bitter;
     private Boolean decaf;
+    private Boolean ground;
     private String coffeeType;
 
 }
