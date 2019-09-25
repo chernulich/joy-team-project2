@@ -1,5 +1,6 @@
 package com.coffeeshop.model.web.product;
 
+import com.coffeeshop.model.web.product.type.SortStatus;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
@@ -32,8 +33,8 @@ public class ProductRequest {
     @ApiModelProperty(example = "100")
     private Double priceMax;
 
-    @ApiModelProperty(example = "price")
-    private String sortBy;
+    @ApiModelProperty(example = "PRICE")
+    private SortStatus sortBy;
 
     private CharacteristicsRequest characteristics;
 
