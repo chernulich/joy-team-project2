@@ -1,8 +1,6 @@
 package com.coffeeshop.controller;
 
 import com.coffeeshop.exception.InputValidationException;
-import com.coffeeshop.model.web.checkout.CheckoutRequest;
-import com.coffeeshop.model.web.checkout.CheckoutResponse;
 import com.coffeeshop.model.web.product.ProductListResponse;
 import com.coffeeshop.model.web.product.ProductRequest;
 import com.coffeeshop.model.web.productDetails.CharacteristicResponse;
@@ -76,15 +74,6 @@ public class ProductController {
                 .build();
 
     }
-
-    @PostMapping("/checkout")
-    public CheckoutResponse submitOrder(@RequestBody CheckoutRequest checkoutRequest) {
-        return CheckoutResponse.builder()
-                .orderId(1L)
-                .message("Thanks for your order")
-                .build();
-    }
-
 
     @GetMapping(
             value = "/products/{productId}/images/{imageId}",
