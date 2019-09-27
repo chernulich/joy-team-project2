@@ -1,10 +1,10 @@
 import {
-  AfterViewChecked,
   Component,
   OnInit,
   Input
 } from '@angular/core';
-import {SliderService} from "../../service/slider-service/slider.service";
+import {SliderService} from "../service/slider-service/slider.service";
+
 
 @Component({
   selector: 'app-slider',
@@ -37,6 +37,8 @@ export class SliderComponent implements OnInit {
 
 
   ngOnInit() {
+    this.currUpper = this.upperValue;
+    this.currLower = this.lowerValue;
     this.sliderService.initialSliderValues.next({lowerPrice: this.lowerValue, upperPrice: this.upperValue});
     this.sliderService.sliderReset
       .subscribe(() => {
@@ -64,8 +66,8 @@ export class SliderComponent implements OnInit {
 
     let handle1Left = parseInt(getComputedStyle(this.handle1).left);
     let handle2Left = parseInt(getComputedStyle(this.handle2).left);
-    this.currHandle1PercentPosition = (handle1Left / (Math.ceil(this.slider.offsetWidth)));
-    this.currHandle2PercentPosition = (handle2Left / (Math.ceil(this.slider.offsetWidth) - this.handle2.offsetWidth));
+    this.currHandle1PercentPosition = handle1Left / (Math.floor(this.slider.offsetWidth) - this.handle1.offsetWidth);
+    this.currHandle2PercentPosition = handle2Left / (Math.floor(this.slider.offsetWidth) - this.handle2.offsetWidth);
   }
 
   handleMouseDown(event){
@@ -83,16 +85,14 @@ export class SliderComponent implements OnInit {
     }
   }
 
-  // calcPercent(){
-  //   let sliderFillWidth = parseInt(getComputedStyle(this.sliderFill).width);
-  //   let sliderWidth = parseInt(getComputedStyle(this.slider).width);
-  //   let handleWidth = this.handle1.offsetWidth;
-  //   this.percent = Math.ceil((sliderFillWidth + handleWidth * 2) / sliderWidth * 100);
-  // }
-
   calcRangeValues(){
-    let lowerValue = Math.floor(+this.currHandle1PercentPosition.toFixed(2) * +this.upperValue);
-    let upperValue = Math.floor(+this.currHandle2PercentPosition.toFixed(2) * +this.upperValue);
+
+    let lowerValue = this.lowerValue +
+      Math.floor(+this.currHandle1PercentPosition.toFixed(2) * (+this.upperValue - +this.lowerValue));
+
+    let upperValue = this.lowerValue +
+      Math.floor(+this.currHandle2PercentPosition.toFixed(2) * (+this.upperValue - +this.lowerValue));
+
     this.currLower =  lowerValue;
     this.currUpper =  upperValue;
     this.sliderService.sliderValueChanges.next({
@@ -139,8 +139,7 @@ export class SliderComponent implements OnInit {
     let resizedWidth =  handle2Left - (handle1Left + this.handle1.offsetWidth);
     (<HTMLElement>this.sliderFill).style.width = resizedWidth + "px";
     (<HTMLElement>this.sliderFill).style.left = parseInt(getComputedStyle(this.handle1).left) +  this.handle1.offsetWidth + "px";
-    // this.calcHandlePositionPercent();
-    //console.log("Handle 1: " + this.currHandle1PercentPosition, "Handle 2: " + this.currHandle2PercentPosition);
+
   }
 
   slideInit(){

@@ -8,9 +8,10 @@ import {CheckoutComponent} from "./checkout-customer/checkout.component";
 import {ExampleComponent} from "./example/example.component";
 
 const routes: Routes = [
-  {path: '', component: ProductListComponent},
   {path: 'examples', component: ExampleComponent},
   {path: 'header', component: HeaderComponent},
+  {path: 'product-list', component: ProductListComponent},
+  {path: 'product-details', component: ProductDetailsComponent},
   {path: 'products/:id' , component: ProductDetailsComponent},
   {path: 'received/:orderId', component: OrderReceivedComponent},
   {path: 'checkout', component: CheckoutComponent},
