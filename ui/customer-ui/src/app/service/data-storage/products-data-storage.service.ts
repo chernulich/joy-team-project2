@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
-import {BehaviorSubject, Subject} from "rxjs";
-import {Product} from "../../../../model/product.model";
-import {HttpService} from "../../../../service/http/http.service";
-import {ProductListRequest} from "../../../model/product-list-request";
+import {BehaviorSubject} from "rxjs";
+import {HttpService} from "../http/http.service";
 
 interface ProductsStore {
   products: [];
@@ -14,14 +12,17 @@ interface ProductsStore {
 export class ProductsDataStorageService {
 
   constructor(private http: HttpService) { }
-  productsStore: BehaviorSubject<[]> =
+  productsStore: BehaviorSubject<Array<any>> =
     new BehaviorSubject([]);
 
 
   httpGetFilteredProducts(requestBody: {}){
     this.http.getFilteredProducts(requestBody)
       .subscribe((products: ProductsStore) => {
-        console.log(products);
+        if(!products.popular || !products.products){
+          this.productsStore.next(['no-products']);
+          return;
+        }
         const allProducts = (products.products.slice(0) as Array<any>);
         const popular = {...products.popular};
         allProducts.unshift(popular);

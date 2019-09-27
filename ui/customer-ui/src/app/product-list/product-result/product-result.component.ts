@@ -1,7 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import {ProductsDataStorageService} from "../product-search/service/data-storage/products-data-storage.service";
-import {Product} from "../model/product";
+import {Component,
+  OnInit} from '@angular/core';
 import {BehaviorSubject} from "rxjs";
+
+
+import {ProductsDataStorageService} from "../../service/data-storage/products-data-storage.service";
+import {MessageService} from "../../service/message-service/message.service";
 
 
 @Component({
@@ -11,16 +14,23 @@ import {BehaviorSubject} from "rxjs";
 })
 export class ProductResultComponent implements OnInit {
 
-  constructor(public productDataStorage: ProductsDataStorageService) { }
+  constructor(public productDataStorage: ProductsDataStorageService,
+              public messageService: MessageService) { }
 
  maxCoffeeCharacteristic = 5;
+ noProducts = false;
  characteristics = ['strong','sour','bitter'];
 
   ngOnInit() {
-     // this.getProductList();
     this.productDataStorage.productsStore
       .subscribe((products) => {
-        console.log("Product Store: ", products);
+        if(products[0] === 'no-products'){
+          this.noProducts = true;
+          this.messageService.showMessage('danger','Your search gave no results, please try again!');
+        }
+        else{
+          this.noProducts = false;
+        }
       });
   }
 
@@ -28,25 +38,27 @@ export class ProductResultComponent implements OnInit {
     return value.charAt(0).toUpperCase() + value.slice(1);
   }
 
-  getProductList(): BehaviorSubject<Product[]>{
-    return this.productDataStorage.productsStore;
+  getProductList(): BehaviorSubject<any>{
+    if(!this.noProducts){
+      return this.productDataStorage.productsStore;
+    }
+    else{
+      return new BehaviorSubject([]);
+    }
   }
 
 
-  onLeftCardClick(leftCard){
-    let rightCard = leftCard.nextElementSibling;
+  onLeftCardClick(rightCard){
     if(!rightCard.classList.contains('open-right')){
       rightCard.style.cssText += 'display: flex!important;';
-      rightCard.classList.remove('close-right');
+      rightCard.closeRight = false;
       setTimeout(() => {
-        // rightCard.style.opacity = '1';
-        rightCard.classList.add('open-right');
+        rightCard.openRight = true;
       } ,20);
     }
     else{
-      // rightCard.style.opacity = '0';
-      rightCard.classList.remove('open-right');
-      rightCard.classList.add('close-right');
+      rightCard.openRight = false;
+      rightCard.closeRight = true;
       setTimeout(() => {
         rightCard.style.cssText += 'display: none!important;';
       } ,401);
@@ -60,4 +72,5 @@ export class ProductResultComponent implements OnInit {
   numberOfCoffeeBeans(){
     return new Array(this.maxCoffeeCharacteristic);
   }
+
 }

@@ -1,9 +1,19 @@
-<div class="row flex-nowrap m-0">
+<div class="row flex-nowrap m-0" [ngClass]="{'align-items-stretch': messageService.messageText}">
 
-  <div class="row">
+  <div
+    class="alert alert-{{messageService.messageType}}"
+    *ngIf="messageService.messageText">
+    {{messageService.messageText}}
+  </div>
+
+  <div class="row" *ngIf="!messageService.messageText">
+
+    <!-- Group of 2 cards -->
     <div *ngFor="let product of (getProductList() | async);let i = index;"
          class="card-group mr-1 mb-1 ml-1 mt-0 flex-nowrap align-items-start">
-      <div class="card card-left m-0 d-flex" style="width: 15rem;" (click)="onLeftCardClick(leftCard1)" #leftCard1>
+
+      <!-- Left Card     -->
+      <div class="card card-left m-0 d-flex" style="width: 15rem;" (click)="onLeftCardClick(rightCard)">
         <div *ngIf="i === 0" class="popular-icon">
           <i class="fas fa-fire-alt"></i>
         </div>
@@ -19,7 +29,13 @@
           <a href="#" class="btn btn-outline-secondary text-uppercase mb-0">add to wishlist</a>
         </div>
       </div>
-      <div class="card right-transition card-right m-0 d-flex" style="width: 15rem;">
+      <!-- left card end      -->
+
+      <!-- right card     -->
+      <div class="card right-transition card-right m-0 d-flex"
+           style="width: 15rem;"
+           #rightCard [ngClass]="{'open-right': rightCard['openRight'],'close-right': rightCard['closeRight']}"
+      >
         <div class="card-body p-0 d-flex flex-column justify-content-between" style="height: 100%;">
           <div class="card-text d-flex flex-column justify-content-between mb-2 p-3">
             <h6 class="mb-2 mx-0">QUANTITY</h6>
@@ -52,6 +68,8 @@
           </div>
         </div>
       </div>
+
+    <!--  right card end  -->
 
     </div>
   </div>

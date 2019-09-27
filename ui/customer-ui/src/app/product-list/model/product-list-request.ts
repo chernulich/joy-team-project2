@@ -15,7 +15,7 @@ export class ProductListRequest {
                 search: string = "",
                 priceMin: number = 10,
                 priceMax: number = 100,
-                sortBy: string = 'popular',
+                sortBy: string = 'PRICE',
                 characteristics: Characteristics = new Characteristics()) {
         this._page = page;
         this._results = results;

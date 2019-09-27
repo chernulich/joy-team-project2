@@ -1,6 +1,6 @@
 import {Component, OnInit, QueryList, ViewChildren} from '@angular/core';
 import {SliderService, SliderValues} from "./service/slider-service/slider.service";
-import {ProductsDataStorageService} from "./service/data-storage/products-data-storage.service";
+import {ProductsDataStorageService} from "../../service/data-storage/products-data-storage.service";
 import {FormControl, FormGroup} from "@angular/forms";
 import {Product} from "../../model/product.model";
 import {ProductListRequest} from "../model/product-list-request";
@@ -64,21 +64,18 @@ export class ProductSearchComponent implements OnInit {
 
     this.characteristicsRangeService.bitterState
       .subscribe((bitterState) => {
-        // console.log('Bitter: ', bitterState);
         this.tempRequestBody.characteristics.bitterFrom = bitterState.from;
         this.tempRequestBody.characteristics.bitterTo = bitterState.to;
       });
 
     this.characteristicsRangeService.sourState
       .subscribe((sourState) => {
-        // console.log('Sour: ', sourState);
         this.tempRequestBody.characteristics.sourFrom = sourState.from;
         this.tempRequestBody.characteristics.sourTo = sourState.to;
       });
 
     this.characteristicsRangeService.strongState
       .subscribe((strongState) => {
-        // console.log('strongState: ', strongState);
         this.tempRequestBody.characteristics.strongFrom = strongState.from;
         this.tempRequestBody.characteristics.strongTo = strongState.to;
       });
