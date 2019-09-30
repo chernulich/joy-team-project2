@@ -1,13 +1,12 @@
-package com.coffeeshop.controller;
+package com.coffeeshop.controller.customer;
 
 import com.coffeeshop.exception.InputValidationException;
 import com.coffeeshop.model.web.product.ProductListResponse;
 import com.coffeeshop.model.web.product.ProductRequest;
 import com.coffeeshop.model.web.productDetails.CharacteristicResponse;
 import com.coffeeshop.model.web.productDetails.RichProductResponse;
-import com.coffeeshop.repository.search.ProductSearchRepository;
+import com.coffeeshop.service.product.ProductSearchService;
 import org.apache.commons.io.IOUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.MediaType;
@@ -32,8 +31,11 @@ public class ProductController {
     @Value(value = "${default.max.result.size}")
     private Integer defaultMaxResultSize;
 
-    @Autowired
-    private ProductSearchRepository productSearchRepository;
+    private final ProductSearchService productSearchService;
+
+    public ProductController(ProductSearchService productSearchService) {
+        this.productSearchService = productSearchService;
+    }
 
     @PostMapping("/products")
     public ProductListResponse getProductList(@RequestBody @Valid ProductRequest productRequest, BindingResult result) {
@@ -51,7 +53,7 @@ public class ProductController {
             productRequest.setResults(defaultMaxResultSize);
         }
 
-        return productSearchRepository.searchProductsViaParams(productRequest);
+        return productSearchService.searchProductByParameters(productRequest);
     }
 
     @GetMapping("/products/{id}")
