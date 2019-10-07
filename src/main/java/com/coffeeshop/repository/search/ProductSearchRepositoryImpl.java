@@ -113,6 +113,7 @@ public class ProductSearchRepositoryImpl implements ProductSearchRepository {
                 .append(" join ProductCoffee pc on p.id=pc.product.id")
                 .append(" join ProductQuantity pq on pc.product.id=pq.product.id")
                 .append(" where p.productName like :search")
+                .append(" and p.available = true")
                 .append(" and p.unitPrice between :priceMin and :priceMax")
                 .append(" and pc.bitter between :bitterFrom and :bitterTo")
                 .append(" and pc.sour between :sourFrom and :sourTo")
