@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @DynamicInsert
 @Entity
 @Table(name = "ORDER_CONFIRMATION_EMAIL")
-public class OrderConfirmationEmail extends BaseDate {
+public class OrderEmail extends BaseDate {
 
     @OneToOne
     @JoinColumn(name = "ORDER_ID" , referencedColumnName = "ID" , nullable = false)
@@ -39,16 +39,16 @@ public class OrderConfirmationEmail extends BaseDate {
     private Integer version;
 
     @Builder
-    public OrderConfirmationEmail(Long id,
-                                  LocalDateTime createdOn,
-                                  LocalDateTime updatedOn,
-                                  Orders order,
-                                  String orderEmail,
-                                  String emailParts,
-                                  Boolean isSendFailed,
-                                  Boolean isLocked,
-                                  LocalDateTime lockAcquiredOn,
-                                  Integer version) {
+    public OrderEmail(Long id,
+                      LocalDateTime createdOn,
+                      LocalDateTime updatedOn,
+                      Orders order,
+                      String orderEmail,
+                      String emailParts,
+                      Boolean isSendFailed,
+                      Boolean isLocked,
+                      LocalDateTime lockAcquiredOn,
+                      Integer version) {
         super(id, createdOn, updatedOn);
         this.order = order;
         this.orderEmail = orderEmail;
