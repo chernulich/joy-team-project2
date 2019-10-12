@@ -86,4 +86,10 @@
                 baseTableName="ORDER_ITEMS" referencedColumnNames="ID"/>
     </changeSet>
 
+    <changeSet id="4" author="Alex">
+        <renameTable newTableName="ORDER_EMAIL"
+                     oldTableName="ORDER_CONFIRMATION_EMAIL"
+                     schemaName="COFFEESHOP"/>
+    </changeSet>
+
 </databaseChangeLog>
