@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 
 @DynamicInsert
 @Entity
-@Table(name = "ORDER_CONFIRMATION_EMAIL")
+@Table(name = "ORDER_EMAIL")
 public class OrderEmail extends BaseDate {
 
     @OneToOne
