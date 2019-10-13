@@ -1,16 +1,19 @@
 
 export class Characteristics {
-    private _bitterFrom: number;
-    private _bitterTo: number;
-    private _sourFrom: number;
-    private _sourTo: number;
-    private _strongFrom: number;
-    private _strongTo: number;
-    private _decaf: boolean;
-    private _ground: boolean;
-    private _coffeeType: string;
+    private _bitterFrom?: number;
+    private _bitterTo?: number;
+    private _sourFrom?: number;
+    private _sourTo?: number;
+    private _strongFrom?: number;
+    private _strongTo?: number;
+    private _decaf?: boolean;
+    private _ground?: boolean;
+    private _coffeeType?: string;
 
-    constructor(bitterFrom: number, bitterTo: number, sourFrom: number, sourTo: number, strongFrom: number, strongTo: number, decaf: boolean, ground: boolean, coffeeType: string) {
+    constructor(bitterFrom: number = 1, bitterTo: number = 5,
+                sourFrom: number = 1, sourTo: number = 5,
+                strongFrom: number = 1, strongTo: number = 5,
+                decaf: boolean = true, ground: boolean = true, coffeeType: string = "") {
         this._bitterFrom = bitterFrom;
         this._bitterTo = bitterTo;
         this._sourFrom = sourFrom;

@@ -50,8 +50,7 @@ public class ProductItemManagementServiceImpl implements ProductItemManagementSe
         }
     }
 
-    @Transactional(propagation = Propagation.REQUIRES_NEW, rollbackFor = ProductNotFoundException.class)
-    public void createProductItem(ProductItemRequest productItemRequest) throws ProductNotFoundException {
+    private void createProductItem(ProductItemRequest productItemRequest) {
         try {
             Product product = productRepository.findById(productItemRequest.getProductId())
                     .orElseThrow(() -> new ProductNotFoundException("Product doesn't exist by id: " + productItemRequest.getProductId()));
@@ -74,12 +73,6 @@ public class ProductItemManagementServiceImpl implements ProductItemManagementSe
 
     private void plusQuantity(ProductQuantity productQuantity, Integer quantity) {
         productQuantity.setQuantity(productQuantity.getQuantity() + quantity);
-    }
-
-    private void minusQuantity(ProductQuantity productQuantity) {
-        if(productQuantity.getQuantity() != 0) {
-            productQuantity.setQuantity(productQuantity.getQuantity() - 1);
-        }
     }
 
     @Override

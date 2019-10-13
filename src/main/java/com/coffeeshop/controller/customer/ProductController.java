@@ -1,15 +1,12 @@
 package com.coffeeshop.controller.customer;
 
 import com.coffeeshop.exception.InputValidationException;
-import com.coffeeshop.model.web.checkout.CheckoutRequest;
-import com.coffeeshop.model.web.checkout.CheckoutResponse;
 import com.coffeeshop.model.web.product.ProductListResponse;
 import com.coffeeshop.model.web.product.ProductRequest;
 import com.coffeeshop.model.web.productDetails.CharacteristicResponse;
 import com.coffeeshop.model.web.productDetails.RichProductResponse;
 import com.coffeeshop.service.product.ProductSearchService;
 import org.apache.commons.io.IOUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.MediaType;
@@ -36,7 +33,6 @@ public class ProductController {
 
     private final ProductSearchService productSearchService;
 
-    @Autowired
     public ProductController(ProductSearchService productSearchService) {
         this.productSearchService = productSearchService;
     }
@@ -80,15 +76,6 @@ public class ProductController {
                 .build();
 
     }
-
-    @PostMapping("/checkout")
-    public CheckoutResponse submitOrder(@RequestBody CheckoutRequest checkoutRequest) {
-        return CheckoutResponse.builder()
-                .orderId(1L)
-                .message("Thanks for your order")
-                .build();
-    }
-
 
     @GetMapping(
             value = "/products/{productId}/images/{imageId}",

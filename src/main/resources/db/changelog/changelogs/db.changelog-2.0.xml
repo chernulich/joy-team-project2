@@ -78,5 +78,12 @@
                 defaultValueBoolean="false"/>
 
     </changeSet>
+    <changeSet id="3" author="Pavel">
+        <dropForeignKeyConstraint baseTableName="ORDER_ITEMS" constraintName="fk_order_items_product"/>
+        <addForeignKeyConstraint
+                constraintName="fk_order_items_product_items"
+                referencedTableName="PRODUCT_ITEM" baseColumnNames="PRODUCT_ITEM_ID"
+                baseTableName="ORDER_ITEMS" referencedColumnNames="ID"/>
+    </changeSet>
 
 </databaseChangeLog>

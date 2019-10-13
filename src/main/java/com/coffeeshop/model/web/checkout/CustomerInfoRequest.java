@@ -10,7 +10,7 @@ import lombok.*;
 @Getter
 @Builder
 @ApiModel
-class CustomerInfoRequest {
+public class CustomerInfoRequest {
 
     @ApiModelProperty(example = "Pedro production")
     private String entityName;

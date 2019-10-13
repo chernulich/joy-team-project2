@@ -18,18 +18,18 @@ export class ExampleComponent implements OnInit {
   constructor(private exampleHttpService: ExampleHttpService) {
   }
 
-  getExamples() {
-    return this.exampleHttpService.getExamples().subscribe(data => this.examples = data);
-  }
-  saveExample(exampleName: string) {
-    return this.exampleHttpService.saveExample(exampleName).subscribe(data => {
-      this.examples.push(data);
-      this.exampleName = '';
-    });
-  }
+  // getExamples() {
+  //   return this.exampleHttpService.getExamples().subscribe(data => this.examples = data);
+  // }
+  // saveExample(exampleName: string) {
+  //   return this.exampleHttpService.saveExample(exampleName).subscribe(data => {
+  //     this.examples.push(data);
+  //     this.exampleName = '';
+  //   });
+  // }
 
   ngOnInit() {
-    this.getExamples();
+    // this.getExamples();
   }
 
 }

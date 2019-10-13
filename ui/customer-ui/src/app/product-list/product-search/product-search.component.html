@@ -1,1 +1,113 @@
-<app-search></app-search>
+
+<div class="container search-container bg-white m-0">
+  <div class="font-weight-bold my-3">
+    <h4>Coffee</h4>
+  </div>
+  <form [formGroup]="productSearchForm" (ngSubmit)="onFormSubmit()">
+    <div class="">
+      <input
+        [formControlName]="'productName'"
+        type="text"
+        class="form-control border-top-0 border-left-0 border-right-0 pl-0 search-button"
+        placeholder="Search..."
+        style="position: relative; vertical-align: top;"
+      >
+    </div>
+    <div class="font-weight-bold my-3">
+      <h4>Price</h4>
+      <div class=" p-0">
+        <app-slider
+          [handleSize]="10"
+          [fillColor]="'#5cb85c'"
+          [handleColor]="'#99aab5'"
+          [lowerValue]="10"
+          [upperValue]="100"
+          [sliderHeight]="3"
+          [handleType]="'rectangle'"
+        ></app-slider>
+      </div>
+    </div>
+
+    <div class="my-3">
+      <h4>Category</h4>
+
+      <div class="accordion" id="accordionExample">
+
+        <!-- checkbox group choise characteristics       -->
+        <div class="card border-0 my-3" *ngFor="let characteristic of characteristics;let i = index;">
+          <div class="card-header border-0 p-0 font-weight-bold" [attr.id]="'heading' + i">
+            <div class="collapsed text-dark pl-0 pr-0 bg-white d-flex justify-content-between"
+                 data-toggle="collapse" [attr.data-target]="'#collapse' + i"
+                 aria-expanded="true" [attr.aria-controls]="'collapse' + i">
+              {{firstLetterUpper(characteristic)}} <i class="fas fa-chevron-down icon"></i>
+            </div>
+          </div>
+
+          <div [attr.id]="'collapse' + i" class="collapse" [attr.aria-labelledby]="'heading' + i" data-parent="#accordionExample">
+            <div class="card-body show ml-2">
+                <app-characteristic-range
+                  [characteristicName]="characteristic"
+                  [coffeeCharacteristicsMarks]="coffeeCharacteristicsMarks"
+                ></app-characteristic-range>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- checkbox group choise characteristics end      -->
+
+
+      <!--  boolean choise characteristics      -->
+        <div class="card border-0 my-3" *ngFor="let characteristic of booleanCharacteristics;let i = index;">
+          <div class="card-header border-0 p-0 font-weight-bold" [attr.id]="'heading' + i + characteristics.length + 1">
+            <div class="collapsed text-dark pl-0 pr-0 bg-white d-flex justify-content-between"
+                 data-toggle="collapse" [attr.data-target]="'#collapseFour' + i + characteristics.length + 1"
+                 aria-expanded="true" [attr.aria-controls]="'collapseFour' + i + characteristics.length + 1">
+              {{firstLetterUpper(characteristic)}} <i class="fas fa-chevron-down icon"></i>
+            </div>
+          </div>
+
+          <div [attr.id]="'collapseFour' + i + characteristics.length + 1"
+               class="collapse" [attr.aria-labelledby]="'headingFour' + i + characteristics.length + 1"
+               data-parent="#accordionExample"
+          >
+            <div class="card-body show ml-2">
+              <div class="form-check">
+                <label class="form-check-label">
+                  <input
+                    [formControlName]="characteristic"
+                    type="radio"
+                    class="form-radio"
+                    value="yes"
+                    [attr.name]="characteristic"
+                  >Yes
+                </label>
+              </div>
+              <div class="form-check">
+                <label class="form-check-label">
+                  <input
+                    [formControlName]="characteristic"
+                    type="radio"
+                    class="form-radio"
+                    value="no"
+                    [attr.name]="characteristic"
+                  >No
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!--  boolean choise characteristics end     -->
+      </div>
+    </div>
+
+    <div class="font-weight-bold my-4 text-center">
+      <button type="submit" class="btn btn-outline-success button-reset mb-2">APPLY FILTER</button>
+      <button type="button" class="btn btn-outline-secondary button-reset" (click)="onReset()">RESET FILTER</button>
+    </div>
+
+  </form>
+
+</div>
+
