@@ -1,5 +1,7 @@
 package com.coffeeshop.model.entity;
 
+import com.coffeeshop.model.entity.converter.OrderEmailTypeConverter;
+import com.coffeeshop.model.entity.type.OrderEmailType;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 import javax.persistence.*;
@@ -38,6 +40,10 @@ public class OrderEmail extends BaseDate {
     @Version
     private Integer version;
 
+    @Column(name = "ORDER_EMAIL_TYPE")
+    @Convert(converter = OrderEmailTypeConverter.class)
+    private OrderEmailType orderEmailType;
+
     @Builder
     public OrderEmail(Long id,
                       LocalDateTime createdOn,
@@ -48,7 +54,8 @@ public class OrderEmail extends BaseDate {
                       Boolean isSendFailed,
                       Boolean isLocked,
                       LocalDateTime lockAcquiredOn,
-                      Integer version) {
+                      Integer version,
+                      OrderEmailType orderEmailType) {
         super(id, createdOn, updatedOn);
         this.order = order;
         this.orderEmail = orderEmail;
@@ -57,5 +64,6 @@ public class OrderEmail extends BaseDate {
         this.isLocked = isLocked;
         this.lockAcquiredOn = lockAcquiredOn;
         this.version = version;
+        this.orderEmailType = orderEmailType;
     }
 }
