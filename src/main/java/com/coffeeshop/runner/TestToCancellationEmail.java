@@ -35,8 +35,9 @@ public class TestToCancellationEmail implements CommandLineRunner {
                 .orderPaymentStatus(OrderPaymentStatus.NO_INFO).build();
         orderRepository.save(order);
         OrderEmailCancellationTemplate template = new OrderEmailCancellationTemplateImpl(orderRepository, orderEmailRepository);
-        OrderEmail orderEmail = template.createOrderCancellationEmail("sacha@11list.ru", "Alex", "Chernulich",
-                1L, "don't need");
+        OrderEmail orderEmail = template.createOrderCancellationEmail("chernulich.alex@gmail.com", "Alex", "Chernulich",
+                1L, "I don't need it");
         System.out.println(new String(Base64.getDecoder().decode(orderEmail.getEmailParts())));
+        System.out.println(orderEmail.getOrderEmail());
     }
 }
