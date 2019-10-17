@@ -8,7 +8,7 @@ import com.coffeeshop.model.entity.type.OrderTransitStatus;
 import com.coffeeshop.repository.OrderEmailRepository;
 import com.coffeeshop.repository.OrderRepository;
 import com.coffeeshop.service.email.OrderEmailCancellationTemplate;
-import com.coffeeshop.service.email.OrderEmailCancellationTemplateImpl;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
@@ -21,10 +21,16 @@ import java.util.Base64;
 @Profile("dev")
 public class TestToCancellationEmail implements CommandLineRunner {
 
+    private final OrderRepository orderRepository;
+    private final OrderEmailRepository orderEmailRepository;
+    private final OrderEmailCancellationTemplate orderEmailCancellationTemplate;
+
     @Autowired
-    OrderRepository orderRepository;
-    @Autowired
-    OrderEmailRepository orderEmailRepository;
+    public TestToCancellationEmail(OrderRepository orderRepository, OrderEmailRepository orderEmailRepository, OrderEmailCancellationTemplate orderEmailCancellationTemplate) {
+        this.orderRepository = orderRepository;
+        this.orderEmailRepository = orderEmailRepository;
+        this.orderEmailCancellationTemplate = orderEmailCancellationTemplate;
+    }
 
     @Override
     @Transactional
@@ -34,9 +40,8 @@ public class TestToCancellationEmail implements CommandLineRunner {
                 .orderTransitStatus(OrderTransitStatus.NEW_ORDER)
                 .orderPaymentStatus(OrderPaymentStatus.NO_INFO).build();
         orderRepository.save(order);
-        OrderEmailCancellationTemplate template = new OrderEmailCancellationTemplateImpl(orderRepository, orderEmailRepository);
-        OrderEmail orderEmail = template.createOrderCancellationEmail("chernulich.alex@gmail.com", "Alex", "Chernulich",
-                1L, "I don't need it");
+        OrderEmail orderEmail = orderEmailCancellationTemplate.createOrderCancellationEmail(
+                "chernulich.alex@gmail.com", "Alex", "Chernulich", 1L, "I don't need it");
         System.out.println(new String(Base64.getDecoder().decode(orderEmail.getEmailParts())));
         System.out.println(orderEmail.getOrderEmail());
     }

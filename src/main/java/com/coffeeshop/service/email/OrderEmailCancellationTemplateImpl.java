@@ -1,6 +1,7 @@
 package com.coffeeshop.service.email;
 
-import com.coffeeshop.exception.OrderNotFoundException;
+import com.coffeeshop.exception.order.OrderException;
+import com.coffeeshop.exception.order.OrderExceptionType;
 import com.coffeeshop.model.entity.OrderEmail;
 import com.coffeeshop.model.entity.Orders;
 import com.coffeeshop.model.entity.type.OrderEmailType;
@@ -12,8 +13,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.FileInputStream;
-import java.io.IOException;
+import javax.annotation.PostConstruct;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.Base64;
@@ -21,9 +22,51 @@ import java.util.Base64;
 @Service
 public class OrderEmailCancellationTemplateImpl implements OrderEmailCancellationTemplate {
 
+
+    private static final String ORDER_EMAIL_CANCELLATION_TEMPLATE;
+
     private final OrderRepository orderRepository;
     private final OrderEmailRepository orderEmailRepository;
 
+//    @PostConstruct
+//    private void initTemplate() {
+//        InputStream inputStream = null;
+//        try {
+//            Class clazz = OrderEmailCancellationTemplateImpl.class;
+//            inputStream = clazz.getResourceAsStream("templates/orderEmailCancellationTemplate.html");
+//            ORDER_EMAIL_CANCELLATION_TEMPLATE = IOUtils.toString(inputStream, StandardCharsets.UTF_8);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//            throw new ExceptionInInitializerError();
+//        } finally {
+//            if (inputStream != null) {
+//                try {
+//                    inputStream.close();
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }
+//    }
+    static {
+        InputStream inputStream = null;
+        try {
+            Class clazz = OrderEmailCancellationTemplateImpl.class;
+            inputStream = clazz.getResourceAsStream("templates/orderEmailCancellationTemplate.html");
+            ORDER_EMAIL_CANCELLATION_TEMPLATE = IOUtils.toString(inputStream, StandardCharsets.UTF_8);
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new ExceptionInInitializerError();
+        }finally {
+            if (inputStream != null) {
+                try {
+                    inputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
     @Autowired
     public OrderEmailCancellationTemplateImpl(OrderRepository orderRepository, OrderEmailRepository orderEmailRepository) {
         this.orderRepository = orderRepository;
@@ -32,9 +75,9 @@ public class OrderEmailCancellationTemplateImpl implements OrderEmailCancellatio
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public OrderEmail createOrderCancellationEmail(String email, String firstName, String lastName, Long orderId, String reason) throws IOException {
+    public OrderEmail createOrderCancellationEmail(String email, String firstName, String lastName, Long orderId, String reason) {
 
-        Orders order = orderRepository.findById(orderId).orElseThrow(OrderNotFoundException::new);
+        Orders order = orderRepository.findById(orderId).orElseThrow(() -> new OrderException(orderId, OrderExceptionType.ORDER_NOT_FOUND));
 
         String base64Message = createMessage(orderId, firstName, lastName, reason);
 
@@ -50,8 +93,8 @@ public class OrderEmailCancellationTemplateImpl implements OrderEmailCancellatio
         return orderEmail;
     }
 
-    private String createMessage(Long orderId, String firstName, String lastName, String reason) throws IOException {
-        String message = getTemplate();
+    private String createMessage(Long orderId, String firstName, String lastName, String reason) {
+        String message = ORDER_EMAIL_CANCELLATION_TEMPLATE;
         message = message.replaceAll("\\$\\{firstName}", firstName)
                         .replaceAll("\\$\\{lastName}", lastName)
                         .replaceAll("\\$\\{reason}", reason)
@@ -59,10 +102,4 @@ public class OrderEmailCancellationTemplateImpl implements OrderEmailCancellatio
         return Base64.getEncoder().encodeToString(message.getBytes());
     }
 
-    private static String getTemplate() throws IOException {
-        String template;
-        FileInputStream fis = new FileInputStream("src/main/resources/templates/orderEmailCancellationTemplate.html");
-        template = IOUtils.toString(fis, StandardCharsets.UTF_8);
-        return template;
-    }
 }
