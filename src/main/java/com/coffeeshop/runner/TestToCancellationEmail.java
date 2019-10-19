@@ -33,7 +33,6 @@ public class TestToCancellationEmail implements CommandLineRunner {
     }
 
     @Override
-    @Transactional
     public void run(String... args) throws Exception {
         Orders order = Orders.builder()
                 .orderStatus(OrderStatus.IN_PROGRESS)
@@ -41,7 +40,7 @@ public class TestToCancellationEmail implements CommandLineRunner {
                 .orderPaymentStatus(OrderPaymentStatus.NO_INFO).build();
         orderRepository.save(order);
         OrderEmail orderEmail = orderEmailCancellationTemplate.createOrderCancellationEmail(
-                "chernulich.alex@gmail.com", "Alex", "Chernulich", 1L, "I don't need it");
+                "chernulich.alex@gmail.com", "Alex", "Chernulich", 1L, "You don't need it");
         System.out.println(new String(Base64.getDecoder().decode(orderEmail.getEmailParts())));
         System.out.println(orderEmail.getOrderEmail());
     }

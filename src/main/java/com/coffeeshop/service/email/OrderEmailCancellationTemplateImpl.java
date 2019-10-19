@@ -7,13 +7,13 @@ import com.coffeeshop.model.entity.Orders;
 import com.coffeeshop.model.entity.type.OrderEmailType;
 import com.coffeeshop.repository.OrderEmailRepository;
 import com.coffeeshop.repository.OrderRepository;
+import lombok.SneakyThrows;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.PostConstruct;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
@@ -28,44 +28,8 @@ public class OrderEmailCancellationTemplateImpl implements OrderEmailCancellatio
     private final OrderRepository orderRepository;
     private final OrderEmailRepository orderEmailRepository;
 
-//    @PostConstruct
-//    private void initTemplate() {
-//        InputStream inputStream = null;
-//        try {
-//            Class clazz = OrderEmailCancellationTemplateImpl.class;
-//            inputStream = clazz.getResourceAsStream("templates/orderEmailCancellationTemplate.html");
-//            ORDER_EMAIL_CANCELLATION_TEMPLATE = IOUtils.toString(inputStream, StandardCharsets.UTF_8);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//            throw new ExceptionInInitializerError();
-//        } finally {
-//            if (inputStream != null) {
-//                try {
-//                    inputStream.close();
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        }
-//    }
     static {
-        InputStream inputStream = null;
-        try {
-            Class clazz = OrderEmailCancellationTemplateImpl.class;
-            inputStream = clazz.getResourceAsStream("templates/orderEmailCancellationTemplate.html");
-            ORDER_EMAIL_CANCELLATION_TEMPLATE = IOUtils.toString(inputStream, StandardCharsets.UTF_8);
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw new ExceptionInInitializerError();
-        }finally {
-            if (inputStream != null) {
-                try {
-                    inputStream.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
+        ORDER_EMAIL_CANCELLATION_TEMPLATE = getTemplate();
     }
     @Autowired
     public OrderEmailCancellationTemplateImpl(OrderRepository orderRepository, OrderEmailRepository orderEmailRepository) {
@@ -102,4 +66,11 @@ public class OrderEmailCancellationTemplateImpl implements OrderEmailCancellatio
         return Base64.getEncoder().encodeToString(message.getBytes());
     }
 
+    @SneakyThrows
+    private static String getTemplate() {
+        try (InputStream inputStream = OrderEmailCancellationTemplateImpl.class.getResourceAsStream
+                ("/templates/orderEmailCancellationTemplate.html")) {
+            return IOUtils.toString(inputStream, StandardCharsets.UTF_8);
+        }
+    }
 }
