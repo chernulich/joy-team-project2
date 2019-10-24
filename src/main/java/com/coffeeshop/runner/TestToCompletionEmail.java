@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 import java.util.Base64;
 
 @Component
-@Profile("dev1")
+@Profile("dev")
 public class TestToCompletionEmail implements CommandLineRunner {
 
     private final OrderRepository orderRepository;
