@@ -1,5 +1,7 @@
 package com.coffeeshop.service.email;
 
+import com.coffeeshop.exception.order.OrderException;
+import com.coffeeshop.exception.order.OrderExceptionType;
 import com.coffeeshop.model.entity.OrderEmail;
 import com.coffeeshop.model.entity.Orders;
 import com.coffeeshop.model.entity.type.OrderEmailType;
@@ -8,6 +10,7 @@ import com.coffeeshop.repository.OrderRepository;
 import lombok.SneakyThrows;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,6 +19,7 @@ import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.Base64;
 
+@Service
 public class OrderEmailCompletionTemplateImpl implements OrderEmailCompletionTemplate{
 
     private static final String ORDER_EMAIL_COMPLETION_TEMPLATE;
