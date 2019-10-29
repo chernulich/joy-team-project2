@@ -29,6 +29,10 @@ public class ProductSearchRepositoryImpl implements ProductSearchRepository {
             TypedQuery<Object[]> typedQuery = entityManager.createQuery(getQuery(), Object[].class);
             setPageAndMaxResult(request, typedQuery);
             List<Object[]> dbResponse = typedQuery.getResultList();
+
+            if (dbResponse.isEmpty()) {
+                return new ProductListResponse();
+            }
             return convertDBResponseToProductResponses(dbResponse);
         }
 
@@ -39,7 +43,6 @@ public class ProductSearchRepositoryImpl implements ProductSearchRepository {
         if (dbResponse.isEmpty()) {
             return new ProductListResponse();
         }
-
         return convertDBResponseToProductResponses(dbResponse);
     }
 
