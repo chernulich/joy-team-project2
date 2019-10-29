@@ -20,6 +20,7 @@ public class ProductSearchRepositoryImpl implements ProductSearchRepository {
     @PersistenceContext
     private EntityManager entityManager;
 
+    private static final Double MAX_VALUE = Double.MAX_VALUE;
 
     @Override
     public ProductListResponse searchProductsViaParams(ProductRequest request) {
@@ -28,6 +29,10 @@ public class ProductSearchRepositoryImpl implements ProductSearchRepository {
             TypedQuery<Object[]> typedQuery = entityManager.createQuery(getQuery(), Object[].class);
             setPageAndMaxResult(request, typedQuery);
             List<Object[]> dbResponse = typedQuery.getResultList();
+
+            if (dbResponse.isEmpty()) {
+                return new ProductListResponse();
+            }
             return convertDBResponseToProductResponses(dbResponse);
         }
 
@@ -38,7 +43,6 @@ public class ProductSearchRepositoryImpl implements ProductSearchRepository {
         if (dbResponse.isEmpty()) {
             return new ProductListResponse();
         }
-
         return convertDBResponseToProductResponses(dbResponse);
     }
 
@@ -62,8 +66,10 @@ public class ProductSearchRepositoryImpl implements ProductSearchRepository {
         String query = getQuery(sortBy);
 
         TypedQuery<Object[]> typedQuery = entityManager.createQuery(query, Object[].class);
-        typedQuery.setParameter("priceMin", request.getPriceMin());
-        typedQuery.setParameter("priceMax", request.getPriceMax());
+        typedQuery.setParameter("priceMin",
+                request.getPriceMin() != null ? request.getPriceMin() : 0);
+        typedQuery.setParameter("priceMax",
+                request.getPriceMax() != null ? request.getPriceMax() : MAX_VALUE);
         typedQuery.setParameter("sourFrom", request.getCharacteristics().getSourFrom());
         typedQuery.setParameter("sourTo", request.getCharacteristics().getSourTo());
         typedQuery.setParameter("strongFrom", request.getCharacteristics().getStrongFrom());
@@ -113,7 +119,9 @@ public class ProductSearchRepositoryImpl implements ProductSearchRepository {
                 .append(" join ProductCoffee pc on p.id=pc.product.id")
                 .append(" join ProductQuantity pq on pc.product.id=pq.product.id")
                 .append(" where p.productName like :search")
-                .append(" and p.unitPrice between :priceMin and :priceMax")
+                .append(" and p.available = true")
+                .append(" and p.unitPrice >= :priceMin")
+                .append(" and p.unitPrice <= :priceMax")
                 .append(" and pc.bitter between :bitterFrom and :bitterTo")
                 .append(" and pc.sour between :sourFrom and :sourTo")
                 .append(" and pc.strong between :strongFrom and :strongTo")

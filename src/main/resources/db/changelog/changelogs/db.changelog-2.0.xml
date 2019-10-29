@@ -86,4 +86,27 @@
                 baseTableName="ORDER_ITEMS" referencedColumnNames="ID"/>
     </changeSet>
 
+    <changeSet id="4" author="Alex">
+        <renameTable newTableName="ORDER_EMAIL"
+                     oldTableName="ORDER_CONFIRMATION_EMAIL"
+                     schemaName="COFFEESHOP"/>
+    </changeSet>
+
+    <changeSet id="5" author="Alex">
+        <addColumn schemaName="COFFEESHOP"
+                   tableName="ORDER_EMAIL">
+            <column name="ORDER_EMAIL_TYPE"
+                    type="INT"/>
+        </addColumn>
+        
+        <addNotNullConstraint schemaName="COFFEESHOP"
+                              tableName="ORDER_EMAIL"
+                              columnName="ORDER_EMAIL_TYPE"
+                              columnDataType="INT"
+                              defaultNullValue="1"/>
+        <addDefaultValue tableName="ORDER_EMAIL"
+                         columnName="ORDER_EMAIL_TYPE"
+                         defaultValueNumeric="1"/>
+    </changeSet>
+
 </databaseChangeLog>
