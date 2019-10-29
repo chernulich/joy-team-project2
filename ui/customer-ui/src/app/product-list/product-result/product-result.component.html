@@ -46,12 +46,12 @@
           <div class="card-text px-3">
             <div class="row align-items-center">
               <p class=" col-sm-6 card-text text-uppercase font-weight-bold h6 my-1"> price </p>
-              <span class="col-sm-6 card-text text-success font-weight-bolder">USD {{product.price}}</span>
+              <span class="col-sm-6 card-text text-success font-weight-bold">USD {{product.price | number : '1.2-2'}}</span>
             </div>
             <div class="row align-items-center">
               <p class=" col-sm-6 card-text text-uppercase font-weight-bold h6 mb-2"> total</p>
               <span
-                class="col-sm-6 card-text text-success font-weight-bolder">USD {{product.price * getQuantity(quantity)}}</span>
+                class="col-sm-6 card-text text-success font-weight-bold">USD {{product.price * +quantity.value | number : '1.2-2'}}</span>
             </div>
           </div>
 

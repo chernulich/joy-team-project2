@@ -11,7 +11,7 @@ export class ProductListRequest {
     private _characteristics?: Characteristics;
 
     constructor(page: number = 1,
-                results: number = 10,
+                results: number = 6,
                 search: string = "",
                 priceMin: number = 10,
                 priceMax: number = 100,

@@ -1,10 +1,13 @@
-import {Component,
-  OnInit} from '@angular/core';
+import {
+  Component, HostListener,
+  OnInit
+} from '@angular/core';
 import {BehaviorSubject} from "rxjs";
 
 
 import {ProductsDataStorageService} from "../../service/data-storage/products-data-storage.service";
 import {MessageService} from "../../service/message-service/message.service";
+import {ProductResultService} from "./services/product-result.service";
 
 
 @Component({
@@ -15,14 +18,18 @@ import {MessageService} from "../../service/message-service/message.service";
 export class ProductResultComponent implements OnInit {
 
   constructor(public productDataStorage: ProductsDataStorageService,
-              public messageService: MessageService) { }
+              public messageService: MessageService,
+              private productResultService: ProductResultService) { }
 
  maxCoffeeCharacteristic = 5;
  noProducts = false;
  characteristics = ['strong','sour','bitter'];
 
+
   ngOnInit() {
-    this.productDataStorage.productsStore
+    this.productResultService.pagination().subscribe(() => {}); // test
+
+    this.productDataStorage.getProductsFromStore()
       .subscribe((products) => {
         if(products[0] === 'no-products'){
           this.noProducts = true;
@@ -40,7 +47,7 @@ export class ProductResultComponent implements OnInit {
 
   getProductList(): BehaviorSubject<any>{
     if(!this.noProducts){
-      return this.productDataStorage.productsStore;
+      return this.productDataStorage.getProductsFromStore() as BehaviorSubject<any>;
     }
     else{
       return new BehaviorSubject([]);
@@ -63,10 +70,6 @@ export class ProductResultComponent implements OnInit {
         rightCard.style.cssText += 'display: none!important;';
       } ,401);
     }
-  }
-
-  getQuantity(quantity){
-    return +quantity.value;
   }
 
   numberOfCoffeeBeans(){
