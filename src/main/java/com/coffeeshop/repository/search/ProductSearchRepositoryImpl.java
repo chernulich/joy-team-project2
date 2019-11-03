@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -31,7 +32,7 @@ public class ProductSearchRepositoryImpl implements ProductSearchRepository {
             List<Object[]> dbResponse = typedQuery.getResultList();
 
             if (dbResponse.isEmpty()) {
-                return new ProductListResponse();
+                return new ProductListResponse(new ProductResponse(), new ArrayList<>());
             }
             return convertDBResponseToProductResponses(dbResponse);
         }
@@ -41,7 +42,7 @@ public class ProductSearchRepositoryImpl implements ProductSearchRepository {
         List<Object[]> dbResponse = typedQuery.getResultList();
 
         if (dbResponse.isEmpty()) {
-            return new ProductListResponse();
+            return new ProductListResponse(new ProductResponse(), new ArrayList<>());
         }
         return convertDBResponseToProductResponses(dbResponse);
     }
