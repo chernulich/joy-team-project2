@@ -16,25 +16,29 @@ export class ProductResultService {
   constructor(private http: HttpService,
               private productsStore: ProductsDataStorageService) { }
 
-  isScrollable = true;
+  public isScrollable = true;
+  public filterSearch = false;
   requestBody: BehaviorSubject<any>  = new BehaviorSubject<any>({});
   public httpGetFilteredProducts(requestBody: {}){
     this.http.getFilteredProducts(requestBody)
       .pipe(
         catchError((err) => {
-          return of([])
+          return of([]);
         })
       )
       .subscribe((products: any) => {
-        if(products.length === 0){
+        if(products.products.length === 0){
           this.isScrollable = false;
-          this.productsStore.setCurrentPage(this.productsStore.getCurrentPage() - 1);
+          if(this.filterSearch){
+            this.productsStore.updateProductStore(['no-products']);
+          }
+          if(!this.filterSearch){
+            this.productsStore.setCurrentPage(this.productsStore.getCurrentPage() - 1);
+          }
           return;
         }
-        if(!products.products){
-          this.productsStore.updateProductStore(['no-products']);
-          return;
-        }
+        this.filterSearch = false;
+        this.isScrollable = true;
         const allProducts = [{...products.popular},...products.products];
         console.log(allProducts);
         this.productsStore.updateProductStore(allProducts);
@@ -44,13 +48,11 @@ export class ProductResultService {
   public pagination(){
     return fromEvent(document,'wheel')
       .pipe(
-        debounceTime(700),
+        debounceTime(500),
         map((event: WheelEvent) => {
           if(Math.ceil((pageYOffset + window.innerHeight) / document.documentElement.offsetHeight * 100) >= 70 &&
           event.deltaY > 0 && this.isScrollable){
             this.productsStore.setCurrentPage(this.productsStore.getCurrentPage() + 1);
-            console.log("curr page: ", this.productsStore.getCurrentPage(), "curr request body: ",
-              { ...this.requestBody.getValue(),"page":this.productsStore.getCurrentPage(), "results": 6});
             this.httpGetFilteredProducts(
               { ...this.requestBody.getValue(),"page":this.productsStore.getCurrentPage(), "results": 6}
               );

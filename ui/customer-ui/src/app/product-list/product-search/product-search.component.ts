@@ -48,7 +48,7 @@ export class ProductSearchComponent implements OnInit {
     this.productSearchForm = new FormGroup({
       productName: new FormControl('',[]),
       ground: new FormControl('',[]),
-      decaf: new FormControl('',[]),
+      decaf: new FormControl('',[])
     });
 
     this.sliderService.sliderValueChanges.subscribe((priceRange) =>{
@@ -105,6 +105,7 @@ export class ProductSearchComponent implements OnInit {
 
   onFormSubmit() {
     this.productDataStorage.setCurrentPage(1);
+    this.productResultService.filterSearch = true;
     this.tempRequestBody.characteristics.decaf = this.productSearchForm.value.decaf === 'yes';
     this.tempRequestBody.characteristics.ground = this.productSearchForm.value.ground === 'yes';
     this.tempRequestBody.search = this.productSearchForm.value.productName;

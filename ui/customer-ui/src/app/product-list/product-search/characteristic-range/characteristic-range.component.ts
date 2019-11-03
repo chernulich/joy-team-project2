@@ -7,13 +7,28 @@ import {
   ViewChild
 } from '@angular/core';
 import {CharacteristicsRangeService} from "../service/charachteristics-range-service/characteristics-range.service";
+import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 
 @Component({
   selector: 'app-characteristic-range',
   templateUrl: './characteristic-range.component.html',
-  styleUrls: ['./characteristic-range.component.css']
+  styleUrls: ['./characteristic-range.component.css'],
+  providers: [ { provide: NG_VALUE_ACCESSOR, useExisting: CharacteristicRangeComponent, multi: true} ]
 })
-export class CharacteristicRangeComponent implements OnInit {
+export class CharacteristicRangeComponent implements OnInit, ControlValueAccessor {
+
+    writeValue(obj: any): void {
+        throw new Error("Method not implemented.");
+    }
+    registerOnChange(fn: any): void {
+        throw new Error("Method not implemented.");
+    }
+    registerOnTouched(fn: any): void {
+        throw new Error("Method not implemented.");
+    }
+    setDisabledState?(isDisabled: boolean): void {
+        throw new Error("Method not implemented.");
+    }
 
   constructor(private renderer: Renderer2,
               private characteristicsRangeService: CharacteristicsRangeService) { }
