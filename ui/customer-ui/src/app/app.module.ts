@@ -13,6 +13,8 @@ import {CheckoutComponent} from './checkout-customer/checkout.component';
 import {ProductDetailsComponent} from "./product-details/product-details.component";
 import {FooterComponent} from './footer/footer.component';
 import {ProductListModule} from "./product-list/product-list.module";
+import {ProductResultService} from "./product-list/product-result/services/product-result.service";
+import {ProductsDataStorageService} from "./service/data-storage/products-data-storage.service";
 
 @NgModule({
   declarations: [
@@ -33,8 +35,13 @@ import {ProductListModule} from "./product-list/product-list.module";
     NgbModule,
     ProductListModule
   ],
-  providers: [],
+  providers: [
+    ProductsDataStorageService,
+    ProductResultService
+  ],
   bootstrap: [AppComponent]
 })
+
 export class AppModule {
+
 }
