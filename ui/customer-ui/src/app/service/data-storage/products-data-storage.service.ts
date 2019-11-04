@@ -1,32 +1,38 @@
 import { Injectable } from '@angular/core';
-import {BehaviorSubject} from "rxjs";
+import {BehaviorSubject, Observable} from "rxjs";
 import {HttpService} from "../http/http.service";
+import {ProductResultService} from "../../product-list/product-result/services/product-result.service";
 
-interface ProductsStore {
-  products: [];
-  popular: {};
-}
-@Injectable({
-  providedIn: 'root'
-})
+
+@Injectable()
 export class ProductsDataStorageService {
 
-  constructor(private http: HttpService) { }
-  productsStore: BehaviorSubject<Array<any>> =
+  constructor() { }
+  private productsStore: BehaviorSubject<Array<any>> =
     new BehaviorSubject([]);
 
+  private currentPage: BehaviorSubject<number> = new BehaviorSubject<number>(1);
 
-  httpGetFilteredProducts(requestBody: {}){
-    this.http.getFilteredProducts(requestBody)
-      .subscribe((products: ProductsStore) => {
-        if(!products.popular || !products.products){
-          this.productsStore.next(['no-products']);
-          return;
-        }
-        const allProducts = (products.products.slice(0) as Array<any>);
-        const popular = {...products.popular};
-        allProducts.unshift(popular);
-        this.productsStore.next(allProducts as any);
-      });
+
+  updateProductStore(products: Array<any>){
+    if(this.currentPage.getValue() > 1){
+      this.productsStore.next([...this.productsStore.getValue(),...products]);
+    }
+    else{
+      this.productsStore.next(products);
+    }
+    // console.log(this.productsStore.getValue());
+  }
+
+  getProductsFromStore(): Observable<any>{
+    return this.productsStore.asObservable();
+  }
+
+  public getCurrentPage(): number{
+    return this.currentPage.getValue();
+  }
+
+  public setCurrentPage(pageNum: number){
+    this.currentPage.next(pageNum);
   }
 }
