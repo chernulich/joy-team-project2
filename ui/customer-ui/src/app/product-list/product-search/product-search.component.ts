@@ -6,6 +6,7 @@ import {Product} from "../../model/product.model";
 import {ProductListRequest} from "../model/product-list-request";
 import {CharacteristicRangeComponent} from "./characteristic-range/characteristic-range.component";
 import {CharacteristicsRangeService} from "./service/charachteristics-range-service/characteristics-range.service";
+import {ProductResultService} from "../product-result/services/product-result.service";
 
 interface Filter {
   search?: string,
@@ -29,7 +30,8 @@ export class ProductSearchComponent implements OnInit {
 
   constructor(private sliderService: SliderService,
               private productDataStorage: ProductsDataStorageService,
-              private characteristicsRangeService: CharacteristicsRangeService) { }
+              private characteristicsRangeService: CharacteristicsRangeService,
+              private productResultService: ProductResultService) { }
 
   productSearchForm: FormGroup;
   priceRange: SliderValues;
@@ -46,7 +48,7 @@ export class ProductSearchComponent implements OnInit {
     this.productSearchForm = new FormGroup({
       productName: new FormControl('',[]),
       ground: new FormControl('',[]),
-      decaf: new FormControl('',[]),
+      decaf: new FormControl('',[])
     });
 
     this.sliderService.sliderValueChanges.subscribe((priceRange) =>{
@@ -102,16 +104,19 @@ export class ProductSearchComponent implements OnInit {
   }
 
   onFormSubmit() {
+    this.productDataStorage.setCurrentPage(1);
+    this.productResultService.filterSearch = true;
     this.tempRequestBody.characteristics.decaf = this.productSearchForm.value.decaf === 'yes';
     this.tempRequestBody.characteristics.ground = this.productSearchForm.value.ground === 'yes';
     this.tempRequestBody.search = this.productSearchForm.value.productName;
     this.requestBody = this.createRequestObject(this.tempRequestBody);
-    this.productDataStorage.httpGetFilteredProducts(this.requestBody);
+    this.productResultService.requestBody.next(this.requestBody);
+    this.productResultService.httpGetFilteredProducts(this.requestBody);
   }
 
   onReset(){
-
     this.sliderService.sliderReset.next();
+    this.productResultService.requestBody.next({});
     this.productSearchForm.setValue({
       productName: "",
       decaf: "",
