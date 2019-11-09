@@ -1,6 +1,7 @@
 package com.coffeeshop.converter.converters;
 
 import com.coffeeshop.model.admin.ProductCoffeeDto;
+import com.coffeeshop.model.common.CoffeeType;
 import com.coffeeshop.model.entity.ProductCoffee;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
@@ -16,6 +17,7 @@ public class ProductCoffeeDtoToProductCoffee implements Converter<ProductCoffeeD
                 .strong(source.getStrong())
                 .ground(source.getGround())
                 .decaf(source.getDecaf())
+                .coffeeType(CoffeeType.getByName(source.getCoffeeType()))
                 .build();
     }
 }
