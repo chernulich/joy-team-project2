@@ -1,5 +1,7 @@
 package com.coffeeshop.model.entity;
 
+import com.coffeeshop.model.common.CoffeeType;
+import com.coffeeshop.model.entity.converter.CoffeeTypeConverter;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 
@@ -36,9 +38,13 @@ public class ProductCoffee extends BaseDate {
     @Column(name = "DECAF", nullable = false)
     private Boolean decaf;
 
+    @Column(name = "COFFEE_TYPE", nullable = false)
+    @Convert(converter = CoffeeTypeConverter.class)
+    private CoffeeType coffeeType;
+
     @Builder
     public ProductCoffee(Long id, LocalDateTime createdOn, LocalDateTime updatedOn, Product product, Integer sour,
-                         Integer bitter, Integer strong, Boolean ground, Boolean decaf) {
+                         Integer bitter, Integer strong, Boolean ground, Boolean decaf, CoffeeType coffeeType) {
         super(id, createdOn, updatedOn);
         this.product = product;
         this.sour = sour;
@@ -46,5 +52,6 @@ public class ProductCoffee extends BaseDate {
         this.strong = strong;
         this.ground = ground;
         this.decaf = decaf;
+        this.coffeeType = coffeeType;
     }
 }

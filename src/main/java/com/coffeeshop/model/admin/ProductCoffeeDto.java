@@ -41,4 +41,8 @@ public class ProductCoffeeDto {
     @NotNull
     @ApiModelProperty(example = "false")
     private Boolean decaf;
+
+    @NotNull
+    @ApiModelProperty(example = "arabica")
+    private String coffeeType;
 }
