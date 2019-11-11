@@ -1,5 +1,6 @@
 package com.coffeeshop.repository.search;
 
+import com.coffeeshop.model.common.CoffeeType;
 import com.coffeeshop.model.web.product.ProductListResponse;
 import com.coffeeshop.model.web.product.ProductParametersResponse;
 import com.coffeeshop.model.web.product.ProductRequest;
@@ -79,6 +80,7 @@ public class ProductSearchRepositoryImpl implements ProductSearchRepository {
         typedQuery.setParameter("bitterTo", request.getCharacteristics().getBitterTo());
         typedQuery.setParameter("decaf", request.getCharacteristics().getDecaf());
         typedQuery.setParameter("ground", request.getCharacteristics().getGround());
+        typedQuery.setParameter("coffeeType", CoffeeType.getByName(request.getCharacteristics().getCoffeeType()));
         typedQuery.setParameter("search", request.getSearch().concat("%"));
 
         return typedQuery;
@@ -104,6 +106,7 @@ public class ProductSearchRepositoryImpl implements ProductSearchRepository {
                                             .bitter(Integer.parseInt(names.get(9)))
                                             .decaf(Boolean.valueOf(names.get(10)))
                                             .ground(Boolean.valueOf(names.get(11)))
+                                            .coffeeType(names.get(12).toLowerCase())
                                             .build()).build();
                 }).collect(Collectors.toList());
         return ProductListResponse.builder()
@@ -115,7 +118,7 @@ public class ProductSearchRepositoryImpl implements ProductSearchRepository {
         return new StringBuilder()
                 .append("select ")
                 .append("pc.product.id, p.productName, p.shortDescription, p.productCategory, p.unitPrice, p.previewImage, pq.quantity,")
-                .append(" pc.strong, pc.sour, pc.bitter, pc.decaf, pc.ground")
+                .append(" pc.strong, pc.sour, pc.bitter, pc.decaf, pc.ground, pc.coffeeType")
                 .append(" from Product p ")
                 .append(" join ProductCoffee pc on p.id=pc.product.id")
                 .append(" join ProductQuantity pq on pc.product.id=pq.product.id")
@@ -128,6 +131,7 @@ public class ProductSearchRepositoryImpl implements ProductSearchRepository {
                 .append(" and pc.strong between :strongFrom and :strongTo")
                 .append(" and pc.decaf = :decaf")
                 .append(" and pc.ground = :ground")
+                .append(" and pc.coffeeType = :coffeeType")
                 .append(" order by")
                 .append(sortBy)
                 .toString();
@@ -137,7 +141,7 @@ public class ProductSearchRepositoryImpl implements ProductSearchRepository {
         return new StringBuilder()
                 .append("select ")
                 .append("pc.product.id, p.productName, p.shortDescription, p.productCategory, p.unitPrice, p.previewImage, pq.quantity,")
-                .append(" pc.strong, pc.sour, pc.bitter, pc.decaf, pc.ground")
+                .append(" pc.strong, pc.sour, pc.bitter, pc.decaf, pc.ground, pc.coffeeType")
                 .append(" from Product p ")
                 .append(" join ProductCoffee pc on p.id=pc.product.id")
                 .append(" join ProductQuantity pq on pc.product.id=pq.product.id ")
