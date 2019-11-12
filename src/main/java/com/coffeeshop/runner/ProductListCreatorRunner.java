@@ -3,6 +3,7 @@ package com.coffeeshop.runner;
 import com.coffeeshop.model.entity.Product;
 import com.coffeeshop.model.entity.ProductCoffee;
 import com.coffeeshop.model.entity.ProductQuantity;
+import com.coffeeshop.model.entity.converter.CoffeeTypeConverter;
 import com.coffeeshop.model.entity.type.ProductCategory;
 import com.coffeeshop.repository.ProductCoffeeRepository;
 import com.coffeeshop.repository.ProductQuantityRepository;
@@ -56,6 +57,7 @@ public class ProductListCreatorRunner implements CommandLineRunner {
                     .bitter(random.nextInt(5) + 1)
                     .sour(random.nextInt(5) + 1)
                     .strong(random.nextInt(5) + 1)
+                    .coffeeType(new CoffeeTypeConverter().convertToEntityAttribute(random.nextInt(4)+1))
                     .product(product)
                     .build();
             productCoffees.add(productCoffee);

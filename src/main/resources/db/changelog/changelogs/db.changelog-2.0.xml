@@ -109,4 +109,21 @@
                          defaultValueNumeric="1"/>
     </changeSet>
 
+    <changeSet id="6" author="Alex">
+        <addColumn schemaName="COFFEESHOP"
+                   tableName="PRODUCT_COFFEE">
+            <column name="COFFEE_TYPE"
+                    type="INT"/>
+        </addColumn>
+
+        <addNotNullConstraint schemaName="COFFEESHOP"
+                              tableName="PRODUCT_COFFEE"
+                              columnName="COFFEE_TYPE"
+                              columnDataType="INT"
+                              defaultNullValue="1"/>
+        <addDefaultValue tableName="PRODUCT_COFFEE"
+                         columnName="COFFEE_TYPE"
+                         defaultValueNumeric="1"/>
+    </changeSet>
+
 </databaseChangeLog>
