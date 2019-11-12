@@ -1,7 +1,7 @@
 
 import {HttpService} from "../../../service/http/http.service";
 import {ProductsDataStorageService} from "../../../service/data-storage/products-data-storage.service";
-import {BehaviorSubject, fromEvent, of} from "rxjs";
+import {BehaviorSubject, fromEvent, of, Subject} from "rxjs";
 import {catchError, debounceTime, delay, map} from "rxjs/operators";
 import {Injectable} from "@angular/core";
 
@@ -57,7 +57,7 @@ export class ProductResultService {
               { ...this.requestBody.getValue(),"page":this.productsStore.getCurrentPage(), "results": 6}
               );
           }
-      }))
+      }));
   }
 
 }

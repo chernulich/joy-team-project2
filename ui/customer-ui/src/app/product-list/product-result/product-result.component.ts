@@ -1,13 +1,14 @@
 import {
-  Component, HostListener,
+  Component, HostListener, OnDestroy,
   OnInit
 } from '@angular/core';
-import {BehaviorSubject} from "rxjs";
+import {BehaviorSubject, fromEvent, Observable, Subject, Subscription} from "rxjs";
 
 
 import {ProductsDataStorageService} from "../../service/data-storage/products-data-storage.service";
 import {MessageService} from "../../service/message-service/message.service";
 import {ProductResultService} from "./services/product-result.service";
+import {takeUntil} from "rxjs/operators";
 
 
 @Component({
@@ -15,7 +16,7 @@ import {ProductResultService} from "./services/product-result.service";
   templateUrl: './product-result.component.html',
   styleUrls: ['./product-result.component.css']
 })
-export class ProductResultComponent implements OnInit {
+export class ProductResultComponent implements OnInit, OnDestroy {
 
   constructor(public productDataStorage: ProductsDataStorageService,
               public messageService: MessageService,
@@ -25,11 +26,19 @@ export class ProductResultComponent implements OnInit {
  noProducts = false;
  characteristics = ['strong','sour','bitter'];
 
+ paginationSubscription: Subscription;
+ productsStoreSubscription: Subscription;
+
+ stopPaginationEvent: Subject<any> = new Subject();
 
   ngOnInit() {
-    this.productResultService.pagination().subscribe(() => {}); // test
+    this.paginationSubscription = this.productResultService
+      .pagination()
+      .pipe(takeUntil(this.stopPaginationEvent))
+      .subscribe(() => {});
 
-    this.productDataStorage.getProductsFromStore()
+    this.productsStoreSubscription =
+      this.productDataStorage.getProductsFromStore()
       .subscribe((products) => {
         if(products[0] === 'no-products'){
           this.noProducts = true;
@@ -76,4 +85,13 @@ export class ProductResultComponent implements OnInit {
     return new Array(this.maxCoffeeCharacteristic);
   }
 
+  ngOnDestroy(): void {
+    this.stopPaginationEvent.next('stop');
+    if(!!this.paginationSubscription){
+      this.paginationSubscription.unsubscribe();
+    }
+    if(!!this.productsStoreSubscription){
+      this.productsStoreSubscription.unsubscribe();
+    }
+  }
 }

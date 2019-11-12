@@ -15,3 +15,11 @@
   padding-left: 10px;
   padding-right: 10px;
 }
+
+.link-active{
+  background: #747d8c;
+}
+
+.link-active .nav-link{
+  color: white;
+}

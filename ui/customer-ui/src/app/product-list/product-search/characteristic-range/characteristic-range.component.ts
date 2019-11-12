@@ -9,6 +9,10 @@ import {
 import {CharacteristicsRangeService} from "../service/charachteristics-range-service/characteristics-range.service";
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 
+export interface CharacteristicRange {
+  "from": number;
+  to: number;
+}
 @Component({
   selector: 'app-characteristic-range',
   templateUrl: './characteristic-range.component.html',
@@ -17,18 +21,6 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 })
 export class CharacteristicRangeComponent implements OnInit, ControlValueAccessor {
 
-    writeValue(obj: any): void {
-        throw new Error("Method not implemented.");
-    }
-    registerOnChange(fn: any): void {
-        throw new Error("Method not implemented.");
-    }
-    registerOnTouched(fn: any): void {
-        throw new Error("Method not implemented.");
-    }
-    setDisabledState?(isDisabled: boolean): void {
-        throw new Error("Method not implemented.");
-    }
 
   constructor(private renderer: Renderer2,
               private characteristicsRangeService: CharacteristicsRangeService) { }
@@ -37,6 +29,11 @@ export class CharacteristicRangeComponent implements OnInit, ControlValueAccesso
   @Input('characteristicName') characteristicName;
   @ViewChild('beansContainer',{static: true}) beansContainer: ElementRef;
 
+  value: CharacteristicRange = {
+    from: 1,
+    to: 5
+  };
+
   isSelected: boolean = false;
   rangeStart: number = -1;
   rangeEnd: number = -1;
@@ -44,7 +41,26 @@ export class CharacteristicRangeComponent implements OnInit, ControlValueAccesso
   blackBean = '../../../assets/images/bean_black.png';
   lightBean = '../../../assets/images/bean_black_light.png';
 
+  onChange: Function = function() {};
+  onTouch: Function = function() {};
+
   ngOnInit() {
+
+  }
+
+  writeValue(obj: CharacteristicRange): void {
+    this.value = obj;
+    if(obj.from === -1 && obj.to === -1){
+      this.reset();
+    }
+  }
+  registerOnChange(fn: any): void {
+    this.onChange = fn;
+  }
+  registerOnTouched(fn: any): void {
+    this.onTouch = fn;
+  }
+  setDisabledState?(isDisabled: boolean): void {
 
   }
 
@@ -63,6 +79,7 @@ export class CharacteristicRangeComponent implements OnInit, ControlValueAccesso
     this.setToInitial();
     this.rangeStart = -1;
     this.rangeEnd = -1;
+    this.onChange({from: 1, to: 5});
     this.isSelected = false;
   }
 
@@ -114,15 +131,17 @@ export class CharacteristicRangeComponent implements OnInit, ControlValueAccesso
     if (index === this.rangeEnd && this.isSelected) {
       this.isSelected = false;
       this.onWidgetLeave();
-      this.characteristicsRangeService[this.characteristicName + 'State']
-        .next({from: 1, to: 5});
+      // this.characteristicsRangeService[this.characteristicName + 'State']
+      //   .next({from: 1, to: 5});
+      this.onChange({from: 1, to: 5});
       return;
     }
     // if previously not selected select current range
     if (!this.isSelected) {
       this.isSelected = true;
-      this.characteristicsRangeService[this.characteristicName + 'State']
-        .next({from: this.rangeStart + 1, to: this.rangeEnd + 1});
+      // this.characteristicsRangeService[this.characteristicName + 'State']
+      //   .next({from: this.rangeStart + 1, to: this.rangeEnd + 1});
+      this.onChange({from: this.rangeStart + 1, to: this.rangeEnd + 1});
     }
   }
 }

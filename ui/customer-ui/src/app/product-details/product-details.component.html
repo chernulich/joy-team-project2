@@ -1,27 +1,55 @@
-<p>product-details works!</p>
-<div class="card-body">
-  <table class="table table-hover table-bordered">
-    <thead class="alert-info">
-    <tr>
-      <th>ID</th>
-      <th>Name</th>
-      <th>Quantity Available Kg</th>
-      <th>Images</th>
-      <th>Characteristics</th>
-      <th>Description</th>
-      <th>In Stock</th>
-      <th>Price</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr >
-      <td>{{this.productId}}</td>
-      <td>{{this.productDetails.productName}}</td>
-      <td>{{this.productDetails.images}}</td>
-      <td>{{this.productDetails.characteristics.bitter}}</td>
-      <td>{{this.productDetails.description}}</td>
-    </tr>
-    </tbody>
+<div class="row justify-content-center">
+  <div class="card m-3 w-75">
+    <div class="row no-gutters my-2">
+      <div class="col-md-4 d-flex flex-row">
+        <div class="small-images">
+          <img src="../../assets/images/Argentina.png" alt="" style="height: 3rem; width: 3rem;">
+          <img src="../../assets/images/Argentina.png" alt="" style="height: 3rem; width: 3rem;">
+        </div>
+        <div class="card-img"></div>
+      </div>
+      <div class="col-md-8">
+        <div class="card-body mx-3">
+          <h5 class="card-title font-weight-bolder">Card title</h5>
+          <h6 class="price font-weight-bolder">USD 36.00</h6>
+          <p class="font-weight-bolder">Description</p>
+          <p class="card-text" #text>
+            This is a wider card with supporting text below as a natural lead-in to additional content.
+            This content is a little bit longer.
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+            Esse explicabo harum modi odio optio perferendis praesentium, provident quasi quisquam rem sequi similique voluptates voluptatum? Aliquam aspernatur consectetur dolorum perspiciatis similique.
+            A adipisci aperiam corporis deleniti distinctio dolorem eius fugit labore laboriosam laborum, magnam magni molestias non odit pariatur quia tempora! Doloribus illo laboriosam magnam modi perspiciatis. Enim necessitatibus placeat provident.
 
-  </table>
+          </p>
+          <table class="table">
+            <tbody>
+            <tr>
+              <th scope="row">Strong</th>
+              <td>Beans</td>
+            </tr>
+            <tr>
+              <th scope="row">Sour</th>
+              <td>Beans</td>
+            </tr>
+            <tr>
+              <th scope="row">Bitter</th>
+              <td>Beans</td>
+            </tr>
+            </tbody>
+          </table>
+          <p class="font-weight-bolder mb-1">Quantity</p>
+<!--          <input type="number" value="1" min="1" step="1" class="number-input mr-5">-->
+          <div class="row m-0">
+            <div class="quantity d-flex flex-row flex-nowrap mr-3">
+              <a class="minus" (click)="quantityMinus()"><i class="fas fa-minus"></i></a>
+              <div class="quantity-input">{{quantityValue}}</div>
+              <a class="plus" (click)="quantityPlus()"><i class="fas fa-plus"></i></a>
+            </div>
+            <a href="#" class="btn btn-dark text-uppercase">add to card</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
+

@@ -1,5 +1,4 @@
 <div class="row flex-nowrap m-0" [ngClass]="{'align-items-stretch': messageService.messageText}">
-
   <div
     class="alert alert-{{messageService.messageType}}"
     *ngIf="messageService.messageText">
@@ -17,8 +16,8 @@
         <div *ngIf="i === 0" class="popular-icon">
           <i class="fas fa-fire-alt"></i>
         </div>
-        <div class="details-icon">
-          <a [routerLink]="['../product-details']"><i class="fas fa-info"></i></a>
+        <div [routerLink]="['./',i]" class="details-icon">
+          <a><i class="fas fa-info"></i></a>
         </div>
         <div class="p-3">
           <img src="../../../assets/images/Argentina.png" class="card-img-top" alt="...">
@@ -74,3 +73,6 @@
     </div>
   </div>
 </div>
+
+
+

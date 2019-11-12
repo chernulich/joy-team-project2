@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {ProductDetails} from "./model/product-details";
-import {ProductDetailsHttpService} from "./service/product-details-http.service";
-import {ActivatedRoute} from "@angular/router";
-import {Subscription} from "rxjs";
+import {ActivatedRoute, Params} from "@angular/router";
+import {ProductDetailsService} from "./service/product-details.service";
+
 
 @Component({
   selector: 'app-product-details',
@@ -11,21 +10,29 @@ import {Subscription} from "rxjs";
 })
 export class ProductDetailsComponent implements OnInit {
 
+  public quantityValue: number = 1;
+  public maxQuantity: number = 10;
+  public minQuantity: number = 1;
 
-  public productDetails: ProductDetails;
-  private subscription: Subscription;
-  public productId: number;
-
-  constructor(private productDetailsHttpService: ProductDetailsHttpService, private activateRoute: ActivatedRoute) {
-    // this.subscription = activateRoute.params.subscribe(params=>this.productId=params['id']);
-  }
-
-  getProductDetails(productId: number) {
-    // return this.productDetailsHttpService.getProductDetails(productId).subscribe(data => this.productDetails = data);
-  }
+  constructor(private activatedRoute: ActivatedRoute,
+              private productDetailsService: ProductDetailsService) {}
 
   ngOnInit() {
-    // this.getProductDetails(this.productId);
+    this.activatedRoute.params
+      .subscribe((params: Params) => {
+        this.productDetailsService.getSelectedProductForDetails(params.id);
+      });
   }
 
+  quantityMinus(){
+    if(this.quantityValue > this.minQuantity){
+      this.quantityValue--;
+    }
+  }
+
+  quantityPlus(){
+    if(this.quantityValue < this.maxQuantity){
+      this.quantityValue++;
+    }
+  }
 }

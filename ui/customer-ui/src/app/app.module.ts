@@ -15,12 +15,13 @@ import {FooterComponent} from './footer/footer.component';
 import {ProductListModule} from "./product-list/product-list.module";
 import {ProductResultService} from "./product-list/product-result/services/product-result.service";
 import {ProductsDataStorageService} from "./service/data-storage/products-data-storage.service";
+import {AboutModule} from "./about/about.module";
+import {RouterModule} from "@angular/router";
 
 @NgModule({
   declarations: [
     AppComponent,
     ExampleComponent,
-    ProductDetailsComponent,
     HeaderComponent,
     OrderReceivedComponent,
     FooterComponent,
@@ -31,13 +32,15 @@ import {ProductsDataStorageService} from "./service/data-storage/products-data-s
     BsDropdownModule.forRoot(),
     AppRoutingModule,
     FormsModule,
+    RouterModule,
     HttpClientModule,
     NgbModule,
-    ProductListModule
+    ProductListModule,
+    AboutModule
   ],
   providers: [
-    ProductsDataStorageService,
-    ProductResultService
+    ProductResultService,
+    ProductsDataStorageService
   ],
   bootstrap: [AppComponent]
 })

@@ -1,4 +1,5 @@
-import {AfterViewInit, Component, ElementRef} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from "@angular/router";
 
 
 @Component({
@@ -6,8 +7,12 @@ import {AfterViewInit, Component, ElementRef} from '@angular/core';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements AfterViewInit {
+export class AppComponent implements AfterViewInit, OnInit {
   constructor(private elementRef: ElementRef) {
+
+  }
+
+  ngOnInit(){
 
   }
 
