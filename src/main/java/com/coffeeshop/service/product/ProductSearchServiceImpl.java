@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -20,20 +21,17 @@ public class ProductSearchServiceImpl implements ProductSearchService {
     private final ProductQuantityRepository productQuantityRepository;
     private final ProductImageRepository productImageRepository;
     private final ProductCoffeeRepository productCoffeeRepository;
-    private final ProductItemRepository productItemRepository;
 
     @Autowired
     public ProductSearchServiceImpl(ProductRepository productRepository,
                                     ProductQuantityRepository productQuantityRepository,
                                     ProductImageRepository productImageRepository,
-                                    ProductCoffeeRepository productCoffeeRepository,
-                                    ProductItemRepository productItemRepository) {
+                                    ProductCoffeeRepository productCoffeeRepository) {
 
         this.productRepository = productRepository;
         this.productQuantityRepository = productQuantityRepository;
         this.productImageRepository = productImageRepository;
         this.productCoffeeRepository = productCoffeeRepository;
-        this.productItemRepository = productItemRepository;
     }
 
 
@@ -46,16 +44,13 @@ public class ProductSearchServiceImpl implements ProductSearchService {
                 .orElseThrow(ProductQuantityNotFoundException::new);
 
         List<ProductImage> productImages = productImageRepository.findProductImagesByProduct(product)
-                .orElseThrow(ProductImageNotFoundException::new);
-
-        ProductItem productItem = productItemRepository.findProductItemByProduct(product)
-                .orElseThrow(ProductItemNotFoundException::new);
+                .orElse(new ArrayList<>());
 
         ProductCoffee productCoffee = productCoffeeRepository.findProductCoffeeByProduct(product)
                 .orElseThrow(ProductCoffeeNotFoundException::new);
 
         return convertProductToRichProductResponse(product, productQuantity,
-                productCoffee, productImages, productItem);
+                productCoffee, productImages);
     }
 
     @Override
@@ -66,8 +61,7 @@ public class ProductSearchServiceImpl implements ProductSearchService {
 
     private RichProductResponse convertProductToRichProductResponse(Product product, ProductQuantity productQuantity,
                                                                     ProductCoffee productCoffee,
-                                                                    List<ProductImage> productImages,
-                                                                    ProductItem productItem) {
+                                                                    List<ProductImage> productImages) {
 
         CharacteristicResponse characteristicResponse = CharacteristicResponse.builder()
                 .bitter(productCoffee.getBitter())
@@ -79,10 +73,12 @@ public class ProductSearchServiceImpl implements ProductSearchService {
 
 
         return RichProductResponse.builder()
+                .id(product.getId())
                 .productName(product.getProductName())
                 .description(product.getDescription())
                 .shortDescription(product.getShortDescription())
                 .productImages(imageLinks)
+                .previewImage(new String())
                 .characteristicResponse(characteristicResponse)
                 .amountAvailable(productQuantity.getQuantity())
                 .price(product.getUnitPrice())

@@ -3,7 +3,6 @@ package com.coffeeshop.controller.customer;
 import com.coffeeshop.exception.InputValidationException;
 import com.coffeeshop.model.web.product.ProductListResponse;
 import com.coffeeshop.model.web.product.ProductRequest;
-import com.coffeeshop.model.web.productDetails.CharacteristicResponse;
 import com.coffeeshop.model.web.productDetails.RichProductResponse;
 import com.coffeeshop.service.product.ProductSearchService;
 import org.apache.commons.io.IOUtils;
@@ -58,22 +57,8 @@ public class ProductController {
 
     @GetMapping("/products/{id}")
     public RichProductResponse getById(@PathVariable("id") Long productId) {
-        String[] img = {"http://customer-ui/products/1/image/1", "http://customer-ui/products/1/image/1"};
-        CharacteristicResponse characteristic = CharacteristicResponse.builder()
-                .strong(2)
-                .sour(2)
-                .bitter(2)
-                .build();
-
-        return RichProductResponse.builder()
-                .productName("Alabasta")
-                .amountAvailable(300)
-                .productImages(img)
-                .characteristicResponse(characteristic)
-                .description("!!!!")
-                .shortDescription("!!")
-                .price(100.0)
-                .build();
+//        String[] img = {"http://customer-ui/products/1/image/1", "http://customer-ui/products/1/image/1"};
+        return productSearchService.findProductById(productId);
 
     }
 
