@@ -32,6 +32,7 @@ export class ProductResultComponent implements OnInit, OnDestroy {
  stopPaginationEvent: Subject<any> = new Subject();
 
   ngOnInit() {
+
     this.paginationSubscription = this.productResultService
       .pagination()
       .pipe(takeUntil(this.stopPaginationEvent))

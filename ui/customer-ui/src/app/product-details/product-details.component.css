@@ -15,6 +15,16 @@
   color: #28a745;
 }
 
+.align-cell-right{
+  text-align: right;
+}
+
+.more-details{
+  font-size: 0.8rem;
+  cursor: pointer;
+  display: inline-block;
+}
+
 .plus,
 .minus,
 .quantity-input{
@@ -39,13 +49,18 @@
   border: 1px solid #f1f2f6;
 }
 
-.card-text{
+.hide-details{
   max-height: 3rem;
-  display: -webkit-box;
   overflow: hidden;
-  -webkit-line-clamp: 3;
-  --webkit-box-orient: vertical;
+  transition: max-height 0.4s ease-in-out;
 }
+
+.show-details{
+  max-height: 100rem;
+  overflow: hidden;
+  transition: max-height 0.4s ease-in-out;
+}
+
 .card-img{
   /*width: calc(100% - 4rem);*/
   background: url("../../assets/images/Argentina.png");
@@ -68,4 +83,8 @@ table th{
 .btn {
   width: 30%;
   border-radius: 0 !important;
+}
+
+.btn-color-white{
+  color: white!important;
 }

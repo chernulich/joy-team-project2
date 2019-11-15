@@ -13,27 +13,28 @@
           <h5 class="card-title font-weight-bolder">Card title</h5>
           <h6 class="price font-weight-bolder">USD 36.00</h6>
           <p class="font-weight-bolder">Description</p>
-          <p class="card-text" #text>
+          <p class="card-text hide-details" [class.mb-2]="!showMore" #details>
             This is a wider card with supporting text below as a natural lead-in to additional content.
             This content is a little bit longer.
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-            Esse explicabo harum modi odio optio perferendis praesentium, provident quasi quisquam rem sequi similique voluptates voluptatum? Aliquam aspernatur consectetur dolorum perspiciatis similique.
-            A adipisci aperiam corporis deleniti distinctio dolorem eius fugit labore laboriosam laborum, magnam magni molestias non odit pariatur quia tempora! Doloribus illo laboriosam magnam modi perspiciatis. Enim necessitatibus placeat provident.
-
+            <span>Lorem ipsum dolor sit amet,
+              consectetur adipisicing elit.
+              Aut earum eveniet incidunt officia omnis reiciendis sed soluta vel!
+              Accusamus amet culpa impedit perspiciatis quas quisquam sapiente similique suscipit temporibus, veniam.</span>
+            <span>Amet asperiores debitis doloremque, eaque facilis illo ipsum nam non nostrum, obcaecati officia perferendis
+              provident voluptatum? Cupiditate distinctio doloribus dolorum explicabo fugit nam nostrum omnis voluptates!
+              Amet facilis harum ipsam.</span>
           </p>
+          <a class="more-details mb-2" (click)="onShowMore()" *ngIf="showMore">More Details...</a>
           <table class="table">
             <tbody>
-            <tr>
-              <th scope="row">Strong</th>
-              <td>Beans</td>
-            </tr>
-            <tr>
-              <th scope="row">Sour</th>
-              <td>Beans</td>
-            </tr>
-            <tr>
-              <th scope="row">Bitter</th>
-              <td>Beans</td>
+            <tr  *ngFor="let characteristic of (getCharacteristics() | async);">
+              <th scope="row">{{firstLetterUpper(characteristic)}}</th>
+              <td class="align-cell-right">
+                <img
+                  *ngFor="let item of numberOfCoffeeBeans();let i = index;"
+                  src="{{(getSelectedProduct() | async) | getIcons : i : characteristic}}"
+                >
+              </td>
             </tr>
             </tbody>
           </table>
@@ -45,7 +46,7 @@
               <div class="quantity-input">{{quantityValue}}</div>
               <a class="plus" (click)="quantityPlus()"><i class="fas fa-plus"></i></a>
             </div>
-            <a href="#" class="btn btn-dark text-uppercase">add to card</a>
+            <a class="btn btn-color-white btn-dark text-uppercase">add to card</a>
           </div>
         </div>
       </div>

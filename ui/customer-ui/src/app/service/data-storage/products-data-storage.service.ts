@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {BehaviorSubject, Observable} from "rxjs";
+import {BehaviorSubject, Observable, Subject} from "rxjs";
 
 
 @Injectable()
@@ -10,6 +10,8 @@ export class ProductsDataStorageService {
     new BehaviorSubject([]);
 
   private currentPage: BehaviorSubject<number> = new BehaviorSubject<number>(1);
+
+  private selectedProductForDetails: BehaviorSubject<any> = new BehaviorSubject<any>({});
 
 
   updateProductStore(products: Array<any>){
@@ -22,7 +24,7 @@ export class ProductsDataStorageService {
     // console.log(this.productsStore.getValue());
   }
 
-  getProductsFromStore(): Observable<any>{
+  public getProductsFromStore(): Observable<any>{
     return this.productsStore.asObservable();
   }
 
@@ -32,5 +34,13 @@ export class ProductsDataStorageService {
 
   public setCurrentPage(pageNum: number){
     this.currentPage.next(pageNum);
+  }
+
+  public setSelectedProductForDetails(product){
+    this.selectedProductForDetails.next(product);
+  }
+
+  public getSelectedProductForDetails(): Observable<any>{
+    return this.selectedProductForDetails.asObservable();
   }
 }
