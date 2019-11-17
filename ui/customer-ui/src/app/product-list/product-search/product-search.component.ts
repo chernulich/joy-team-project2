@@ -108,13 +108,6 @@ export class ProductSearchComponent implements OnInit, OnDestroy {
 
     this.requestBody = this.createRequestObject();
 
-    // console.log(this.requestBody);
-    // this.tempRequestBody.characteristics.decaf = this.productSearchForm.value.decaf === 'yes';
-    // this.tempRequestBody.characteristics.ground = this.productSearchForm.value.ground === 'yes';
-    // this.tempRequestBody.search = this.productSearchForm.value.productName;
-    // this.tempRequestBody.priceMax = this.productSearchForm.value.priceRange['maxPrice'];
-    // this.tempRequestBody.priceMin = this.productSearchForm.value.priceRange['minPrice'];
-    // this.requestBody = this.createRequestObject(this.tempRequestBody);
     this.productResultService.requestBody.next(this.requestBody);
     this.productResultService.httpGetFilteredProducts(this.requestBody);
   }
