@@ -11,7 +11,7 @@ import {Characteristics} from "../model/characteristics";
 
 interface Filter {
   search?: string,
-  bitter?: Array <number>,
+  bitter?: Array<number>,
   sour?: Array<number>,
   strong?: Array<number>,
   instant?: boolean,
@@ -33,14 +33,15 @@ export class ProductSearchComponent implements OnInit, OnDestroy {
               private productDataStorage: ProductsDataStorageService,
               private characteristicsRangeService: CharacteristicsRangeService,
               private productResultService: ProductResultService,
-              private fb: FormBuilder) { }
+              private fb: FormBuilder) {
+  }
 
   productSearchForm: FormGroup;
   priceRange: SliderValues;
   products: Product [] = [];
-  coffeeCharacteristicsMarks = [1,2,3,4,5];
-  characteristics: Array<string> = ['bitter','sour','strong'];
-  booleanCharacteristics: Array<string> = ['decaf','ground'];
+  coffeeCharacteristicsMarks = [1, 2, 3, 4, 5];
+  characteristics: Array<string> = ['bitter', 'sour', 'strong'];
+  booleanCharacteristics: Array<string> = ['decaf', 'ground'];
 
   private tempRequestBody: ProductListRequest = new ProductListRequest();
   private requestBody: {} = new ProductListRequest();
@@ -49,9 +50,9 @@ export class ProductSearchComponent implements OnInit, OnDestroy {
 
 
     this.productSearchForm = this.fb.group({
-      productName: this.fb.control('',[]),
+      productName: this.fb.control('', []),
       ground: this.fb.control('', []),
-      decaf: this.fb.control('',[]),
+      decaf: this.fb.control('', []),
       priceRange: this.fb.control({minPrice: 10, maxPrice: 100}, []),
       bitter: this.fb.control({bitterFrom: 1, bitterTo: 5}, []),
       sour: this.fb.control({sourFrom: 1, sourTo: 5}, []),
@@ -59,27 +60,26 @@ export class ProductSearchComponent implements OnInit, OnDestroy {
     });
   }
 
-  transformRequestObject(request): ProductListRequest{
+  transformRequestObject(request): ProductListRequest {
     const result = {};
     const keys = Object.keys(request);
     let midResult;
     keys.forEach((key) => {
 
-      if(request[key] instanceof Object && !(request[key] instanceof Array)){
+      if (request[key] instanceof Object && !(request[key] instanceof Array)) {
         midResult = this.transformRequestObject(request[key]);
       }
 
-      if(!!midResult){
+      if (!!midResult) {
         result[key.slice(1)] = midResult;
-      }
-      else{
+      } else {
         result[key.slice(1)] = request[key];
       }
     });
     return result as ProductListRequest;
   }
 
-  createRequestObject(){
+  createRequestObject() {
 
     let requestObject: ProductListRequest = new ProductListRequest(1, 6, "",
       this.productSearchForm.value.priceRange['minPrice'],
@@ -94,10 +94,10 @@ export class ProductSearchComponent implements OnInit, OnDestroy {
         this.productSearchForm.value.strong.to,
         this.productSearchForm.value.decaf === 'yes',
         this.productSearchForm.value.ground === 'yes',
-        "arabica")
+        "")
     );
 
-    return  requestObject = this.transformRequestObject(requestObject);
+    return requestObject = this.transformRequestObject(requestObject);
   }
 
 
@@ -108,14 +108,16 @@ export class ProductSearchComponent implements OnInit, OnDestroy {
 
     this.requestBody = this.createRequestObject();
 
+    console.log(this.requestBody);
     this.productResultService.requestBody.next(this.requestBody);
     this.productResultService.httpGetFilteredProducts(this.requestBody);
   }
 
-  onReset(){
+  onReset() {
     this.sliderService.sliderReset.next();
-    //this.productResultService.requestBody.next({});
-    if(!this.productResultService.requestBody.getValue()['characteristics']) {return;}
+    if (!this.productResultService.requestBody.getValue()['characteristics']) {
+      return;
+    }
     this.productSearchForm.setValue({
       productName: "",
       decaf: "",
@@ -129,13 +131,9 @@ export class ProductSearchComponent implements OnInit, OnDestroy {
     this.productDataStorage.setCurrentPage(1);
     this.productResultService.requestBody.next(this.requestBody);
     this.productResultService.httpGetFilteredProducts(this.requestBody);
-    // this.tempRequestBody = new ProductListRequest();
-    // this.characteristicRangeComponents.forEach((component: CharacteristicRangeComponent) => {
-    //   component.reset();
-    // })
   }
 
-  firstLetterUpper(value: string){
+  firstLetterUpper(value: string) {
     return value.charAt(0).toUpperCase() + value.slice(1);
   }
 
