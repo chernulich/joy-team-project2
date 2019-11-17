@@ -3,26 +3,19 @@
     <div class="row no-gutters my-2">
       <div class="col-md-4 d-flex flex-row">
         <div class="small-images">
-          <img src="../../assets/images/Argentina.png" alt="" style="height: 3rem; width: 3rem;">
-          <img src="../../assets/images/Argentina.png" alt="" style="height: 3rem; width: 3rem;">
+          <img (click)="onSmallImageClick(smallImage,previewImage)" #smallImage src="../../assets/images/coffe 1.jpeg" alt="" style="height: 3rem; width: 3rem;">
+          <img (click)="onSmallImageClick(smallImage1,previewImage)" #smallImage1 src="../../assets/images/coffe 2.jpg" alt="" style="height: 3rem; width: 3rem;">
         </div>
-        <div class="card-img"></div>
+        <div class="card-img" #previewImage></div>
       </div>
       <div class="col-md-8">
-        <div class="card-body mx-3">
-          <h5 class="card-title font-weight-bolder">Card title</h5>
-          <h6 class="price font-weight-bolder">USD 36.00</h6>
-          <p class="font-weight-bolder">Description</p>
+        <span class="far fa-times-circle float-right mx-2" [routerLink]="['../']"></span>
+        <div class="card-body mx-3 h-100">
+          <h5 class="card-title font-weight-bolder">{{(getSelectedProduct() | async).productName}}</h5>
+          <h6 class="price font-weight-bolder">{{(getSelectedProduct() | async).price | currency : 'USD'}}</h6>
+          <h5 class="font-weight-bolder">Description</h5>
           <p class="card-text hide-details" [class.mb-2]="!showMore" #details>
-            This is a wider card with supporting text below as a natural lead-in to additional content.
-            This content is a little bit longer.
-            <span>Lorem ipsum dolor sit amet,
-              consectetur adipisicing elit.
-              Aut earum eveniet incidunt officia omnis reiciendis sed soluta vel!
-              Accusamus amet culpa impedit perspiciatis quas quisquam sapiente similique suscipit temporibus, veniam.</span>
-            <span>Amet asperiores debitis doloremque, eaque facilis illo ipsum nam non nostrum, obcaecati officia perferendis
-              provident voluptatum? Cupiditate distinctio doloribus dolorum explicabo fugit nam nostrum omnis voluptates!
-              Amet facilis harum ipsam.</span>
+            {{(getSelectedProduct() | async).description}}
           </p>
           <a class="more-details mb-2" (click)="onShowMore()" *ngIf="showMore">More Details...</a>
           <table class="table">
@@ -39,14 +32,13 @@
             </tbody>
           </table>
           <p class="font-weight-bolder mb-1">Quantity</p>
-<!--          <input type="number" value="1" min="1" step="1" class="number-input mr-5">-->
           <div class="row m-0">
             <div class="quantity d-flex flex-row flex-nowrap mr-3">
               <a class="minus" (click)="quantityMinus()"><i class="fas fa-minus"></i></a>
               <div class="quantity-input">{{quantityValue}}</div>
               <a class="plus" (click)="quantityPlus()"><i class="fas fa-plus"></i></a>
             </div>
-            <a class="btn btn-color-white btn-dark text-uppercase">add to card</a>
+            <button [disabled]="!minQuantity" class="btn btn-color-white btn-dark text-uppercase">add to card</button>
           </div>
         </div>
       </div>

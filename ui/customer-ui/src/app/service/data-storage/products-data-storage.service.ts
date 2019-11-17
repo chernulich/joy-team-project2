@@ -1,6 +1,17 @@
 import { Injectable } from '@angular/core';
 import {BehaviorSubject, Observable, Subject} from "rxjs";
 
+export interface IProductDetails {
+  amountAvailable: number;
+  characteristicResponse: {strong: number; sour: number; bitter: number;};
+  description: string;
+  id: number;
+  previewImage: string;
+  price: number;
+  productImages: Array<string>;
+  productName: string;
+  shortDescription: string;
+}
 
 @Injectable()
 export class ProductsDataStorageService {
@@ -40,7 +51,7 @@ export class ProductsDataStorageService {
     this.selectedProductForDetails.next(product);
   }
 
-  public getSelectedProductForDetails(): Observable<any>{
+  public getSelectedProductForDetails(): Observable<IProductDetails>{
     return this.selectedProductForDetails.asObservable();
   }
 }

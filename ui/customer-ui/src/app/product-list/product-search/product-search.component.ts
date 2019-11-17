@@ -94,7 +94,7 @@ export class ProductSearchComponent implements OnInit, OnDestroy {
         this.productSearchForm.value.strong.to,
         this.productSearchForm.value.decaf === 'yes',
         this.productSearchForm.value.ground === 'yes',
-        "")
+        "arabica")
     );
 
     return  requestObject = this.transformRequestObject(requestObject);
@@ -108,7 +108,7 @@ export class ProductSearchComponent implements OnInit, OnDestroy {
 
     this.requestBody = this.createRequestObject();
 
-    console.log(this.requestBody);
+    // console.log(this.requestBody);
     // this.tempRequestBody.characteristics.decaf = this.productSearchForm.value.decaf === 'yes';
     // this.tempRequestBody.characteristics.ground = this.productSearchForm.value.ground === 'yes';
     // this.tempRequestBody.search = this.productSearchForm.value.productName;

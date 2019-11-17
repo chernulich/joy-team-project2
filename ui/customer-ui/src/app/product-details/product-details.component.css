@@ -1,4 +1,15 @@
 
+.fa-times-circle{
+  cursor: pointer;
+  outline: none;
+}
+
+.card-img{
+  background: url("../../assets/images/Argentina.png");
+  background-repeat: no-repeat;
+  min-height: 300px;
+}
+
 .small-images{
   display: flex;
   flex-flow: column nowrap;
@@ -59,12 +70,6 @@
   max-height: 100rem;
   overflow: hidden;
   transition: max-height 0.4s ease-in-out;
-}
-
-.card-img{
-  /*width: calc(100% - 4rem);*/
-  background: url("../../assets/images/Argentina.png");
-  background-repeat: no-repeat;
 }
 
 .number-input {

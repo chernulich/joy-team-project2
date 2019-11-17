@@ -20,7 +20,9 @@ export class ProductDetailsComponent implements OnInit {
   constructor(private activatedRoute: ActivatedRoute,
               private productDetailsService: ProductDetailsService,
               private dataStorage: ProductsDataStorageService,
-              private renderer: Renderer2) {}
+              private renderer: Renderer2) {
+    window.scrollTo({left: 0, top: 0, behavior: "smooth"});
+  }
 
   characteristics;
   maxCoffeeCharacteristic = 5;
@@ -28,11 +30,16 @@ export class ProductDetailsComponent implements OnInit {
   @ViewChild('details', {read: ElementRef, static: true}) detailsElem: ElementRef;
 
   ngOnInit() {
-    this.activatedRoute.params
-      .subscribe((params: Params) => {
-        console.log(params);
-        this.productDetailsService.getSelectedProductForDetails(params.id);
-      });
+
+    this.activatedRoute.data.subscribe((data) => {
+      this.dataStorage.setSelectedProductForDetails(data.productDetails);
+    });
+
+    this.getSelectedProduct().subscribe((product) => {
+      this.maxQuantity = product.amountAvailable;
+      this.minQuantity = product.amountAvailable > 0 ? 1 : 0;
+      this.quantityValue = this.minQuantity;
+    });
 
     this.showMore =
       Math.floor(this.detailsElem.nativeElement.scrollHeight / 3) > Math.floor(this.detailsElem.nativeElement.offsetHeight / 3);
@@ -52,12 +59,13 @@ export class ProductDetailsComponent implements OnInit {
   getCharacteristics(){
     return this.dataStorage.getSelectedProductForDetails()
       .pipe(map((product) => {
-        if(!!product.characteristics){
-          return Object.keys(product.characteristics);
+        if(!!product.characteristicResponse){
+          return Object.keys(product.characteristicResponse);
         }
         else{ return [];}
       }));
   }
+
 
   getSelectedProduct(){
     return this.dataStorage.getSelectedProductForDetails();
@@ -81,6 +89,10 @@ export class ProductDetailsComponent implements OnInit {
 
   numberOfCoffeeBeans(){
     return new Array(this.maxCoffeeCharacteristic);
+  }
+
+  onSmallImageClick(imageElem: HTMLImageElement,previewImage: HTMLElement){
+    this.renderer.setStyle(previewImage,'background-image',`url(${imageElem.src})`);
   }
 
 }

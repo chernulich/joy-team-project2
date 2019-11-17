@@ -9,10 +9,6 @@ export class ProductDetailsService {
 
 
   public getSelectedProductForDetails(id){
-    this.http.getProductDetails(id)
-      .subscribe((productDetails) => {
-          console.log(productDetails);
-          this.dataStorage.setSelectedProductForDetails(productDetails);
-      });
+    return this.http.getProductDetails(id);
   }
 }

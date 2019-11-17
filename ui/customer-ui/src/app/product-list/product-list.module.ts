@@ -17,6 +17,7 @@ import {ProductsDataStorageService} from "../service/data-storage/products-data-
 import {ProductDetailsComponent} from "../product-details/product-details.component";
 import {ProductListRoutingModule} from "./product-list-routing.module";
 import {ProductDetailsService} from "../product-details/service/product-details.service";
+import {ProductDetailsResolverService} from "../product-details/product-details-resolver.service";
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import {ProductDetailsService} from "../product-details/service/product-details.
     HttpClientModule
   ],
   providers: [
-    ProductDetailsService
+    ProductDetailsService,
+    ProductDetailsResolverService
   ],
   exports: [
     GetIconsPipe
