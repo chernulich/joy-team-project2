@@ -38,9 +38,8 @@ public class TestToCompletionEmail implements CommandLineRunner {
                 .orderPaymentStatus(OrderPaymentStatus.NO_INFO).build();
         orderRepository.save(order);
         OrderEmail orderEmail = orderEmailCompletionTemplate.createOrderCompletionEmail(
-                "poloz.dana@gmail.com", "Dana", "Poloz", 2L);
+                "sacha11@list.ru", "Dana", "Poloz", 3L);
         System.out.println(new String(Base64.getDecoder().decode(orderEmail.getEmailParts())));
         System.out.println(orderEmail.getOrderEmail());
     }
 }
-

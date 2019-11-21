@@ -24,7 +24,7 @@ public class ProductRequest {
     @Min(1)
     private Integer results;
 
-    @ApiModelProperty(example = "Ala")
+    @ApiModelProperty(example = "product")
     private String search;
 
     @ApiModelProperty(example = "10")

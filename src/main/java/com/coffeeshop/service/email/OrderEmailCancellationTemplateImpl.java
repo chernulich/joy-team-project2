@@ -1,7 +1,6 @@
 package com.coffeeshop.service.email;
 
 import com.coffeeshop.exception.order.OrderException;
-import com.coffeeshop.exception.order.OrderExceptionType;
 import com.coffeeshop.model.entity.OrderEmail;
 import com.coffeeshop.model.entity.Orders;
 import com.coffeeshop.model.entity.type.OrderEmailType;
@@ -13,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import static com.coffeeshop.exception.order.OrderExceptionType.ORDER_NOT_FOUND;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -41,7 +41,7 @@ public class OrderEmailCancellationTemplateImpl implements OrderEmailCancellatio
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public OrderEmail createOrderCancellationEmail(String email, String firstName, String lastName, Long orderId, String reason) {
 
-        Orders order = orderRepository.findById(orderId).orElseThrow(() -> new OrderException(orderId, OrderExceptionType.ORDER_NOT_FOUND));
+        Orders order = orderRepository.findById(orderId).orElseThrow(() -> new OrderException(orderId, ORDER_NOT_FOUND));
 
         String base64Message = createMessage(orderId, firstName, lastName, reason);
 
@@ -60,9 +60,9 @@ public class OrderEmailCancellationTemplateImpl implements OrderEmailCancellatio
     private String createMessage(Long orderId, String firstName, String lastName, String reason) {
         String message = ORDER_EMAIL_CANCELLATION_TEMPLATE;
         message = message.replaceAll("\\$\\{firstName}", firstName)
-                        .replaceAll("\\$\\{lastName}", lastName)
-                        .replaceAll("\\$\\{reason}", reason)
-                        .replaceAll("\\$\\{orderId}", Long.toString(orderId));
+                .replaceAll("\\$\\{lastName}", lastName)
+                .replaceAll("\\$\\{reason}", reason)
+                .replaceAll("\\$\\{orderId}", Long.toString(orderId));
         return Base64.getEncoder().encodeToString(message.getBytes());
     }
 
