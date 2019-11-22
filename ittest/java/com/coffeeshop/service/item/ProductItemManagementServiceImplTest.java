@@ -1,45 +1,46 @@
 package com.coffeeshop.service.item;
 
-import com.coffeeshop.SpringTestConfiguration;
+import com.coffeeshop.configuration.ItTestDockerMySQLConfiguration;
+import com.palantir.docker.compose.DockerComposeRule;
 import org.junit.Assert;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
-import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.client.RestClientResponseException;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Stream;
 
 @RunWith(SpringRunner.class)
-@Import(SpringTestConfiguration.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@TestPropertySource(locations = "classpath:test.properties")
-class ProductItemManagementServiceImplTest {
+@ActiveProfiles("test")
+public class ProductItemManagementServiceImplTest {
 
     @LocalServerPort
     int randomServerPort;
 
     @Autowired
-    private RestTemplate restTemplate;
+    private TestRestTemplate restTemplate;
 
     private Map<HttpStatus, Integer> counterByStatus;
 
-    //todo part should be replaces with spring test infra and converted to a proper integration test
+    @ClassRule
+    public static DockerComposeRule dockerComposeRule = ItTestDockerMySQLConfiguration.getDockerComposeRule();
 
-    @BeforeEach
-    void before() {
+    @Before
+    public void before() {
         counterByStatus = new ConcurrentHashMap<>();
         counterByStatus.put(HttpStatus.OK, 0);
         counterByStatus.put(HttpStatus.PRECONDITION_FAILED, 0);
@@ -47,7 +48,7 @@ class ProductItemManagementServiceImplTest {
     }
 
     @Test
-    void findAndMarkAsSoldUseCase1() {
+    public void findAndMarkAsSoldUseCase1() {
         /*
         Pre: Create 1 product in the database and 100 items
         Execution: Run at least 10 concurrent clients, each “buying” 50 product items. Controller must identify each
@@ -65,7 +66,7 @@ class ProductItemManagementServiceImplTest {
     }
 
     @Test
-    void findAndMarkAsSoldUseCase2() {
+    public void findAndMarkAsSoldUseCase2() {
         /*
         Execution: Run at least 10 concurrent clients, each buys 20 items.
         Results: There must be 5 successful.*/
@@ -81,7 +82,7 @@ class ProductItemManagementServiceImplTest {
 
 
     @Test
-    void findAndMarkAsSoldUseCase3() {
+    public void findAndMarkAsSoldUseCase3() {
         /*
         Pre: Create 2 products, first has 5 items, second – 100 items
         Execution: Run at least 10 clients, buying 1 and 20 each

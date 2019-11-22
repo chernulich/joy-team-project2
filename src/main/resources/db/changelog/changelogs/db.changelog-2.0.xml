@@ -88,19 +88,16 @@
 
     <changeSet id="4" author="Alex">
         <renameTable newTableName="ORDER_EMAIL"
-                     oldTableName="ORDER_CONFIRMATION_EMAIL"
-                     schemaName="COFFEESHOP"/>
+                     oldTableName="ORDER_CONFIRMATION_EMAIL"/>
     </changeSet>
 
     <changeSet id="5" author="Alex">
-        <addColumn schemaName="COFFEESHOP"
-                   tableName="ORDER_EMAIL">
+        <addColumn tableName="ORDER_EMAIL">
             <column name="ORDER_EMAIL_TYPE"
                     type="INT"/>
         </addColumn>
         
-        <addNotNullConstraint schemaName="COFFEESHOP"
-                              tableName="ORDER_EMAIL"
+        <addNotNullConstraint tableName="ORDER_EMAIL"
                               columnName="ORDER_EMAIL_TYPE"
                               columnDataType="INT"
                               defaultNullValue="1"/>
@@ -110,14 +107,12 @@
     </changeSet>
 
     <changeSet id="6" author="Alex">
-        <addColumn schemaName="COFFEESHOP"
-                   tableName="PRODUCT_COFFEE">
+        <addColumn tableName="PRODUCT_COFFEE">
             <column name="COFFEE_TYPE"
                     type="INT"/>
         </addColumn>
 
-        <addNotNullConstraint schemaName="COFFEESHOP"
-                              tableName="PRODUCT_COFFEE"
+        <addNotNullConstraint tableName="PRODUCT_COFFEE"
                               columnName="COFFEE_TYPE"
                               columnDataType="INT"
                               defaultNullValue="1"/>
