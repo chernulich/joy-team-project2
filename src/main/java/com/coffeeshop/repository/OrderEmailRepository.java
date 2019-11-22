@@ -7,6 +7,6 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface OrderEmailRepository extends JpaRepository<OrderEmail,Long> {
-    @Query("select oe from OrderEmail oe where oe.isSendFailed = true ")
-    List<OrderEmail> findAllByIsSendFailedEqTrue();
+//    @Query("select oe from OrderEmail oe where oe.isSendFailed = true ")
+    List<OrderEmail> findAllByIsSendFailedTrue();
 }

@@ -1,8 +1,7 @@
 package com.coffeeshop.service.email;
 
-import static com.coffeeshop.exception.order.OrderExceptionType.ORDER_NOT_FOUND;
-
 import com.coffeeshop.exception.order.OrderException;
+import com.coffeeshop.exception.order.OrderExceptionType;
 import com.coffeeshop.model.entity.OrderEmail;
 import com.coffeeshop.repository.OrderEmailRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,18 +40,15 @@ public class OrderEmailSendServiceImpl implements OrderEmailSendService {
     @Scheduled(cron = "${cron.expression}")
     @Transactional
     public void checkingStatusOrderEmails() {
-        List<OrderEmail> orders = orderEmailRepository.findAllByIsSendFailedEqTrue();
+        List<OrderEmail> orders = orderEmailRepository.findAllByIsSendFailedTrue();
         orders.forEach(orderEmail -> sendEmail(orderEmail));
     }
-
-
-
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public OrderEmail sendEmail(OrderEmail orderEmail) {
         Long orderId = orderEmail.getId();
-        orderEmail = orderEmailRepository.findById(orderId).orElseThrow(() -> new OrderException(orderId, ORDER_NOT_FOUND));
+        orderEmail = orderEmailRepository.findById(orderId).orElseThrow(() -> new OrderException(orderId, OrderExceptionType.ORDER_NOT_FOUND));
         try {
             emailSender(orderEmail);
         } catch (MessagingException e) {
