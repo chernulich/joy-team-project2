@@ -17,6 +17,5 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_ROOT_USERNAME=root
-      - START_DELAY=20000
     depends_on:
       - database
