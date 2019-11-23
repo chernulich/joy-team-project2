@@ -1,0 +1,28 @@
+
+
+.cart-header{
+  margin-left: 0.5rem;
+}
+
+.row{
+  max-height: 4rem;
+  overflow: hidden;
+  margin: 0!important;
+}
+
+.item-image{
+  min-width: 64px;
+}
+
+.item-details{
+  margin-left: 0.5rem;
+}
+
+.item-description{
+  font-size: 0.8rem;
+}
+
+.selected{
+  background: #ced6e0;
+  color: white;
+}

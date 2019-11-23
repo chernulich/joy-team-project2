@@ -1,4 +1,11 @@
 /* You can add global styles to this file, and also import other style files */
+
+body,
+app-root{
+  background-color: gainsboro!important;
+}
+
+
 .border {
   border-style: solid;
 }
@@ -13,5 +20,9 @@
 
 .card-img-top{
   height: 227.32px;
+}
+
+p{
+  margin: 0!important;
 }
 

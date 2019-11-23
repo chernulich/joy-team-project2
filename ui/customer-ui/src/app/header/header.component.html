@@ -1,19 +1,27 @@
-<head>
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
-</head>
-<body>
 <div class="page-header bg-dark"></div>
 <nav class="navbar navbar-expand-lg navbar-light bg-white">
-  <a class="navbar-brand" href="#">Coffee Shop</a>
+  <a class="navbar-brand">Coffee Shop</a>
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item">
-        <a class="nav-link" href="#">HOME <span class="sr-only">(current)</span></a>
+      <li
+          class="nav-item"
+          [routerLink]="['./product-list']"
+          [routerLinkActiveOptions]="{exact: true}"
+          [routerLinkActive]="'link-active'"
+      >
+        <a class="nav-link">
+          HOME
+        </a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">ABOUT</a>
+      <li
+        class="nav-item"
+        [routerLink]="['./about']"
+        [routerLinkActive]="'link-active'"
+      >
+        <a class="nav-link">ABOUT</a>
       </li>
+
       <li class="dropdown" dropdown class="nav-item dropdown" >
-        <a class="nav-link dropdown-toggle" dropdownToggle href="#" role="button">
+        <a class="nav-link dropdown-toggle" dropdownToggle role="button">
           PRODUCTS <span class="caret"></span></a>
         <div *dropdownMenu class="dropdown-menu">
           <a class="dropdown-item" href="#">Link 1</a>
@@ -22,21 +30,31 @@
         </div>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">CONTACTS</a>
+        <a class="nav-link">CONTACTS</a>
       </li>
-      <li class="nav-item">
-        <i class=""></i>
-        <a class="nav-link" href="#">DELIVERY</a>
+      <li class="nav-item"
+          [routerLink]="['./delivery']"
+          [routerLinkActive]="'link-active'"
+      >
+        <a class="nav-link">DELIVERY</a>
       </li>
-      <li class="nav-item" class="nav-link" href="#" style="position:absolute; right: 400px" >
-        <i class="fas fa-search fa-lg"></i>
-      </li>
-      <li class="nav-item" class="nav-link" href="#" style="position:absolute; right: 350px" >
-        <i class="fas fa-heart fa-lg"></i>
-      </li>
-      <li class="nav-item" class="nav-link" href="#" style="position:absolute; right: 300px">
-        <i class="fas fa-shopping-basket fa-lg"></i>
+
+      <li
+        class="nav-item"
+        [routerLink]="['./checkout-customer']"
+        [routerLinkActive]="'link-active'"
+      >
+        <a class="nav-link">CHECKOUT</a>
       </li>
     </ul>
 </nav>
 
+<!--<li class="nav-item" class="nav-link" style="position:absolute; right: 400px" >-->
+<!--  <i class="fas fa-search fa-lg"></i>-->
+<!--</li>-->
+<!--<li class="nav-item" class="nav-link" >-->
+<!--  <i class="fas fa-heart fa-lg"></i>-->
+<!--</li>-->
+<!--<li class="nav-item" class="nav-link">-->
+<!--  <i class="fas fa-shopping-basket fa-lg"></i>-->
+<!--</li>-->

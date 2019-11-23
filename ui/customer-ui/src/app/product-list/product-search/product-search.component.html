@@ -17,6 +17,7 @@
       <h4>Price</h4>
       <div class=" p-0">
         <app-slider
+          [formControlName]="'priceRange'"
           [handleSize]="10"
           [fillColor]="'#5cb85c'"
           [handleColor]="'#99aab5'"
@@ -43,9 +44,14 @@
             </div>
           </div>
 
-          <div [attr.id]="'collapse' + i" class="collapse" [attr.aria-labelledby]="'heading' + i" data-parent="#accordionExample">
+          <div [attr.id]="'collapse' + i"
+               class="collapse"
+               [attr.aria-labelledby]="'heading' + i"
+               data-parent="#accordionExample"
+          >
             <div class="card-body show ml-2">
                 <app-characteristic-range
+                  [formControlName]="characteristic"
                   [characteristicName]="characteristic"
                   [coffeeCharacteristicsMarks]="coffeeCharacteristicsMarks"
                 ></app-characteristic-range>

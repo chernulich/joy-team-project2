@@ -1,0 +1,39 @@
+<div class="card my-2">
+  <div class="card-body">
+    <h3 class="cart-header">ORDER SUMMARY</h3>
+    <p class="ml-2" *ngIf="!cartProducts.length">The Cart Is Empty</p>
+    <table
+      *ngIf="cartProducts.length"
+      class="table table-borderless"
+    >
+      <thead>
+      <tr>
+        <th scope="col">ITEM</th>
+        <th scope="col">WEIGHT</th>
+        <th scope="col">QTY</th>
+        <th scope="col">PRICE</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let product of cartProducts;let i = index;">
+        <td class="item" style="max-width: 300px;">
+          <div class="row ml-0 flex-nowrap" style="width: 300px;">
+            <img class="item-image" src="../../assets/images/Argentina.png" alt="" height="64px" width="64px">
+            <div class="item-details">
+              <h6 class="item-title">{{product.productTitle}}</h6>
+              <p class="item-description">
+                {{product.shortDescription}}
+              </p>
+            </div>
+          </div>
+        </td>
+        <td>{{product.weight  + (+product.weight - 1 > 0 ? 'kg.' : '0gr.')}}</td>
+        <td>{{product.quantity}}</td>
+        <td>{{product.price | currency : 'USD'}}</td>
+        <td><i class="far fa-trash-alt" (click)="removeFromCart(product.productId)"></i></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+

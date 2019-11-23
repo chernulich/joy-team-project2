@@ -1,0 +1,95 @@
+
+.fa-times-circle{
+  cursor: pointer;
+  outline: none;
+}
+
+.card-img{
+  background: url("../../assets/images/Argentina.png");
+  background-repeat: no-repeat;
+  min-height: 300px;
+}
+
+.small-images{
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+  padding: 0 0.5rem 0 0.5rem;
+  align-content: center;
+}
+
+.small-images img{
+  margin-bottom: 0.6rem;
+}
+
+.price{
+  color: #28a745;
+}
+
+.align-cell-right{
+  text-align: right;
+}
+
+.more-details{
+  font-size: 0.8rem;
+  cursor: pointer;
+  display: inline-block;
+}
+
+.plus,
+.minus,
+.quantity-input{
+  height: 2.3rem;
+  width: 2.3rem;
+  line-height: 2.3rem;
+  text-align: center;
+}
+
+.minus,.plus{
+  background: #f1f2f6;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.quantity{
+  border-radius: 5px;
+}
+
+.quantity-input{
+  appearance: none;
+  border: 1px solid #f1f2f6;
+}
+
+.hide-details{
+  max-height: 3rem;
+  overflow: hidden;
+  transition: max-height 0.4s ease-in-out;
+}
+
+.show-details{
+  max-height: 100rem;
+  overflow: hidden;
+  transition: max-height 0.4s ease-in-out;
+}
+
+.number-input {
+  width: 5rem;
+}
+
+.number-input:hover {
+  border-color: green !important;
+  box-shadow: 1vh 1vh 1.5vh 0.5vh rgba(0, 0, 0, 0.25);
+}
+
+table th{
+  padding-left: 0;
+}
+
+.btn {
+  width: 30%;
+  border-radius: 0 !important;
+}
+
+.btn-color-white{
+  color: white!important;
+}

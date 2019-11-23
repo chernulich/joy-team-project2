@@ -1,27 +1,54 @@
-<p>product-details works!</p>
-<div class="card-body">
-  <table class="table table-hover table-bordered">
-    <thead class="alert-info">
-    <tr>
-      <th>ID</th>
-      <th>Name</th>
-      <th>Quantity Available Kg</th>
-      <th>Images</th>
-      <th>Characteristics</th>
-      <th>Description</th>
-      <th>In Stock</th>
-      <th>Price</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr >
-      <td>{{this.productId}}</td>
-      <td>{{this.productDetails.productName}}</td>
-      <td>{{this.productDetails.images}}</td>
-      <td>{{this.productDetails.characteristics.bitter}}</td>
-      <td>{{this.productDetails.description}}</td>
-    </tr>
-    </tbody>
-
-  </table>
+<div class="row justify-content-center">
+  <div class="card m-3 w-75">
+    <div class="row no-gutters my-2">
+      <div class="col-md-4 d-flex flex-row">
+        <div class="small-images">
+          <img (click)="onSmallImageClick(smallImage,previewImage)" #smallImage src="../../assets/images/coffe 1.jpeg" alt="" style="height: 3rem; width: 3rem;">
+          <img (click)="onSmallImageClick(smallImage1,previewImage)" #smallImage1 src="../../assets/images/coffe 2.jpg" alt="" style="height: 3rem; width: 3rem;">
+        </div>
+        <div class="card-img" #previewImage></div>
+      </div>
+      <div class="col-md-8">
+        <span class="far fa-times-circle float-right mx-2" [routerLink]="['../']"></span>
+        <div class="card-body mx-3 h-100">
+          <h5 class="card-title font-weight-bolder">{{(getSelectedProductFromStorage() | async).productName}}</h5>
+          <h6 class="price font-weight-bolder">{{(getSelectedProductFromStorage() | async).price | currency : 'USD'}}</h6>
+          <h5 class="font-weight-bolder">Description</h5>
+          <p class="card-text hide-details" [class.mb-2]="!showMore" #details>
+            {{(getSelectedProductFromStorage() | async).description}}
+          </p>
+          <a class="more-details mb-2" (click)="onShowMore()" *ngIf="showMore">More Details...</a>
+          <table class="table">
+            <tbody>
+            <tr  *ngFor="let characteristic of getCharacteristics(getSelectedProductFromStorage() | async);">
+              <th scope="row">{{firstLetterUpper(characteristic)}}</th>
+              <td class="align-cell-right">
+                <img
+                  *ngFor="let item of numberOfCoffeeBeans();let i = index;"
+                  src="{{(getSelectedProductFromStorage() | async) | getIcons : i : characteristic}}"
+                >
+              </td>
+            </tr>
+            </tbody>
+          </table>
+          <p class="font-weight-bolder mb-1">Quantity</p>
+          <div class="row m-0" [quantity]="(getSelectedProductFromStorage() | async).amountAvailable" #quantity="quantity">
+            <div class="quantity d-flex flex-row flex-nowrap mr-3">
+              <a class="minus" (click)="quantityMinus()"><i class="fas fa-minus"></i></a>
+              <div class="quantity-input">{{quantityValue}}</div>
+              <a class="plus" (click)="quantityPlus(quantity.quantity)"><i class="fas fa-plus"></i></a>
+            </div>
+            <button
+              [disabled]="!minQuantity"
+              (click)="onAddToCart()"
+              class="btn btn-color-white btn-dark text-uppercase"
+            >
+              add to cart
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
+

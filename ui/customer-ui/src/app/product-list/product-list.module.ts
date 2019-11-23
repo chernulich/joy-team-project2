@@ -10,9 +10,15 @@ import {SliderComponent} from "./product-search/slider/slider.component";
 import {CharacteristicRangeComponent} from "./product-search/characteristic-range/characteristic-range.component";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
-import {RouterModule} from "@angular/router";
 import {HttpClientModule} from "@angular/common/http";
 import {ProductResultService} from "./product-result/services/product-result.service";
+import {RouterModule} from "@angular/router";
+import {ProductsDataStorageService} from "../service/data-storage/products-data-storage.service";
+import {ProductDetailsComponent} from "../product-details/product-details.component";
+import {ProductListRoutingModule} from "./product-list-routing.module";
+import {ProductDetailsService} from "../product-details/service/product-details.service";
+import {ProductDetailsResolverService} from "../product-details/product-details-resolver.service";
+import {QuantityHolderDirective} from "../product-details/quantity-holder.directive";
 
 @NgModule({
   declarations: [
@@ -22,17 +28,23 @@ import {ProductResultService} from "./product-result/services/product-result.ser
     ProductListComponent,
     ProductSearchComponent,
     SliderComponent,
-    CharacteristicRangeComponent
+    CharacteristicRangeComponent,
+    ProductDetailsComponent,
+    QuantityHolderDirective
   ],
   imports: [
+    RouterModule,
     CommonModule,
     ReactiveFormsModule,
+    ProductListRoutingModule,
     FormsModule,
     NgbModule,
-    RouterModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [
+    ProductDetailsService,
+    ProductDetailsResolverService
+  ],
   exports: [
     GetIconsPipe
   ]
