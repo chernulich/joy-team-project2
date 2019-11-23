@@ -64,23 +64,36 @@ public class ProductSearchRepositoryImpl implements ProductSearchRepository {
         if(request.getSortBy() == null) {
             request.setSortBy(SortStatus.PRICE);
         }
-        String sortBy = request.getSortBy().toString();
-        String query = getQuery(sortBy);
+        String query = getQuery(request);
 
         TypedQuery<Object[]> typedQuery = entityManager.createQuery(query, Object[].class);
         typedQuery.setParameter("priceMin",
                 request.getPriceMin() != null ? request.getPriceMin() : 0);
         typedQuery.setParameter("priceMax",
                 request.getPriceMax() != null ? request.getPriceMax() : MAX_VALUE);
-        typedQuery.setParameter("sourFrom", request.getCharacteristics().getSourFrom());
-        typedQuery.setParameter("sourTo", request.getCharacteristics().getSourTo());
-        typedQuery.setParameter("strongFrom", request.getCharacteristics().getStrongFrom());
-        typedQuery.setParameter("strongTo", request.getCharacteristics().getStrongTo());
-        typedQuery.setParameter("bitterFrom", request.getCharacteristics().getBitterFrom());
-        typedQuery.setParameter("bitterTo", request.getCharacteristics().getBitterTo());
-        typedQuery.setParameter("decaf", request.getCharacteristics().getDecaf());
-        typedQuery.setParameter("ground", request.getCharacteristics().getGround());
-        typedQuery.setParameter("coffeeType", CoffeeType.getByName(request.getCharacteristics().getCoffeeType()));
+
+        typedQuery.setParameter("sourFrom", setParamFrom(
+                request.getCharacteristics().getSourFrom(), request.getCharacteristics().getSourTo()));
+        typedQuery.setParameter("sourTo", setParamTo(
+                request.getCharacteristics().getSourFrom(), request.getCharacteristics().getSourTo()));
+        typedQuery.setParameter("strongFrom", setParamFrom(
+                request.getCharacteristics().getStrongFrom(), request.getCharacteristics().getStrongTo()));
+        typedQuery.setParameter("strongTo", setParamTo(
+                request.getCharacteristics().getStrongFrom(), request.getCharacteristics().getStrongTo()));
+        typedQuery.setParameter("bitterFrom", setParamFrom(
+                request.getCharacteristics().getBitterFrom(), request.getCharacteristics().getBitterTo()));
+        typedQuery.setParameter("bitterTo", setParamTo(
+                request.getCharacteristics().getBitterFrom(), request.getCharacteristics().getBitterTo()));
+
+        if (request.getCharacteristics().getDecaf() != null) {
+            typedQuery.setParameter("decaf", request.getCharacteristics().getDecaf());
+        }
+        if (request.getCharacteristics().getGround() != null) {
+            typedQuery.setParameter("ground", request.getCharacteristics().getGround());
+        }
+        if (request.getCharacteristics().getCoffeeType() != null) {
+            typedQuery.setParameter("coffeeType", CoffeeType.getByName(request.getCharacteristics().getCoffeeType()));
+        }
         typedQuery.setParameter("search", request.getSearch().concat("%"));
 
         return typedQuery;
@@ -114,7 +127,11 @@ public class ProductSearchRepositoryImpl implements ProductSearchRepository {
                 .products(productResponseList.subList(1,productResponseList.size())).build();
     }
 
-    private String getQuery(String sortBy) {
+    private String getQuery(ProductRequest request) {
+        String sortBy = request.getSortBy().toString();
+        String coffeeType = request.getCharacteristics().getCoffeeType() == null ? "" : " and pc.coffeeType = :coffeeType";
+        String decaf = request.getCharacteristics().getDecaf() == null ? "" : " and pc.decaf = :decaf";
+        String ground = request.getCharacteristics().getGround() == null ? "" : " and pc.ground = :ground";
         return new StringBuilder()
                 .append("select ")
                 .append("pc.product.id, p.productName, p.shortDescription, p.productCategory, p.unitPrice, p.previewImage, pq.quantity,")
@@ -129,10 +146,10 @@ public class ProductSearchRepositoryImpl implements ProductSearchRepository {
                 .append(" and pc.bitter between :bitterFrom and :bitterTo")
                 .append(" and pc.sour between :sourFrom and :sourTo")
                 .append(" and pc.strong between :strongFrom and :strongTo")
-                .append(" and pc.decaf = :decaf")
-                .append(" and pc.ground = :ground")
-                .append(" and pc.coffeeType = :coffeeType")
-                .append(" order by")
+                .append(decaf)
+                .append(ground)
+                .append(coffeeType)
+                .append(" order by ")
                 .append(sortBy)
                 .toString();
     }
@@ -146,6 +163,18 @@ public class ProductSearchRepositoryImpl implements ProductSearchRepository {
                 .append(" join ProductCoffee pc on p.id=pc.product.id")
                 .append(" join ProductQuantity pq on pc.product.id=pq.product.id ")
                 .toString();
+    }
+
+    private Integer setParamTo(Integer from, Integer to){
+        if (to != null) return to;
+        if (from != null) return from;
+        return 5;
+    }
+
+    private Integer setParamFrom(Integer from, Integer to){
+        if (from != null) return from;
+        if (to != null) return to;
+        return 1;
     }
 
 }

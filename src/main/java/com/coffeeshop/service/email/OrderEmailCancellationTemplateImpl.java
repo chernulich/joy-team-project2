@@ -60,9 +60,9 @@ public class OrderEmailCancellationTemplateImpl implements OrderEmailCancellatio
     private String createMessage(Long orderId, String firstName, String lastName, String reason) {
         String message = ORDER_EMAIL_CANCELLATION_TEMPLATE;
         message = message.replaceAll("\\$\\{firstName}", firstName)
-                        .replaceAll("\\$\\{lastName}", lastName)
-                        .replaceAll("\\$\\{reason}", reason)
-                        .replaceAll("\\$\\{orderId}", Long.toString(orderId));
+                .replaceAll("\\$\\{lastName}", lastName)
+                .replaceAll("\\$\\{reason}", reason)
+                .replaceAll("\\$\\{orderId}", orderId.toString());
         return Base64.getEncoder().encodeToString(message.getBytes());
     }
 
