@@ -94,7 +94,7 @@ export class ProductSearchComponent implements OnInit, OnDestroy {
         this.productSearchForm.value.strong.to,
         this.productSearchForm.value.decaf === 'yes',
         this.productSearchForm.value.ground === 'yes',
-        "")
+        "arabica")
     );
 
     return requestObject = this.transformRequestObject(requestObject);

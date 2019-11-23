@@ -1,5 +1,6 @@
 import {AfterViewInit, Component, ElementRef, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from "@angular/router";
+import {ProductCartService} from "./checkout-customer/product-cart/services/product-cart.service";
+import set = Reflect.set;
 
 
 @Component({
@@ -8,12 +9,16 @@ import {ActivatedRoute, Router} from "@angular/router";
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements AfterViewInit, OnInit {
-  constructor(private elementRef: ElementRef) {
+  constructor(private elementRef: ElementRef,
+              private productCartService: ProductCartService) {
 
   }
 
   ngOnInit(){
-
+    const cart = this.productCartService.getCartFromLocalStorage();
+    if(!!cart){
+      this.productCartService.setProductCart(cart);
+    }
   }
 
   ngAfterViewInit() {

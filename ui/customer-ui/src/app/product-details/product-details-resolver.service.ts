@@ -4,9 +4,7 @@ import {ProductDetailsService} from "./service/product-details.service";
 
 export class ProductDetailsResolverService implements Resolve<any> {
 
-  constructor(private activateRoute: ActivatedRoute, private productDetailsService: ProductDetailsService) {
-
-  }
+  constructor(private activateRoute: ActivatedRoute, private productDetailsService: ProductDetailsService) {}
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> | Promise<any> | any {
       return this.productDetailsService.getSelectedProductForDetails(+route.params.id);

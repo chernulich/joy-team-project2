@@ -18,6 +18,7 @@ import {ProductDetailsComponent} from "../product-details/product-details.compon
 import {ProductListRoutingModule} from "./product-list-routing.module";
 import {ProductDetailsService} from "../product-details/service/product-details.service";
 import {ProductDetailsResolverService} from "../product-details/product-details-resolver.service";
+import {QuantityHolderDirective} from "../product-details/quantity-holder.directive";
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import {ProductDetailsResolverService} from "../product-details/product-details-
     ProductSearchComponent,
     SliderComponent,
     CharacteristicRangeComponent,
-    ProductDetailsComponent
+    ProductDetailsComponent,
+    QuantityHolderDirective
   ],
   imports: [
     RouterModule,

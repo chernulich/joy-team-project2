@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
-import {BehaviorSubject, Observable, Subject} from "rxjs";
+import {BehaviorSubject, Observable, of, Subject} from "rxjs";
+import {ProductCartService} from "../../checkout-customer/product-cart/services/product-cart.service";
+import {debug} from "util";
 
 export interface IProductDetails {
   amountAvailable: number;
@@ -16,7 +18,7 @@ export interface IProductDetails {
 @Injectable()
 export class ProductsDataStorageService {
 
-  constructor() { }
+  constructor(private productCartService: ProductCartService) { }
   private productsStore: BehaviorSubject<Array<any>> =
     new BehaviorSubject([]);
 
@@ -26,13 +28,13 @@ export class ProductsDataStorageService {
 
 
   updateProductStore(products: Array<any>){
+    this.productCartService.updateProductListQuantity(products);
     if(this.currentPage.getValue() > 1){
       this.productsStore.next([...this.productsStore.getValue(),...products]);
     }
     else{
       this.productsStore.next(products);
     }
-    // console.log(this.productsStore.getValue());
   }
 
   public getProductsFromStore(): Observable<any>{
@@ -47,11 +49,19 @@ export class ProductsDataStorageService {
     this.currentPage.next(pageNum);
   }
 
-  public setSelectedProductForDetails(product){
+  public setSelectedProductForDetails(product,quantity){
+
+    if(!!product.amountAvailable){
+      product.amountAvailable -= quantity;
+    }
+    else if(!!product.availableAmount){
+      product.availableAmount -= quantity;
+    }
     this.selectedProductForDetails.next(product);
+    console.log("Details Product: " , this.selectedProductForDetails.getValue());
   }
 
-  public getSelectedProductForDetails(): Observable<IProductDetails>{
+  public getSelectedProductFromDataStorage(): Observable<IProductDetails>{
     return this.selectedProductForDetails.asObservable();
   }
 }

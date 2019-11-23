@@ -1,14 +1,14 @@
 import {Injectable} from "@angular/core";
 import {HttpService} from "../../service/http/http.service";
-import {ProductsDataStorageService} from "../../service/data-storage/products-data-storage.service";
+import {Observable} from "rxjs";
+import {IProductDetails} from "../../service/data-storage/products-data-storage.service";
 
 @Injectable()
 export class ProductDetailsService {
-  constructor(private http: HttpService,
-              private dataStorage: ProductsDataStorageService){}
+  constructor(private http: HttpService){}
 
 
-  public getSelectedProductForDetails(id){
+  public getSelectedProductForDetails(id): Observable<IProductDetails>{
     return this.http.getProductDetails(id);
   }
 }

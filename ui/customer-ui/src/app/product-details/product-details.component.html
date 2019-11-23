@@ -11,34 +11,40 @@
       <div class="col-md-8">
         <span class="far fa-times-circle float-right mx-2" [routerLink]="['../']"></span>
         <div class="card-body mx-3 h-100">
-          <h5 class="card-title font-weight-bolder">{{(getSelectedProduct() | async).productName}}</h5>
-          <h6 class="price font-weight-bolder">{{(getSelectedProduct() | async).price | currency : 'USD'}}</h6>
+          <h5 class="card-title font-weight-bolder">{{(getSelectedProductFromStorage() | async).productName}}</h5>
+          <h6 class="price font-weight-bolder">{{(getSelectedProductFromStorage() | async).price | currency : 'USD'}}</h6>
           <h5 class="font-weight-bolder">Description</h5>
           <p class="card-text hide-details" [class.mb-2]="!showMore" #details>
-            {{(getSelectedProduct() | async).description}}
+            {{(getSelectedProductFromStorage() | async).description}}
           </p>
           <a class="more-details mb-2" (click)="onShowMore()" *ngIf="showMore">More Details...</a>
           <table class="table">
             <tbody>
-            <tr  *ngFor="let characteristic of (getCharacteristics() | async);">
+            <tr  *ngFor="let characteristic of getCharacteristics(getSelectedProductFromStorage() | async);">
               <th scope="row">{{firstLetterUpper(characteristic)}}</th>
               <td class="align-cell-right">
                 <img
                   *ngFor="let item of numberOfCoffeeBeans();let i = index;"
-                  src="{{(getSelectedProduct() | async) | getIcons : i : characteristic}}"
+                  src="{{(getSelectedProductFromStorage() | async) | getIcons : i : characteristic}}"
                 >
               </td>
             </tr>
             </tbody>
           </table>
           <p class="font-weight-bolder mb-1">Quantity</p>
-          <div class="row m-0">
+          <div class="row m-0" [quantity]="(getSelectedProductFromStorage() | async).amountAvailable" #quantity="quantity">
             <div class="quantity d-flex flex-row flex-nowrap mr-3">
               <a class="minus" (click)="quantityMinus()"><i class="fas fa-minus"></i></a>
               <div class="quantity-input">{{quantityValue}}</div>
-              <a class="plus" (click)="quantityPlus()"><i class="fas fa-plus"></i></a>
+              <a class="plus" (click)="quantityPlus(quantity.quantity)"><i class="fas fa-plus"></i></a>
             </div>
-            <button [disabled]="!minQuantity" class="btn btn-color-white btn-dark text-uppercase">add to card</button>
+            <button
+              [disabled]="!minQuantity"
+              (click)="onAddToCart()"
+              class="btn btn-color-white btn-dark text-uppercase"
+            >
+              add to cart
+            </button>
           </div>
         </div>
       </div>
