@@ -1,5 +1,4 @@
 <div class="row flex-nowrap m-0" [ngClass]="{'align-items-stretch': messageService.messageText}">
-
   <div
     class="alert alert-{{messageService.messageType}}"
     *ngIf="messageService.messageText">
@@ -8,69 +7,39 @@
 
   <div class="row" *ngIf="!messageService.messageText">
 
-    <!-- Group of 2 cards -->
     <div *ngFor="let product of (getProductList() | async);let i = index;"
-         class="card-group mr-1 mb-1 ml-1 mt-0 flex-nowrap align-items-start">
+         class="mr-1 mb-1 ml-1 mt-0 flex-nowrap align-items-start">
 
-      <!-- Left Card     -->
-      <div class="card card-left m-0 d-flex" style="width: 15rem;" (click)="onLeftCardClick(rightCard)">
+      <div class="card m-0 d-flex" style="width: 15rem;">
         <div *ngIf="i === 0" class="popular-icon">
           <i class="fas fa-fire-alt"></i>
         </div>
-        <div class="details-icon">
-          <a [routerLink]="['../product-details']"><i class="fas fa-info"></i></a>
+
+        <!--  product details page route     -->
+        <div [routerLink]="['./',product.productId]" class="details-icon">
+          <a><i class="fas fa-info"></i></a>
         </div>
+        <!--  product details page route end     -->
+
         <div class="p-3">
           <img src="../../../assets/images/Argentina.png" class="card-img-top" alt="...">
         </div>
         <div class="card-body p-3">
           <h5 class="card-title text-center m-0 p-1 h-1">{{product.title}}</h5>
           <p class="card-text text-center text-success font-weight-bold h4 p-1"> USD {{product.price}}$ </p>
-          <a href="#" class="btn btn-outline-secondary text-uppercase mb-0">add to wishlist</a>
+          <button
+            class="btn btn-dark text-uppercase"
+            [disabled]="!product.availableAmount"
+            (click)="onAddToCart(product)"
+          >
+            add to cart
+          </button>
         </div>
       </div>
-      <!-- left card end      -->
-
-      <!-- right card     -->
-      <div class="card right-transition card-right m-0 d-flex"
-           style="width: 15rem;"
-           #rightCard [ngClass]="{'open-right': rightCard['openRight'],'close-right': rightCard['closeRight']}"
-      >
-        <div class="card-body p-0 d-flex flex-column justify-content-between" style="height: 100%;">
-          <div class="card-text d-flex flex-column justify-content-between mb-2 p-3">
-            <h6 class="mb-2 mx-0">QUANTITY</h6>
-            <input #quantity type="number" value="1" min="1" step="1" class="number-input form-control">
-            <h6 class="mt-3 mx-0">WEIGHT</h6>
-            <input type="number" value="250" min="250" max="1000" step="250" class="number-input form-control">
-          </div>
-          <div class="card-text px-3">
-            <div class="row align-items-center">
-              <p class=" col-sm-6 card-text text-uppercase font-weight-bold h6 my-1"> price </p>
-              <span class="col-sm-6 card-text text-success font-weight-bold">USD {{product.price | number : '1.2-2'}}</span>
-            </div>
-            <div class="row align-items-center">
-              <p class=" col-sm-6 card-text text-uppercase font-weight-bold h6 mb-2"> total</p>
-              <span
-                class="col-sm-6 card-text text-success font-weight-bold">USD {{product.price * +quantity.value | number : '1.2-2'}}</span>
-            </div>
-          </div>
-
-          <div class="card-body mt-3 p-3">
-            <div class="row align-items-center" *ngFor="let characteristic of characteristics;">
-              <p class=" col-sm-6 card-text font-weight-bold h6 mb-0"> {{firstLetterUpper(characteristic)}}</p>
-              <span class="col-sm-6 card-text text-success font-weight-bolder">
-                <img *ngFor="let item of numberOfCoffeeBeans();let i = index;" src="{{product | getIcons : i : characteristic}}">
-              </span>
-            </div>
-            <div class="row px-3 pb-0 pt-2 mt-2">
-              <a href="#" class="btn btn-dark text-uppercase">add to card</a>
-            </div>
-          </div>
-        </div>
-      </div>
-
-    <!--  right card end  -->
 
     </div>
   </div>
 </div>
+
+
+

@@ -1,9 +1,10 @@
 
 import {HttpService} from "../../../service/http/http.service";
 import {ProductsDataStorageService} from "../../../service/data-storage/products-data-storage.service";
-import {BehaviorSubject, fromEvent, of} from "rxjs";
-import {catchError, debounceTime, delay, map} from "rxjs/operators";
+import {BehaviorSubject, combineLatest, forkJoin, fromEvent, of, Subject} from "rxjs";
+import {catchError, debounceTime, delay, map, take} from "rxjs/operators";
 import {Injectable} from "@angular/core";
+import {ProductCartService} from "../../../checkout-customer/product-cart/services/product-cart.service";
 
 interface ProductsStore {
   products: [];
@@ -14,18 +15,14 @@ interface ProductsStore {
 export class ProductResultService {
 
   constructor(private http: HttpService,
-              private productsStore: ProductsDataStorageService) { }
+              private productsStore: ProductsDataStorageService,
+              private productCart: ProductCartService) { }
 
   public isScrollable = true;
   public filterSearch = false;
   requestBody: BehaviorSubject<any>  = new BehaviorSubject<any>({});
   public httpGetFilteredProducts(requestBody: {}){
     this.http.getFilteredProducts(requestBody)
-      .pipe(
-        catchError((err) => {
-          return of([]);
-        })
-      )
       .subscribe((products: any) => {
         if(products.products.length === 0){
           this.isScrollable = false;
@@ -39,7 +36,9 @@ export class ProductResultService {
         }
         this.filterSearch = false;
         this.isScrollable = true;
+
         const allProducts = [{...products.popular},...products.products];
+
         console.log(allProducts);
         this.productsStore.updateProductStore(allProducts);
       });
@@ -57,7 +56,7 @@ export class ProductResultService {
               { ...this.requestBody.getValue(),"page":this.productsStore.getCurrentPage(), "results": 6}
               );
           }
-      }))
+      }));
   }
 
 }

@@ -13,7 +13,7 @@ export class Characteristics {
     constructor(bitterFrom: number = 1, bitterTo: number = 5,
                 sourFrom: number = 1, sourTo: number = 5,
                 strongFrom: number = 1, strongTo: number = 5,
-                decaf: boolean = true, ground: boolean = true, coffeeType: string = "") {
+                decaf: boolean = true, ground: boolean = true, coffeeType: string = "arabica") {
         this._bitterFrom = bitterFrom;
         this._bitterTo = bitterTo;
         this._sourFrom = sourFrom;

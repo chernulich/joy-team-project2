@@ -9,35 +9,36 @@ import {FormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
 import {HeaderComponent} from './header/header.component';
 import {OrderReceivedComponent} from './order-received/order-received.component';
-import {CheckoutComponent} from './checkout-customer/checkout.component';
-import {ProductDetailsComponent} from "./product-details/product-details.component";
 import {FooterComponent} from './footer/footer.component';
 import {ProductListModule} from "./product-list/product-list.module";
 import {ProductResultService} from "./product-list/product-result/services/product-result.service";
 import {ProductsDataStorageService} from "./service/data-storage/products-data-storage.service";
+import {AboutModule} from "./about/about.module";
+import {RouterModule} from "@angular/router";
+import {SharedModule} from "./shared/shared.module";
 
 @NgModule({
   declarations: [
     AppComponent,
     ExampleComponent,
-    ProductDetailsComponent,
     HeaderComponent,
     OrderReceivedComponent,
-    FooterComponent,
-    CheckoutComponent
+    FooterComponent
   ],
   imports: [
     BrowserModule,
     BsDropdownModule.forRoot(),
     AppRoutingModule,
     FormsModule,
+    RouterModule,
     HttpClientModule,
     NgbModule,
-    ProductListModule
+    SharedModule.forRoot(),
+    ProductListModule,
+    AboutModule
   ],
   providers: [
-    ProductsDataStorageService,
-    ProductResultService
+
   ],
   bootstrap: [AppComponent]
 })

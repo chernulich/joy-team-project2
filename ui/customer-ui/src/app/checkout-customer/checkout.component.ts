@@ -1,8 +1,5 @@
-import { Component, OnInit, Injectable } from '@angular/core';
-import {CheckoutRequest} from './model/checkoutRequest';
-import {CheckoutHttpService} from "./service/checkout-http.service";
-import {SubmitOrderResponse} from "./model/submitOrderResponse";
-import {Router} from "@angular/router";
+import { Component, OnInit } from '@angular/core';
+
 
 
 @Component({
@@ -11,26 +8,12 @@ import {Router} from "@angular/router";
   styleUrls: ['./checkout.component.css']
 })
 
-@Injectable()
 export class CheckoutComponent implements OnInit {
 
-  public json: string;
-  public orderResponse : SubmitOrderResponse;
-  public defaultRequest : CheckoutRequest = CheckoutRequest.prototype.getDefaultCheckoutRequest();
-
-  constructor(private checkoutHttpService : CheckoutHttpService,
-              private router: Router){ }
-
-  submitOrder(checkoutRequest : CheckoutRequest){
-    return this.checkoutHttpService.submitOrder(checkoutRequest).subscribe(data => {
-      this.orderResponse = data;
-      this.json = JSON.stringify(this.orderResponse);
-      this.router.navigate(['/received/' + this.orderResponse.orderId]);
-    });
-  }
+  constructor(){ }
 
   ngOnInit() {
-    this.submitOrder(this.defaultRequest);
+
   }
 
 

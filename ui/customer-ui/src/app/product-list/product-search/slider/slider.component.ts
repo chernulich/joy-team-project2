@@ -1,19 +1,35 @@
 import {
   Component,
   OnInit,
-  Input
+  Input, forwardRef, Provider
 } from '@angular/core';
 import {SliderService} from "../service/slider-service/slider.service";
+import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 
+export interface SliderValue {
+  priceMax: number;
+  priceMin: number;
+}
+
+const controlValueAccessorProvider: Provider = {
+  provide: NG_VALUE_ACCESSOR,
+  useExisting:  forwardRef(() => SliderComponent),
+  multi: true
+};
 
 @Component({
   selector: 'app-slider',
   templateUrl: './slider.component.html',
-  styleUrls: ['./slider.component.css']
+  styleUrls: ['./slider.component.css'],
+  providers: [controlValueAccessorProvider]
 })
-export class SliderComponent implements OnInit {
+export class SliderComponent implements OnInit,ControlValueAccessor {
+
 
   constructor(private sliderService: SliderService) { }
+
+  onChanges: Function = function() {}; // controlValueAccessor changes function
+  onTouched: Function = function() {}; // controlValueAccessor on touched function
 
   handle1;
   handle2;
@@ -25,6 +41,11 @@ export class SliderComponent implements OnInit {
   currHandle1PercentPosition: number;
   currHandle2PercentPosition: number;
 
+  value: SliderValue = {
+    priceMax: 100,
+    priceMin: 10
+  };
+
 
 
   @Input('handleSize') handleSize: number = 10;
@@ -35,19 +56,29 @@ export class SliderComponent implements OnInit {
   @Input('sliderHeight') sliderHeight: number = 4;
   @Input('handleType') handleType: string = 'square';
 
+  writeValue(obj: SliderValue): void {
+    this.value = obj;
+    this.slideInit();
+    this.calcHandlePositionPercent();
+    this.calcRangeValues();
+    this.sliderFill.style.left = (parseInt(getComputedStyle(this.handle1).left) + this.handle1.offsetWidth) + "px";
+    this.sliderFill.style.width =  (parseInt(getComputedStyle(this.handle1).left) - this.handle1.offsetWidth) + parseInt(getComputedStyle(this.handle2).left) + "px";
+  }
+
+  registerOnChange(fn: any): void {
+    this.onChanges = fn;
+  }
+  registerOnTouched(fn: (value: SliderValue) => void): void {
+    this.onTouched = fn;
+  }
+  setDisabledState?(isDisabled: boolean): void {
+
+  }
 
   ngOnInit() {
     this.currUpper = this.upperValue;
     this.currLower = this.lowerValue;
-    this.sliderService.initialSliderValues.next({lowerPrice: this.lowerValue, upperPrice: this.upperValue});
-    this.sliderService.sliderReset
-      .subscribe(() => {
-        this.slideInit();
-        this.calcHandlePositionPercent();
-        this.calcRangeValues();
-        this.sliderFill.style.left = (parseInt(getComputedStyle(this.handle1).left) + this.handle1.offsetWidth) + "px";
-        this.sliderFill.style.width =  (parseInt(getComputedStyle(this.handle1).left) - this.handle1.offsetWidth) + parseInt(getComputedStyle(this.handle2).left) + "px";
-      });
+
     this.registerElems();
     this.slideInit();
     this.calcHandlePositionPercent();
@@ -95,10 +126,9 @@ export class SliderComponent implements OnInit {
 
     this.currLower =  lowerValue;
     this.currUpper =  upperValue;
-    this.sliderService.sliderValueChanges.next({
-      lowerPrice: lowerValue,
-      upperPrice: upperValue
-    })
+
+    this.onChanges({maxPrice: upperValue, minPrice: lowerValue}); // controlValueAccessor change emit
+
   }
 
   posititonAt(clientX,shiftX,element){

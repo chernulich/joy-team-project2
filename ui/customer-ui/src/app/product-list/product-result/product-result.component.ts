@@ -1,13 +1,15 @@
 import {
-  Component, HostListener,
+  Component, HostListener, OnDestroy,
   OnInit
 } from '@angular/core';
-import {BehaviorSubject} from "rxjs";
+import {BehaviorSubject, fromEvent, Observable, Subject, Subscription} from "rxjs";
 
 
 import {ProductsDataStorageService} from "../../service/data-storage/products-data-storage.service";
 import {MessageService} from "../../service/message-service/message.service";
 import {ProductResultService} from "./services/product-result.service";
+import {takeUntil} from "rxjs/operators";
+import {ICartProduct, ProductCartService} from "../../checkout-customer/product-cart/services/product-cart.service";
 
 
 @Component({
@@ -15,34 +17,41 @@ import {ProductResultService} from "./services/product-result.service";
   templateUrl: './product-result.component.html',
   styleUrls: ['./product-result.component.css']
 })
-export class ProductResultComponent implements OnInit {
+export class ProductResultComponent implements OnInit, OnDestroy {
 
   constructor(public productDataStorage: ProductsDataStorageService,
               public messageService: MessageService,
-              private productResultService: ProductResultService) { }
+              private productResultService: ProductResultService,
+              private productCartService: ProductCartService) { }
 
- maxCoffeeCharacteristic = 5;
  noProducts = false;
- characteristics = ['strong','sour','bitter'];
 
+ productList = [];
+ paginationSubscription: Subscription;
+ productsStoreSubscription: Subscription;
+
+ stopPaginationEvent: Subject<any> = new Subject();
 
   ngOnInit() {
-    this.productResultService.pagination().subscribe(() => {}); // test
 
-    this.productDataStorage.getProductsFromStore()
+    this.paginationSubscription = this.productResultService
+      .pagination()
+      .pipe(takeUntil(this.stopPaginationEvent))
+      .subscribe(() => {});
+
+    this.productsStoreSubscription =
+      this.productDataStorage.getProductsFromStore()
       .subscribe((products) => {
         if(products[0] === 'no-products'){
+          this.productList = [];
           this.noProducts = true;
           this.messageService.showMessage('danger','Your search gave no results, please try again!');
         }
         else{
+          this.productList = products;
           this.noProducts = false;
         }
       });
-  }
-
-  firstLetterUpper(value: string){
-    return value.charAt(0).toUpperCase() + value.slice(1);
   }
 
   getProductList(): BehaviorSubject<any>{
@@ -54,26 +63,22 @@ export class ProductResultComponent implements OnInit {
     }
   }
 
-
-  onLeftCardClick(rightCard){
-    if(!rightCard.classList.contains('open-right')){
-      rightCard.style.cssText += 'display: flex!important;';
-      rightCard.closeRight = false;
-      setTimeout(() => {
-        rightCard.openRight = true;
-      } ,20);
+  onAddToCart(product){
+    const cartProduct: ICartProduct = this.productCartService.createCartProductObjectToAdd(product,1);
+    this.productCartService.updateCart(cartProduct);
+    if(product.availableAmount - 1 >= 0){
+      product.availableAmount -= 1;
     }
-    else{
-      rightCard.openRight = false;
-      rightCard.closeRight = true;
-      setTimeout(() => {
-        rightCard.style.cssText += 'display: none!important;';
-      } ,401);
-    }
+    console.log(this.productList);
   }
 
-  numberOfCoffeeBeans(){
-    return new Array(this.maxCoffeeCharacteristic);
+  ngOnDestroy(): void {
+    this.stopPaginationEvent.next('stop');
+    if(!!this.paginationSubscription){
+      this.paginationSubscription.unsubscribe();
+    }
+    if(!!this.productsStoreSubscription){
+      this.productsStoreSubscription.unsubscribe();
+    }
   }
-
 }
