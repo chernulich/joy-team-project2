@@ -11,11 +11,8 @@ import lombok.*;
 public class CustomerInfo {
 
     private String entityName;
-
     private String email;
-
     private String phoneNumber;
-
     private ContactInfo contactInfo;
 
 }

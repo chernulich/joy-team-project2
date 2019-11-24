@@ -8,10 +8,10 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 
-public class ContactInfo {
+public class ManagementUserInfo {
 
     private String firstName;
     private String lastName;
-    private String phoneNumber;
+    private String avatarImage;
 
 }

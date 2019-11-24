@@ -83,7 +83,7 @@ public class CheckoutServiceImpl implements CheckoutService {
         List<ProductItem> productItems = productItemRepository.findAllById(productItemIds);
 
         List<OrderItems> orderItems = productItems.stream().map(item -> OrderItems.builder()
-                .ordersId(order)
+                .order(order)
                 .productItemId(item)
                 .build()).collect(Collectors.toList());
 
