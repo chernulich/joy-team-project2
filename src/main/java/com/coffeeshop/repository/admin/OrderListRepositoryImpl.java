@@ -10,6 +10,10 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import java.sql.Date;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -27,8 +31,14 @@ public class OrderListRepositoryImpl implements OrderListRepository {
         TypedQuery<Object[]> typedQuery;
         if (request.getQuery().equals("") || request.getQuery() == null) {
             typedQuery = entityManager.createQuery(getQueryTemplate(request.getQuery()), Object[].class);
+            typedQuery.setParameter("fromDate",
+                    new Timestamp(Date.from(request.getFrom().atZone(ZoneId.systemDefault()).toInstant()).getTime()));
+            typedQuery.setParameter("toDate", Date.from(request.getTo().atZone(ZoneId.systemDefault()).toInstant()));
+
         } else {
             typedQuery = entityManager.createQuery(getQueryTemplate(request.getQuery()), Object[].class);
+            typedQuery.setParameter("fromDate", request.getFrom());
+            typedQuery.setParameter("toDate", request.getTo());
             typedQuery.setParameter("search", request.getQuery().concat("%"));
         }
         setPageAndMaxResult(request, typedQuery);
@@ -55,18 +65,20 @@ public class OrderListRepositoryImpl implements OrderListRepository {
                 .append("od.customerName, od.contactFirstName , od.contactLastName , od.contactPhoneNumber, od" +
                         ".orderEmail, ")
                 .append("op.subtotalPrice, o.orderTransitStatus, o.orderPaymentStatus, o.orderStatus, od" +
-                        ".deliveryComment ")
+                        ".deliveryComment, o.createdOn ")
                 .append("from OrderDetails od ")
                 .append("join Orders o on o.id=od.order.id ")
-                .append("join OrderPrice op on op.order.id=od.order.id ");
+                .append("join OrderPrice op on op.order.id=od.order.id ")
+                .append("where od.createdOn between :fromDate and :toDate ");
 
         if (request != null && !request.isEmpty()) {
             template
-                    .append("where od.orderEmail like :search ")
+                    .append("or od.orderEmail like :search ")
                     .append("or od.customerName like :search ")
                     .append("or od.contactFirstName like :search ")
-                    .append("or od.contactLastName like :search");
+                    .append("or od.contactLastName like :search ");
         }
+        template.append("order by o.createdOn");
         return template.toString();
     }
 
@@ -85,6 +97,7 @@ public class OrderListRepositoryImpl implements OrderListRepository {
                             .paymentStatus(OrderPaymentStatus.valueOf(names.get(7)))
                             .orderStatus(OrderStatus.valueOf(names.get(8)))
                             .customerComment(names.get(9))
+                            .createdDate(LocalDateTime.parse(names.get(10)))
                             .build();
                 }).collect(Collectors.toList());
         return responseList;

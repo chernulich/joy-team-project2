@@ -5,7 +5,7 @@ import com.coffeeshop.model.entity.type.OrderStatus;
 import com.coffeeshop.model.entity.type.OrderTransitStatus;
 import lombok.*;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -16,7 +16,7 @@ public class OrderListResponse {
 
     private Long id;
 
-    private LocalDate createdDate;
+    private LocalDateTime createdDate;
 
     private String companyName;
 
