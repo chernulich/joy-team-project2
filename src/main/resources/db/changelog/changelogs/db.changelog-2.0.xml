@@ -194,4 +194,15 @@
 
     </changeSet>
 
+    <changeSet id="8" author="Alex">
+
+        <insert tableName="MANAGEMENT_USERS">
+            <column name="ID" valueNumeric="1"/>
+            <column name="FULL_NAME" value="Default User1"/>
+            <column name="EMAIL" value="default@test.com"/>
+            <column name="IS_TEST_USER" valueBoolean="true"/>
+        </insert>
+
+    </changeSet>
+
 </databaseChangeLog>
