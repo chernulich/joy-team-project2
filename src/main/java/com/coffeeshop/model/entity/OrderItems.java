@@ -21,16 +21,16 @@ public class OrderItems extends  BaseDate{
 
     @OneToOne
     @JoinColumn(name = "ORDER_ID", referencedColumnName = "ID", nullable = false)
-    private Orders ordersId;
+    private Orders order;
 
     @OneToOne
     @JoinColumn(name = "PRODUCT_ITEM_ID", referencedColumnName = "ID", nullable = false)
     private ProductItem productItemId;
 
     @Builder
-    public OrderItems(Long id, LocalDateTime createdOn, LocalDateTime updatedOn, Orders ordersId, ProductItem productItemId) {
+    public OrderItems(Long id, LocalDateTime createdOn, LocalDateTime updatedOn, Orders order, ProductItem productItemId) {
         super(id, createdOn, updatedOn);
-        this.ordersId = ordersId;
+        this.order = order;
         this.productItemId = productItemId;
     }
 }

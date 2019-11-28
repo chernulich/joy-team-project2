@@ -55,7 +55,7 @@ public class CheckoutServiceImpl implements CheckoutService {
         Orders order = Orders.builder()
                 .orderPaymentStatus(OrderPaymentStatus.NO_INFO)
                 .orderTransitStatus(OrderTransitStatus.NEW_ORDER)
-                .orderStatus(OrderStatus.IN_PROGRESS)
+                .orderStatus(OrderStatus.UNPROCESSED)
                 .build();
 
         OrderDetails orderDetails = convertCheckoutRequestToOrderDetails(request, order);
@@ -83,7 +83,7 @@ public class CheckoutServiceImpl implements CheckoutService {
         List<ProductItem> productItems = productItemRepository.findAllById(productItemIds);
 
         List<OrderItems> orderItems = productItems.stream().map(item -> OrderItems.builder()
-                .ordersId(order)
+                .order(order)
                 .productItemId(item)
                 .build()).collect(Collectors.toList());
 
