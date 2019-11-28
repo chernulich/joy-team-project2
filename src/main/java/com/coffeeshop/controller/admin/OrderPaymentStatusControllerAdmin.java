@@ -1,5 +1,6 @@
 package com.coffeeshop.controller.admin;
 
+import com.coffeeshop.model.web.admin.StatusRequest;
 import com.coffeeshop.service.admin.OrderStatusService;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -17,7 +18,7 @@ public class OrderPaymentStatusControllerAdmin {
     }
 
     @PutMapping("/{orderId}/payment")
-    public void updateOrderPaymentStatus(@PathVariable("orderId") Long orderId, String status) {
-        orderStatusService.updateOrderPaymentStatus(orderId, status);
+    public void updateOrderPaymentStatus(@PathVariable("orderId") Long orderId, StatusRequest statusRequest) {
+        orderStatusService.updateOrderPaymentStatus(orderId, statusRequest);
     }
 }
