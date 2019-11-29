@@ -4,10 +4,10 @@ import java.util.Arrays;
 
 public enum OrderTransitStatus {
 
-    NEW_ORDER(1, "New order"),
-    SHIPPED(2, "Shipped"),
-    DELIVERED(3, "Delivered"),
-    RETURNED(4, "Returned");
+    NEW_ORDER(1, "NEW_ORDER"),
+    SHIPPED(2, "SHIPPED"),
+    DELIVERED(3, "DELIVERED"),
+    RETURNED(4, "RETURNED");
 
     private Integer id;
     private String name;

@@ -47,7 +47,7 @@ public class OrderStatusServiceImpl implements OrderStatusService  {
     public void updateOrderTransitStatus(Long orderId, StatusRequest statusRequest) {
         Orders order = findOrder(orderId);
         String status = statusRequest.getStatus();
-        OrderTransitStatus transitStatus = OrderTransitStatus.getByName(status);
+        OrderTransitStatus transitStatus = OrderTransitStatus.valueOf(status);
         order.setOrderTransitStatus(transitStatus);
         orderRepository.save(order);
     }

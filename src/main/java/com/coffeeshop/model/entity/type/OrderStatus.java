@@ -4,10 +4,10 @@ import java.util.Arrays;
 
 public enum OrderStatus {
 
-    UNPROCESSED(1, "Unprocessed"),
-    IN_PROGRESS(2, "In progress"),
-    CLOSED(3, "Closed"),
-    ESCALATED(4, "Escalated");
+    UNPROCESSED(1, "UNPROCESSED"),
+    IN_PROGRESS(2, "IN_PROGRESS"),
+    CLOSED(3, "CLOSED"),
+    ESCALATED(4, "ESCALATED");
 
     private Integer id;
     private String name;

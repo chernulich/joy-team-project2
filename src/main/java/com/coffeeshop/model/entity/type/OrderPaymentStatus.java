@@ -6,10 +6,10 @@ import java.util.Arrays;
 
 public enum OrderPaymentStatus {
 
-    NO_INFO(1, "No info"),
-    PAY_ON_DELIVERY(2, "Pay on delivery"),
-    PAID_ON_DELIVERY(3, "Paid on delivery"),
-    PAID_BY_CC(4, "Paid by CC");
+    NO_INFO(1, "NO_INFO"),
+    PAY_ON_DELIVERY(2, "PAY_ON_DELIVERY"),
+    PAID_ON_DELIVERY(3, "PAID_ON_DELIVERY"),
+    PAID_BY_CC(4, "PAID_BY_CC");
 
     private Integer id;
     private String name;
