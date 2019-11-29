@@ -26,8 +26,8 @@ public class OrderStatusServiceImpl implements OrderStatusService  {
     @Transactional
     public void updateOrderStatus(Long orderId, StatusRequest statusRequest) {
         Orders order = findOrder(orderId);
-        String status = statusRequest.getStatus();
-        OrderStatus orderStatus = OrderStatus.getByName(status);
+        String newStatus = statusRequest.getNewStatus();
+        OrderStatus orderStatus = OrderStatus.getByName(newStatus);
         order.setOrderStatus(orderStatus);
         orderRepository.save(order);
     }
@@ -36,8 +36,8 @@ public class OrderStatusServiceImpl implements OrderStatusService  {
     @Transactional
     public void updateOrderPaymentStatus(Long orderId, StatusRequest statusRequest) {
         Orders order = findOrder(orderId);
-        String status = statusRequest.getStatus();
-        OrderPaymentStatus paymentStatus = OrderPaymentStatus.getByName(status);
+        String newStatus = statusRequest.getNewStatus();
+        OrderPaymentStatus paymentStatus = OrderPaymentStatus.getByName(newStatus);
         order.setOrderPaymentStatus(paymentStatus);
         orderRepository.save(order);
     }
@@ -46,8 +46,8 @@ public class OrderStatusServiceImpl implements OrderStatusService  {
     @Transactional
     public void updateOrderTransitStatus(Long orderId, StatusRequest statusRequest) {
         Orders order = findOrder(orderId);
-        String status = statusRequest.getStatus();
-        OrderTransitStatus transitStatus = OrderTransitStatus.valueOf(status);
+        String newStatus = statusRequest.getNewStatus();
+        OrderTransitStatus transitStatus = OrderTransitStatus.valueOf(newStatus);
         order.setOrderTransitStatus(transitStatus);
         orderRepository.save(order);
     }

@@ -9,5 +9,5 @@ import lombok.*;
 @Builder
 public class StatusRequest {
 
-    private String status;
+    private String newStatus;
 }
