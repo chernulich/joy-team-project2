@@ -11,8 +11,9 @@ import lombok.SneakyThrows;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
@@ -37,7 +38,8 @@ public class OrderEmailConfirmationTemplateImpl implements OrderEmailConfirmatio
     }
 
     @Override
-    public OrderEmail createOrderConfirmationEmail(String email, String firstName, String lastName, Long orderId) throws IOException {
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public OrderEmail createOrderConfirmationEmail(String email, String firstName, String lastName, Long orderId) {
 
         Orders order = orderRepository.findById(orderId).orElseThrow(()
                 -> new OrderException(orderId, OrderExceptionType.ORDER_NOT_FOUND));

@@ -9,6 +9,8 @@ import com.coffeeshop.model.web.checkout.CheckoutRequest;
 import com.coffeeshop.model.web.checkout.CheckoutResponse;
 import com.coffeeshop.model.web.checkout.ProductWeightQuantityRequest;
 import com.coffeeshop.repository.*;
+import com.coffeeshop.service.email.OrderEmailConfirmationTemplate;
+import com.coffeeshop.service.email.OrderEmailSendService;
 import com.coffeeshop.service.item.ProductItemManagementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -33,12 +35,15 @@ public class CheckoutServiceImpl implements CheckoutService {
     private final OrderDetailsRepository orderDetailsRepository;
     private final OrderPriceRepository orderPriceRepository;
     private final OrderItemsRepository orderItemsRepository;
+    private final OrderEmailConfirmationTemplate orderEmailConfirmationTemplate;
+    private final OrderEmailSendService orderEmailSendService;
 
     @Autowired
     public CheckoutServiceImpl(ProductItemManagementService productItemManagementService,
                                ProductItemRepository productItemRepository, ProductRepository productRepository,
                                OrderRepository orderRepository, OrderDetailsRepository orderDetailsRepository,
-                               OrderPriceRepository orderPriceRepository, OrderItemsRepository orderItemsRepository) {
+                               OrderPriceRepository orderPriceRepository, OrderItemsRepository orderItemsRepository,
+                               OrderEmailConfirmationTemplate orderEmailConfirmationTemplate, OrderEmailSendService orderEmailSendService) {
         this.productItemManagementService = productItemManagementService;
         this.productItemRepository = productItemRepository;
         this.productRepository = productRepository;
@@ -46,6 +51,8 @@ public class CheckoutServiceImpl implements CheckoutService {
         this.orderDetailsRepository = orderDetailsRepository;
         this.orderPriceRepository = orderPriceRepository;
         this.orderItemsRepository = orderItemsRepository;
+        this.orderEmailConfirmationTemplate = orderEmailConfirmationTemplate;
+        this.orderEmailSendService = orderEmailSendService;
     }
 
 
@@ -88,15 +95,25 @@ public class CheckoutServiceImpl implements CheckoutService {
                 .build()).collect(Collectors.toList());
 
         Orders savedOrder = orderRepository.save(order);
-        orderDetailsRepository.save(orderDetails);
+        OrderDetails savedOrderDetails = orderDetailsRepository.save(orderDetails);
         orderPriceRepository.save(orderPrice);
         orderItemsRepository.saveAll(orderItems);
 
+        sendConfirmationEmail(savedOrder, savedOrderDetails);
 
         return CheckoutResponse.builder()
                 .orderId(savedOrder.getId())
                 .message(CHECKOUT_MESSAGE)
                 .build();
+    }
+
+    private void sendConfirmationEmail(Orders savedOrder, OrderDetails savedOrderDetails) {
+        OrderEmail orderEmail = orderEmailConfirmationTemplate.createOrderConfirmationEmail(
+                savedOrderDetails.getOrderEmail(),
+                savedOrderDetails.getContactFirstName(),
+                savedOrderDetails.getContactLastName(),
+                savedOrder.getId());
+        orderEmailSendService.sendEmail(orderEmail);
     }
 
     private OrderDetails convertCheckoutRequestToOrderDetails(CheckoutRequest request, Orders order) {

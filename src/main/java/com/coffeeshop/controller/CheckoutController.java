@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
+
 @RestController
 @RequestMapping("/api/customer/")
 public class CheckoutController {
@@ -23,7 +25,7 @@ public class CheckoutController {
     }
 
     @PostMapping("/checkout")
-    public CheckoutResponse checkout(@RequestBody CheckoutRequest request, BindingResult result) {
+    public CheckoutResponse checkout(@RequestBody CheckoutRequest request, BindingResult result) throws IOException {
         if (result.hasErrors()) {
             throw new InputValidationException(result);
         }

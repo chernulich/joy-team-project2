@@ -10,8 +10,6 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.mail.MessagingException;
 import java.time.LocalDateTime;
@@ -38,14 +36,12 @@ public class OrderEmailSendServiceImpl implements OrderEmailSendService {
     }
 
     @Scheduled(cron = "${cron.expression}")
-    @Transactional
     public void checkingStatusOrderEmails() {
         List<OrderEmail> orders = orderEmailRepository.findAllByIsSendFailedTrue();
         orders.forEach(orderEmail -> sendEmail(orderEmail));
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public OrderEmail sendEmail(OrderEmail orderEmail) {
         Long orderId = orderEmail.getId();
         orderEmail = orderEmailRepository.findById(orderId).orElseThrow(() -> new OrderException(orderId, OrderExceptionType.ORDER_NOT_FOUND));
