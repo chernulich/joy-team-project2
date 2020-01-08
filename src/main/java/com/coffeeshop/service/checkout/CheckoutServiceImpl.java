@@ -15,9 +15,12 @@ import com.coffeeshop.service.item.ProductItemManagementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.mail.MailAuthenticationException;
+import org.springframework.mail.MailSendException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.mail.MessagingException;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -56,8 +59,8 @@ public class CheckoutServiceImpl implements CheckoutService {
     }
 
 
-    @Transactional
-    public CheckoutResponse checkout(CheckoutRequest request) {
+    @Transactional(noRollbackFor = {MessagingException.class, MailAuthenticationException.class, MailSendException.class})
+    public CheckoutResponse checkout(CheckoutRequest request) throws Exception {
 
         Orders order = Orders.builder()
                 .orderPaymentStatus(OrderPaymentStatus.NO_INFO)
@@ -99,7 +102,11 @@ public class CheckoutServiceImpl implements CheckoutService {
         orderPriceRepository.save(orderPrice);
         orderItemsRepository.saveAll(orderItems);
 
-        sendConfirmationEmail(savedOrder, savedOrderDetails);
+        try {
+            sendConfirmationEmail(savedOrder, savedOrderDetails);
+        } catch (MailSendException | MailAuthenticationException ex) {
+            ex.printStackTrace();
+        }
 
         return CheckoutResponse.builder()
                 .orderId(savedOrder.getId())
@@ -113,7 +120,11 @@ public class CheckoutServiceImpl implements CheckoutService {
                 savedOrderDetails.getContactFirstName(),
                 savedOrderDetails.getContactLastName(),
                 savedOrder.getId());
-        orderEmailSendService.sendEmail(orderEmail);
+        try {
+            orderEmailSendService.sendEmail(orderEmail);
+        } catch (MailSendException | MailAuthenticationException ex) {
+            ex.printStackTrace();
+        }
     }
 
     private OrderDetails convertCheckoutRequestToOrderDetails(CheckoutRequest request, Orders order) {

@@ -7,10 +7,12 @@ import com.coffeeshop.model.entity.ProductQuantity;
 import com.coffeeshop.model.entity.admin.ManagementUsers;
 import com.coffeeshop.model.entity.converter.CoffeeTypeConverter;
 import com.coffeeshop.model.entity.type.ProductCategory;
+import com.coffeeshop.model.web.checkout.*;
 import com.coffeeshop.repository.ProductCoffeeRepository;
 import com.coffeeshop.repository.ProductQuantityRepository;
 import com.coffeeshop.repository.ProductRepository;
 import com.coffeeshop.repository.admin.ManagementUsersRepository;
+import com.coffeeshop.service.checkout.CheckoutService;
 import com.coffeeshop.service.item.ProductItemManagementService;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,10 +21,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Base64;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 @Component
 @Profile("dev")
@@ -33,16 +32,20 @@ public class ProductListCreatorRunner implements CommandLineRunner {
     private final ProductQuantityRepository productQuantityRepository;
     private final ProductItemManagementService productItemManagementService;
     private final ManagementUsersRepository managementUsersRepository;
+    private final CheckoutService checkoutService;
 
 
     @Autowired
     public ProductListCreatorRunner(ProductRepository productRepository, ProductCoffeeRepository productCoffeeRepository,
-                                    ProductQuantityRepository productQuantityRepository, ProductItemManagementService productItemManagementService, ManagementUsersRepository managementUsersRepository) {
+                                    ProductQuantityRepository productQuantityRepository, CheckoutService checkoutService,
+                                    ProductItemManagementService productItemManagementService,
+                                    ManagementUsersRepository managementUsersRepository) {
         this.productRepository = productRepository;
         this.productCoffeeRepository = productCoffeeRepository;
         this.productQuantityRepository = productQuantityRepository;
         this.productItemManagementService = productItemManagementService;
         this.managementUsersRepository = managementUsersRepository;
+        this.checkoutService = checkoutService;
     }
 
 
@@ -98,11 +101,36 @@ public class ProductListCreatorRunner implements CommandLineRunner {
 
         InputStream io = ProductListCreatorRunner.class.getResourceAsStream("/image/avatar/sad-face-icon.jpg");
         String defaultAvatar = Base64.getEncoder().encodeToString(IOUtils.toByteArray(io));
-        ManagementUsers user = managementUsersRepository.findById(1l).get();
+        ManagementUsers user = managementUsersRepository.findById(1L).get();
         user.setAvatarImage(defaultAvatar);
         managementUsersRepository.save(user);
 
+        List<ProductWeightQuantityRequest> list = new ArrayList<>();
+        list.add(ProductWeightQuantityRequest.builder().productId(1L).quantity(10).build());
+        list.add(ProductWeightQuantityRequest.builder().productId(2L).quantity(6).build());
+        CheckoutRequest request = CheckoutRequest.builder()
+                .customerInfo(CustomerInfoRequest.builder()
+                        .email("chernulich.alex@gmail.com")
+                        .phoneNumber("123456")
+                        .entityName("EntityName")
+                        .contacts(ContactInfoRequest.builder()
+                                .firstName("Vasya")
+                                .lastName("Pupkin")
+                                .phoneNumber("321654")
+                                .build()).build())
+                .delivery(DeliveryRequest.builder()
+                        .apartment("2B")
+                        .city("NY")
+                        .deliveryComment("lkkjhg")
+                        .floor("123")
+                        .houseNumber("5d5d5")
+                        .officialName("name")
+                        .selfPickup(true)
+                        .street("street")
+                        .build())
+                .products(list).build();
 
+        checkoutService.checkout(request);
 
     }
 }

@@ -7,5 +7,5 @@ import java.io.IOException;
 
 public interface CheckoutService {
 
-    CheckoutResponse checkout(CheckoutRequest request) throws IOException;
+    CheckoutResponse checkout(CheckoutRequest request) throws Exception;
 }
