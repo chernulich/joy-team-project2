@@ -6,6 +6,7 @@ import com.coffeeshop.model.web.product.ProductParametersResponse;
 import com.coffeeshop.model.web.product.ProductRequest;
 import com.coffeeshop.model.web.product.ProductResponse;
 import com.coffeeshop.model.web.product.type.SortStatus;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -21,6 +22,12 @@ public class ProductSearchRepositoryImpl implements ProductSearchRepository {
 
     @PersistenceContext
     private EntityManager entityManager;
+
+    @Value("${min.characteristic}")
+    private Integer minCharacteristic;
+
+    @Value("${max.characteristic}")
+    private Integer maxCharacteristic;
 
     private static final Double MAX_VALUE = Double.MAX_VALUE;
 
@@ -167,14 +174,12 @@ public class ProductSearchRepositoryImpl implements ProductSearchRepository {
 
     private Integer setParamTo(Integer from, Integer to){
         if (to != null) return to;
-        if (from != null) return from;
-        return 5;
+        return maxCharacteristic;
     }
 
     private Integer setParamFrom(Integer from, Integer to){
         if (from != null) return from;
-        if (to != null) return to;
-        return 1;
+        return minCharacteristic;
     }
 
 }
