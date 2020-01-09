@@ -38,7 +38,7 @@ public class OrderEmailCompletionTemplateImpl implements OrderEmailCompletionTem
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    @Transactional(propagation = Propagation.SUPPORTS)
     public OrderEmail createOrderCompletionEmail(String email, String firstName, String lastName, Long orderId) {
 
         Orders order = orderRepository.findById(orderId).orElseThrow(() -> new OrderException(orderId, OrderExceptionType.ORDER_NOT_FOUND));

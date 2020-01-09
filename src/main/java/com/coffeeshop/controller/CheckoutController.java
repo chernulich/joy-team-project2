@@ -23,7 +23,7 @@ public class CheckoutController {
     }
 
     @PostMapping("/checkout")
-    public CheckoutResponse checkout(@RequestBody CheckoutRequest request, BindingResult result) {
+    public CheckoutResponse checkout(@RequestBody CheckoutRequest request, BindingResult result) throws Exception {
         if (result.hasErrors()) {
             throw new InputValidationException(result);
         }

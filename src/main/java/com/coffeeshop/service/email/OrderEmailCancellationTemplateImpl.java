@@ -38,7 +38,7 @@ public class OrderEmailCancellationTemplateImpl implements OrderEmailCancellatio
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    @Transactional(propagation = Propagation.SUPPORTS)
     public OrderEmail createOrderCancellationEmail(String email, String firstName, String lastName, Long orderId, String reason) {
 
         Orders order = orderRepository.findById(orderId).orElseThrow(() -> new OrderException(orderId, OrderExceptionType.ORDER_NOT_FOUND));
