@@ -18,6 +18,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.mail.MailAuthenticationException;
 import org.springframework.mail.MailSendException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.mail.MessagingException;
@@ -59,8 +60,9 @@ public class CheckoutServiceImpl implements CheckoutService {
     }
 
 
-    @Transactional(noRollbackFor = {MessagingException.class, MailAuthenticationException.class, MailSendException.class})
-    public CheckoutResponse checkout(CheckoutRequest request) throws Exception {
+    @Transactional(propagation = Propagation.REQUIRES_NEW,
+            noRollbackFor = {MessagingException.class, MailAuthenticationException.class, MailSendException.class})
+    public CheckoutResponse checkout(CheckoutRequest request) {
 
         Orders order = Orders.builder()
                 .orderPaymentStatus(OrderPaymentStatus.NO_INFO)
