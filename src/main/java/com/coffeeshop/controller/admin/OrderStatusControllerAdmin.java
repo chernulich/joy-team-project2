@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
+
 @RestController
 @RequestMapping("/admin/orders")
 public class OrderStatusControllerAdmin {
@@ -18,7 +20,11 @@ public class OrderStatusControllerAdmin {
     }
 
     @PutMapping("/{orderId}/order")
-    public void updateOrderStatus(@PathVariable("orderId") Long orderId, StatusRequest statusRequest) {
+    public void updateOrderStatus(@PathVariable("orderId") Long orderId, StatusRequest statusRequest) throws IOException {
         orderStatusService.updateOrderStatus(orderId, statusRequest);
+    }
+    @PutMapping("/{orderId}/order/{reason}")
+    public void updateOrderStatus(@PathVariable("orderId") Long orderId, @PathVariable("reason") String reason, StatusRequest statusRequest) throws IOException {
+        orderStatusService.updateOrderStatus(orderId, reason, statusRequest);
     }
 }
