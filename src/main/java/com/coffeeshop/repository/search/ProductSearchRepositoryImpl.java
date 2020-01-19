@@ -6,6 +6,7 @@ import com.coffeeshop.model.web.product.ProductParametersResponse;
 import com.coffeeshop.model.web.product.ProductRequest;
 import com.coffeeshop.model.web.product.ProductResponse;
 import com.coffeeshop.model.web.product.type.SortStatus;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -21,6 +22,12 @@ public class ProductSearchRepositoryImpl implements ProductSearchRepository {
 
     @PersistenceContext
     private EntityManager entityManager;
+
+    @Value("${min.characteristic}")
+    private Integer minCharacteristic;
+
+    @Value("${max.characteristic}")
+    private Integer maxCharacteristic;
 
     private static final Double MAX_VALUE = Double.MAX_VALUE;
 
@@ -72,18 +79,12 @@ public class ProductSearchRepositoryImpl implements ProductSearchRepository {
         typedQuery.setParameter("priceMax",
                 request.getPriceMax() != null ? request.getPriceMax() : MAX_VALUE);
 
-        typedQuery.setParameter("sourFrom", setParamFrom(
-                request.getCharacteristics().getSourFrom(), request.getCharacteristics().getSourTo()));
-        typedQuery.setParameter("sourTo", setParamTo(
-                request.getCharacteristics().getSourFrom(), request.getCharacteristics().getSourTo()));
-        typedQuery.setParameter("strongFrom", setParamFrom(
-                request.getCharacteristics().getStrongFrom(), request.getCharacteristics().getStrongTo()));
-        typedQuery.setParameter("strongTo", setParamTo(
-                request.getCharacteristics().getStrongFrom(), request.getCharacteristics().getStrongTo()));
-        typedQuery.setParameter("bitterFrom", setParamFrom(
-                request.getCharacteristics().getBitterFrom(), request.getCharacteristics().getBitterTo()));
-        typedQuery.setParameter("bitterTo", setParamTo(
-                request.getCharacteristics().getBitterFrom(), request.getCharacteristics().getBitterTo()));
+        typedQuery.setParameter("sourFrom", setParamFrom(request.getCharacteristics().getSourFrom()));
+        typedQuery.setParameter("sourTo", setParamTo(request.getCharacteristics().getSourTo()));
+        typedQuery.setParameter("strongFrom", setParamFrom(request.getCharacteristics().getStrongFrom()));
+        typedQuery.setParameter("strongTo", setParamTo(request.getCharacteristics().getStrongTo()));
+        typedQuery.setParameter("bitterFrom", setParamFrom(request.getCharacteristics().getBitterFrom()));
+        typedQuery.setParameter("bitterTo", setParamTo(request.getCharacteristics().getBitterTo()));
 
         if (request.getCharacteristics().getDecaf() != null) {
             typedQuery.setParameter("decaf", request.getCharacteristics().getDecaf());
@@ -165,16 +166,14 @@ public class ProductSearchRepositoryImpl implements ProductSearchRepository {
                 .toString();
     }
 
-    private Integer setParamTo(Integer from, Integer to){
+    private Integer setParamTo(Integer to){
         if (to != null) return to;
-        if (from != null) return from;
-        return 5;
+        return maxCharacteristic;
     }
 
-    private Integer setParamFrom(Integer from, Integer to){
+    private Integer setParamFrom(Integer from){
         if (from != null) return from;
-        if (to != null) return to;
-        return 1;
+        return minCharacteristic;
     }
 
 }
