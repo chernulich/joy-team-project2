@@ -6,8 +6,9 @@ public enum OrderStatus {
 
     UNPROCESSED(1, "UNPROCESSED"),
     IN_PROGRESS(2, "IN_PROGRESS"),
-    CLOSED(3, "CLOSED"),
-    ESCALATED(4, "ESCALATED");
+    COMPLETED(3, "COMPLETED"),
+    ESCALATED(4, "ESCALATED"),
+    CANCELED(5, "CANCELED");
 
     private Integer id;
     private String name;
