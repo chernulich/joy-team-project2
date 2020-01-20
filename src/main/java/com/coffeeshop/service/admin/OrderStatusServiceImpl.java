@@ -83,22 +83,30 @@ public class OrderStatusServiceImpl implements OrderStatusService  {
 
     @Override
     @Transactional
-    public void updateOrderPaymentStatus(Long orderId, StatusRequest statusRequest) {
+    public void updateOrderPaymentStatus(Long orderId, StatusRequest statusRequest) throws IOException {
         Orders order = findOrder(orderId);
         String newStatus = statusRequest.getNewStatus();
         OrderPaymentStatus paymentStatus = OrderPaymentStatus.getByName(newStatus);
         order.setOrderPaymentStatus(paymentStatus);
         orderRepository.save(order);
+        switch (paymentStatus) {
+            case PAID_ON_DELIVERY: updateOrderTransitStatus(orderId, StatusRequest.builder().newStatus("DELIVERED").build());
+                break;
+        }
     }
 
     @Override
     @Transactional
-    public void updateOrderTransitStatus(Long orderId, StatusRequest statusRequest) {
+    public void updateOrderTransitStatus(Long orderId, StatusRequest statusRequest) throws IOException {
         Orders order = findOrder(orderId);
         String newStatus = statusRequest.getNewStatus();
         OrderTransitStatus transitStatus = OrderTransitStatus.valueOf(newStatus);
         order.setOrderTransitStatus(transitStatus);
         orderRepository.save(order);
+        switch (transitStatus) {
+            case DELIVERED: updateOrderStatus(orderId, StatusRequest.builder().newStatus("COMPLETED").build());
+                break;
+        }
     }
 
     private Orders findOrder(Long orderId) {

@@ -8,6 +8,6 @@ public interface OrderStatusService {
 
     void updateOrderStatus(Long orderId, StatusRequest statusRequest) throws IOException;
     void updateOrderStatus(Long orderId, String reason, StatusRequest statusRequest) throws IOException;
-    void updateOrderPaymentStatus(Long orderId, StatusRequest statusRequest);
-    void updateOrderTransitStatus(Long orderId, StatusRequest statusRequest);
+    void updateOrderPaymentStatus(Long orderId, StatusRequest statusRequest) throws IOException;
+    void updateOrderTransitStatus(Long orderId, StatusRequest statusRequest) throws IOException;
 }
